@@ -1,0 +1,13 @@
+# Editor and OS clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Never commit secrets (none are needed yet, but keep it that way)
+.env
+.env.*
+
+# Local Netlify CLI state
+.netlify/

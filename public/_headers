@@ -1,0 +1,23 @@
+# Aster: security and caching headers. Netlify reads this file from the folder it publishes.
+
+/*
+  # The browser may only load scripts, fonts and images from this site itself, and the site
+  # can't be framed by another one. 'unsafe-inline' for styles covers the few style="" attributes.
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Font files never change under the same name, so browsers may keep them for a year.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images: a week, then re-checked in the background. A replaced image under the SAME
+# name can take up to a week to reach repeat visitors; a new name shows at once.
+/images/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# The stylesheet: re-checked on every visit, so a design change shows at once.
+/css/*
+  Cache-Control: public, max-age=0, must-revalidate

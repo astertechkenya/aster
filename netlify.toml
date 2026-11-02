@@ -1,0 +1,7 @@
+# netlify.toml: how Netlify serves the Aster site (read from the repository root).
+#
+# Only public/ is published. README.md, this file and anything else at the root stay private.
+# The site is plain files: nothing to build.
+[build]
+  publish = "public"
+  command = ""

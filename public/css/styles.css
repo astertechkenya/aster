@@ -1,0 +1,761 @@
+/* Aster Tech Solutions: the site's styles.
+   Fonts first (self-hosted from /fonts: no third-party requests), then the design tokens,
+   then each part of the page in reading order. */
+
+/* ---------------------------------------------------------
+   FONTS
+   Latin and Latin Extended subsets only; unicode-range means a browser downloads a
+   file only when the page actually uses a character from it.
+--------------------------------------------------------- */
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/playfair-display-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/playfair-display-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/playfair-display-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/playfair-display-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/playfair-display-latin-ext-600-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/playfair-display-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url(/fonts/playfair-display-latin-ext-400-italic.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url(/fonts/playfair-display-latin-400-italic.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:500;font-display:swap;src:url(/fonts/playfair-display-latin-ext-500-italic.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:500;font-display:swap;src:url(/fonts/playfair-display-latin-500-italic.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/inter-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/inter-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/inter-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/inter-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/inter-latin-ext-600-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/inter-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Roboto Condensed';font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/roboto-condensed-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Roboto Condensed';font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/roboto-condensed-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/ibm-plex-mono-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/ibm-plex-mono-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/ibm-plex-mono-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+/* ---------------------------------------------------------
+   TOKENS
+   Warm off-white / near-black / warm greys — no accent hue.
+   The brand is explicitly monochrome; restraint here is the point.
+--------------------------------------------------------- */
+:root {
+  --paper: #f6f5f1;
+  --paper-raised: #ffffff;
+  --ink: #14130f;
+  --ink-soft: #47453d;
+  --graphite: #86847a;
+  --line: #dedcd3;
+  --line-strong: #c7c4b8;
+
+  --font-display: "Playfair Display", "Iowan Old Style", "Georgia", serif;
+  --font-body: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "SF Mono", Consolas, monospace;
+  --font-condensed: "Roboto Condensed", "Arial Narrow", sans-serif; /* matches the subtitle in your actual logo file */
+
+  --measure: 62ch;
+  --radius: 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121110;
+    --paper-raised: #1a1917;
+    --ink: #f3f1ea;
+    --ink-soft: #c7c4b8;
+    --graphite: #928f83;
+    --line: #2d2c27;
+    --line-strong: #3d3b34;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #121110;
+  --paper-raised: #1a1917;
+  --ink: #f3f1ea;
+  --ink-soft: #c7c4b8;
+  --graphite: #928f83;
+  --line: #2d2c27;
+  --line-strong: #3d3b34;
+}
+
+/* ---------------------------------------------------------
+   RESET / BASE
+--------------------------------------------------------- */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: inherit; }
+ul { margin: 0; padding: 0; list-style: none; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; }
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.wrap {
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+@media (min-width: 640px) {
+  .wrap { padding-inline: 40px; }
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+
+/* ---------------------------------------------------------
+   STAR MARK
+   Two overlapping four-point sparkles — one at 0°, one at 45°
+   with a shorter radius — forming the eight-point compass star.
+   The minor path's coordinates are the major path's, scaled to
+   0.638 of its radius and rotated 45° about the shared centre.
+--------------------------------------------------------- */
+.star-svg { overflow: visible; }
+
+.star-spin {
+  transform-origin: 50% 50%;
+  animation: star-rotate 22s linear infinite;
+}
+
+@keyframes star-rotate {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star-spin { animation: none; }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------
+   WORDMARK
+   Not text set in a look-alike font — this is a single traced
+   SVG of your actual "Aster" artwork (letters + star), so it
+   renders identically to the source file at any size, in both
+   themes, with zero font-metric guessing.
+--------------------------------------------------------- */
+.wordmark-mark {
+  width: auto;
+  display: block;
+  color: inherit;
+}
+
+/* ---------------------------------------------------------
+   HEADER
+--------------------------------------------------------- */
+header {
+  border-bottom: 1px solid var(--line);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 20px;
+}
+.logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.logo .wordmark-mark {
+  height: 1.98rem; /* 1.6rem, rescaled for the viewBox's new 24-unit margin so the letters read the same size as before */
+}
+
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: 32px;
+  font-size: 0.94rem;
+}
+.nav-links a { text-decoration: none; color: var(--ink-soft); }
+.nav-links a:hover { color: var(--ink); }
+
+@media (min-width: 720px) {
+  .nav-links { display: flex; }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.btn-ghost:hover { border-color: var(--ink); }
+
+/* ---------------------------------------------------------
+   HERO
+--------------------------------------------------------- */
+.hero {
+  /* Top padding is kept deliberately small: everything below it
+     (the card stack, then the headline) needs to still be
+     visible on a short browser window without scrolling, and
+     every pixel spent here is a pixel taken from that budget. */
+  padding-block: 32px 72px;
+}
+
+@media (min-width: 860px) {
+  .hero { padding-block: 40px 100px; }
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 860px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 56px;
+  }
+}
+
+.hero-brand {
+  display: flex;
+  /* The logo is the first thing the viewer should see, so it gets the
+     shortest possible entrance -- a quick settle-in rather than a "slide,"
+     starting at 0s (no delay). Everything else in the staged reveal below
+     (cards, then the headline) is timed relative to this. */
+  animation: hero-brand-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes hero-brand-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-brand { animation: none; }
+}
+
+.hero-wordmark {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hero-wordmark .wordmark-mark {
+  /* 5% bigger than the 30%-smaller clamp(3.36rem, 7.7vw, 6.02rem) --
+     net result vs. the very original clamp(4.8rem, 11vw, 8.6rem) is
+     0.7 x 1.05 = 0.735, i.e. about 26.5% smaller than where this
+     started. Every number scaled together, not just the endpoints. */
+  height: clamp(3.528rem, 8.085vw, 6.321rem);
+}
+.hero-tagline {
+  margin-top: 0.5em;
+  font-family: var(--font-condensed);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  /* sized off the actual logo file's proportions: the tagline's cap-height
+     runs about 29% of the wordmark's, not picked to "look about right".
+     Scaled by the same factors as .wordmark-mark above (x0.7, then
+     x1.05) at every step, so that ratio still holds exactly. */
+  font-size: clamp(0.9702rem, 2.75625vw, 1.764rem);
+  color: var(--ink);
+  text-indent: 0.22em; /* optically re-center for the trailing letter-spacing */
+}
+
+/* ---------------------------------------------------------
+   HERO TEMPLATE STACK
+   Three small "what we build" cards, fanned and overlapping
+   like a stack of print proofs. Absolutely positioned within a
+   fixed-height container so the fan composition holds at any
+   width.
+
+   Card sizes are driven by cqw (container query width), not vw:
+   .hero-templates sits in a 6fr grid column whose actual pixel
+   width varies a lot relative to the viewport -- e.g. it's
+   narrower right around the 860px two-column breakpoint than a
+   naive vw-based clamp() assumes. Sizing off vw made the cards
+   too large for that narrower column, so the front card ended
+   up covering the "Organic traffic / +128%" text on the card
+   behind it. Sizing off the container's own width instead keeps
+   the same relative overlap -- and keeps every card's text
+   legible -- at any column width.
+--------------------------------------------------------- */
+.hero-templates {
+  container-type: inline-size;
+  position: relative;
+  height: clamp(200px, 50cqw, 260px);
+  margin-bottom: clamp(20px, 5cqw, 28px);
+}
+
+.template-card {
+  position: absolute;
+  width: clamp(150px, 34cqw, 220px);
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 20px 40px -22px rgba(20, 19, 15, 0.45), 0 2px 8px rgba(20, 19, 15, 0.08);
+  padding: 12px;
+  /* Each card's own fixed tilt lives in --rot (set per card below) so it
+     can stay constant while card-in animates everything else. Without
+     this split, animating "transform" directly would either fight the
+     card's rotation or require duplicating each card's angle inside its
+     own @keyframes block. */
+  transform: rotate(var(--rot, 0deg));
+  /* Staggered per card via animation-delay below -- see the comment on
+     .template-automation for the full timing plan. */
+  animation: card-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .template-card {
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+:root[data-theme="dark"] .template-card {
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.94) rotate(var(--rot, 0deg));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(var(--rot, 0deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .template-card { animation: none; }
+}
+
+.tc-card-label {
+  margin-top: 10px;
+  font-family: var(--font-condensed);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+.tc-line {
+  display: block;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--line-strong);
+}
+.tc-line--nav { width: 22%; height: 5px; display: inline-block; margin-right: 6%; }
+.tc-line--lg { width: 80%; height: 9px; margin-bottom: 7px; background: var(--ink-soft); }
+.tc-line--md { width: 55%; margin-bottom: 10px; }
+.tc-line--sm { width: 60%; }
+.tc-line--xs { width: 38%; margin-top: 6px; }
+
+/* -- website preview card -- */
+.template-website {
+  left: -13.2%;
+  top: 21.3%;
+  z-index: 2;
+  --rot: -6deg;
+  width: clamp(170px, 44.9cqw, 244px);
+  animation-delay: 0.49s;
+}
+.tc-browser-dots {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+.tc-browser-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+/* A real project in place of the wireframe lines. aspect-ratio plus the
+   img's width/height reserve its space before it loads, so nothing jumps. */
+.tc-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 2px;
+  background: var(--line); /* a grey block until the photo arrives, not a hole */
+}
+/* In the one-column layout the stack is full width, and the card's negative
+   left offset pushed it past the screen edge, cutting the screenshot off. */
+@media (max-width: 859px) {
+  .template-website { left: 0; }
+}
+
+/* -- SEO / analytics card -- */
+.template-analytics {
+  right: 8%;
+  top: -7.9%;
+  z-index: 3;
+  --rot: 7deg;
+  width: clamp(150px, 34cqw, 220px);
+  animation-delay: 0.61s;
+}
+.tc-card-eyebrow {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin-bottom: 2px;
+}
+.tc-card-stat {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.tc-chart {
+  display: block;
+  width: 100%;
+  height: clamp(34px, 6cqw, 46px);
+  color: var(--ink);
+}
+.tc-chart polyline {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* -- social presence card -- */
+.template-social {
+  left: 28.5%;
+  bottom: 5.4%;
+  z-index: 1;
+  --rot: 6deg;
+  width: clamp(134px, 30cqw, 188px);
+  animation-delay: 0.37s;
+}
+.tc-social-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.tc-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--line-strong);
+  flex-shrink: 0;
+}
+.tc-social-media {
+  display: block;
+  aspect-ratio: 1 / 1;
+  border-radius: 2px;
+  background: var(--line);
+  margin-bottom: 10px;
+}
+.tc-social-actions {
+  display: flex;
+  gap: 10px;
+}
+.tc-social-actions span {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--graphite);
+}
+
+/* -- AI automation card -- */
+.template-automation {
+  right: 8%;
+  bottom: 7%;
+  z-index: 0;
+  --rot: 16deg;
+  width: clamp(146px, 32cqw, 204px);
+  /* Stagger order runs back-to-front by z-index (automation, z:0, lands
+     first; analytics, z:3, lands last) rather than left-to-right, so the
+     stack visually builds the way it's layered -- like laying down cards
+     back layer first. 0.12s between each keeps the cascade quick and
+     readable instead of a slow crawl.
+       automation 0.25s -> social 0.37s -> website 0.49s -> analytics 0.61s
+     Last card's animation (0.6s long) finishes at 0.61 + 0.6 = 1.21s,
+     which is what the headline's own delay below is timed against. */
+  animation-delay: 0.25s;
+}
+.tc-flow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.tc-flow-node {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--graphite);
+  flex-shrink: 0;
+  background: transparent;
+}
+.tc-flow-node--active {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.tc-flow-connector {
+  flex: 1;
+  height: 1.5px;
+  background: var(--line-strong);
+  margin: 0 5px;
+}
+
+@media (min-width: 860px) {
+  .hero-templates { margin-bottom: 32px; }
+}
+
+.hero h1 {
+  font-size: clamp(2.3rem, 5.6vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  /* The finale of the staged reveal: logo first (0s), cards cascading
+     through 1.21s (see .template-automation's comment), then this --
+     starting right as the last card lands, so the eye has nowhere else
+     left to go but here. 0.65s is deliberately the longest single move
+     in the sequence; it's the "biggest reveal" the sequence builds to. */
+  animation: hero-headline-in 0.65s 1.05s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 500;
+}
+
+@keyframes hero-headline-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero h1 { animation: none; }
+}
+
+/* ---------------------------------------------------------
+   "Impossible" gets a hand-drawn underline that draws itself
+   in on load, like it's being underlined with a pencil. The
+   squiggle is a single SVG path; the "drawing" effect is the
+   classic stroke-dasharray/-dashoffset trick, sized to the
+   path's own length so the reveal lands exactly at the tip.
+--------------------------------------------------------- */
+.ink-highlight {
+  position: relative;
+  display: inline-block;
+}
+.ink-underline {
+  position: absolute;
+  left: -2%;
+  top: 100%;
+  width: 104%;
+  aspect-ratio: 220 / 20;
+  overflow: visible;
+  pointer-events: none;
+}
+.ink-underline path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 210;
+  stroke-dashoffset: 210;
+  /* Delay used to be a flat 0.6s from page load, back when the headline
+     itself appeared instantly. Now the headline doesn't finish revealing
+     until 1.05s (its delay) + 0.65s (its duration) = 1.7s, so this has to
+     wait at least that long -- otherwise the pencil-underline would
+     finish drawing itself in while "impossible" is still invisible, and
+     then just sit there "already done" the moment the word fades in.
+     1.8s gives it a 0.1s beat after the headline lands before it starts. */
+  animation: ink-draw 0.9s 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes ink-draw {
+  to { stroke-dashoffset: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ink-underline path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   SERVICES
+--------------------------------------------------------- */
+.services {
+  border-top: 1px solid var(--line);
+  padding-block: 72px;
+}
+.services-head {
+  max-width: 60ch;
+  margin-bottom: 48px;
+}
+.services-head h2 {
+  font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+  font-weight: 500;
+  margin-top: 10px;
+}
+.services-head p {
+  margin-top: 16px;
+  color: var(--ink-soft);
+  max-width: var(--measure);
+}
+
+.service-grid {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+@media (min-width: 780px) {
+  .service-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.service-panel {
+  background: var(--paper);
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.bearing {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: var(--graphite);
+}
+
+.service-panel h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.service-panel p {
+  color: var(--ink-soft);
+}
+
+.service-list {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.service-list li {
+  display: flex;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.service-list li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-top: 8px;
+  flex-shrink: 0;
+  background: var(--ink);
+  transform: rotate(45deg);
+}
+
+/* ---------------------------------------------------------
+   CTA BAND
+--------------------------------------------------------- */
+.cta-band {
+  background: var(--ink);
+  color: var(--paper);
+  padding-block: 68px;
+}
+.cta-band .wrap {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+}
+@media (min-width: 780px) {
+  .cta-band .wrap { grid-template-columns: 1fr auto; }
+}
+.cta-band h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.2rem);
+  font-weight: 500;
+}
+.cta-band p {
+  margin-top: 12px;
+  color: color-mix(in srgb, var(--paper) 72%, transparent);
+  max-width: 52ch;
+}
+.cta-band .btn-primary {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
+}
+
+/* ---------------------------------------------------------
+   FOOTER
+--------------------------------------------------------- */
+footer {
+  padding-block: 40px;
+  border-top: 1px solid var(--line);
+}
+.foot-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+}
+.foot-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+.foot-mark .star-svg { width: 15px; height: 15px; }
+.foot-meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--graphite);
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.foot-meta a { text-decoration: none; }
+.foot-meta a:hover { color: var(--ink); }
