@@ -25,14 +25,17 @@ aster/
 
 ## Working on it locally
 
-From this folder:
+Double-click `public/index.html`: it opens styled, because its links to the CSS, fonts and
+images are relative (`css/styles.css`, not `/css/styles.css`). Keep them that way.
+
+`404.html` is the exception: Netlify shows it at any missing address (like `/old/page`), so its
+links must start with `/`. To preview it, run a local server from this folder:
 
 ```
 python -m http.server 8000 --directory public
 ```
 
-then open http://localhost:8000. Paths start with `/`, so open the page through a server like
-this rather than by double-clicking the file.
+then open http://localhost:8000/404.html.
 
 ## Conventions
 
