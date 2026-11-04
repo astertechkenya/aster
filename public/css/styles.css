@@ -29,6 +29,13 @@
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* Jost: used only inside the Safari Ember card, so its miniature hero is set in that site's own type */
+@font-face{font-family:'Jost';font-style:normal;font-weight:300;font-display:swap;src:url(../fonts/jost-latin-300-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Jost';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/jost-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* Bebas Neue and DM Sans: only inside the NURA cards, so its miniatures are set in that site's own type */
+@font-face{font-family:'Bebas Neue';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/bebas-neue-v16-latin-regular.woff2) format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/dm-sans-v17-latin-regular.woff2) format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/dm-sans-v17-latin-700.woff2) format('woff2')}
 
 /* ---------------------------------------------------------
    TOKENS
@@ -299,47 +306,42 @@ header {
 }
 
 /* ---------------------------------------------------------
-   HERO TEMPLATE STACK
-   Three small "what we build" cards, fanned and overlapping
-   like a stack of print proofs. Absolutely positioned within a
-   fixed-height container so the fan composition holds at any
-   width.
+   HERO WORK STACK
+   The two sites Aster built, each on a desktop card with its phone version in front,
+   plus the SEO card behind: websites and search, the two things Aster sells.
 
-   Card sizes are driven by cqw (container query width), not vw:
-   .hero-templates sits in a 6fr grid column whose actual pixel
-   width varies a lot relative to the viewport -- e.g. it's
-   narrower right around the 860px two-column breakpoint than a
-   naive vw-based clamp() assumes. Sizing off vw made the cards
-   too large for that narrower column, so the front card ended
-   up covering the "Organic traffic / +128%" text on the card
-   behind it. Sizing off the container's own width instead keeps
-   the same relative overlap -- and keeps every card's text
-   legible -- at any column width.
+   Nothing in here is a screenshot. Each "screen" is the site's hero rebuilt in miniature:
+   its real photo under real text, in the site's own fonts. A tilted screenshot is a grid of
+   pixels the browser has to resample at an angle, which always softens small text; text is
+   drawn AFTER the tilt, so it stays sharp at any angle, size or screen density.
+
+   Two kinds of cqw are at work:
+   - .hero-templates is a container, so card positions and widths are in cqw of the stack's
+     width, and the composition holds however wide the column is;
+   - each .mini screen is a container too, so everything INSIDE a screen is in cqw of that
+     screen's width, and a miniature keeps its proportions however big its card is.
 --------------------------------------------------------- */
 .hero-templates {
   container-type: inline-size;
   position: relative;
-  height: clamp(200px, 50cqw, 260px);
+  height: clamp(250px, 62cqw, 350px);
   margin-bottom: clamp(20px, 5cqw, 28px);
 }
 
-.template-card {
+/* Every card, laptop or phone: tilted by its own --rot, and dealt in by card-in */
+.template-card,
+.template-phone {
   position: absolute;
-  width: clamp(150px, 34cqw, 220px);
+  transform: rotate(var(--rot, 0deg));
+  /* Staggered per card with animation-delay: back to front, the way the stack is layered */
+  animation: card-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.template-card {
   background: var(--paper-raised);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: 0 20px 40px -22px rgba(20, 19, 15, 0.45), 0 2px 8px rgba(20, 19, 15, 0.08);
-  padding: 12px;
-  /* Each card's own fixed tilt lives in --rot (set per card below) so it
-     can stay constant while card-in animates everything else. Without
-     this split, animating "transform" directly would either fight the
-     card's rotation or require duplicating each card's angle inside its
-     own @keyframes block. */
-  transform: rotate(var(--rot, 0deg));
-  /* Staggered per card via animation-delay below -- see the comment on
-     .template-automation for the full timing plan. */
-  animation: card-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  padding: 10px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .template-card {
@@ -351,193 +353,246 @@ header {
 }
 
 @keyframes card-in {
-  from {
-    opacity: 0;
-    transform: translateY(28px) scale(0.94) rotate(var(--rot, 0deg));
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1) rotate(var(--rot, 0deg));
-  }
+  from { opacity: 0; transform: translateY(28px) scale(0.94) rotate(var(--rot, 0deg)); }
+  to   { opacity: 1; transform: translateY(0) scale(1) rotate(var(--rot, 0deg)); }
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .template-card { animation: none; }
+  .template-card, .template-phone { animation: none; }
 }
 
 .tc-card-label {
-  margin-top: 10px;
+  margin-top: 8px;
   font-family: var(--font-condensed);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--graphite);
 }
-.tc-line {
-  display: block;
-  height: 6px;
-  border-radius: 2px;
-  background: var(--line-strong);
-}
-.tc-line--nav { width: 22%; height: 5px; display: inline-block; margin-right: 6%; }
-.tc-line--lg { width: 80%; height: 9px; margin-bottom: 7px; background: var(--ink-soft); }
-.tc-line--md { width: 55%; margin-bottom: 10px; }
-.tc-line--sm { width: 60%; }
-.tc-line--xs { width: 38%; margin-top: 6px; }
+.tc-browser-dots { display: flex; gap: 5px; margin-bottom: 8px; }
+.tc-browser-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--line-strong); }
 
-/* -- website preview card -- */
-.template-website {
-  left: -13.2%;
-  top: 21.3%;
-  z-index: 2;
-  --rot: -6deg;
-  width: clamp(170px, 44.9cqw, 244px);
-  animation-delay: 0.49s;
+/* -- The phones: a dark body and a notch, no card around them -- */
+.template-phone {
+  width: clamp(62px, 14cqw, 86px);
+  padding: 3px;
+  background: #121110;
+  border-radius: 12px;
+  box-shadow: 0 18px 30px -16px rgba(20, 19, 15, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
-.tc-browser-dots {
-  display: flex;
-  gap: 5px;
-  margin-bottom: 10px;
+.template-phone .mini { border-radius: 9px; }
+.template-phone::before {          /* the notch */
+  content: "";
+  position: absolute; z-index: 3;
+  top: 6px; left: 50%;
+  width: 28%; height: 4px;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  background: #121110;
 }
-.tc-browser-dots span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--line-strong);
-}
-/* A real project in place of the wireframe lines. aspect-ratio plus the
-   img's width/height reserve its space before it loads, so nothing jumps. */
-.tc-shot {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  border-radius: 2px;
-  background: var(--line); /* a grey block until the photo arrives, not a hole */
-}
-/* In the one-column layout the stack is full width, and the card's negative
-   left offset pushed it past the screen edge, cutting the screenshot off. */
+
+/* -- Where each card sits (percentages of the stack), and when it's dealt in --
+   Back to front: SEO 0.25s → NURA laptop 0.37s → Safari Ember laptop 0.49s
+   → NURA phone 0.61s → Safari Ember phone 0.73s. The last lands at 1.33s, just as the
+   headline (delay 1.05s, see .hero h1) finishes rising, so the eye ends on the words. */
+.template-analytics { left: 37%;    top: -6%;  z-index: 1; --rot: 3deg;  width: clamp(214px, 44cqw, 250px); animation-delay: 0.25s; }
+.template-nura      { right: 3%;    top: 43%;  z-index: 2; --rot: 5deg;  width: clamp(170px, 44cqw, 250px); animation-delay: 0.37s; }
+.template-se        { left: -10%;   top: 8%;   z-index: 3; --rot: -6deg; width: clamp(170px, 46cqw, 260px); animation-delay: 0.49s; }
+.template-nura-m    { right: -4%;   top: 60%;  z-index: 4; --rot: 8deg;  animation-delay: 0.61s; }
+.template-se-m      { left: 27%;    top: 40%;  z-index: 5; --rot: -3deg; animation-delay: 0.73s; }
+
+/* One column (phones, small tablets): nothing may hang past the screen edge */
 @media (max-width: 859px) {
-  .template-website { left: 0; }
+  /* Cards have minimum widths, so in a narrow column they take a bigger share of it:
+     a taller stack, with NURA lower, keeps the SEO card's figure and label in view. */
+  .hero-templates { height: clamp(300px, 92cqw, 380px); }
+  .template-se { left: 0; }
+  /* The SEO card moves to the right edge and in front, so its first gauge (SEO) isn't
+     hidden behind the Safari Ember card */
+  .template-analytics { left: auto; right: 0; top: -5%; z-index: 4; width: clamp(200px, 64cqw, 250px); }
+  .template-nura { top: 44%; right: 2%; }
+  .template-nura-m { right: 0; top: 58%; }
+  .template-se-m { top: 46%; }
 }
 
-/* -- SEO / analytics card -- */
-.template-analytics {
-  right: 8%;
-  top: -7.9%;
-  z-index: 3;
-  --rot: 7deg;
-  width: clamp(150px, 34cqw, 220px);
-  animation-delay: 0.61s;
-}
-.tc-card-eyebrow {
-  font-size: 0.72rem;
-  color: var(--ink-soft);
-  margin-bottom: 2px;
-}
-.tc-card-stat {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 8px;
-}
-.tc-chart {
-  display: block;
-  width: 100%;
-  height: clamp(34px, 6cqw, 46px);
-  color: var(--ink);
-}
-.tc-chart polyline {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.6;
+/* -- SEO card: Lighthouse-style score gauges --
+   Real scores, in the green Lighthouse uses for 90-100, so anyone who has run PageSpeed
+   Insights recognises them at a glance. Each ring is an SVG circle with pathLength="100", so
+   a dash of length --score draws exactly that share of the ring; the number is SVG text, so
+   it stays sharp at the card's tilt. */
+.tc-card-eyebrow { font-size: 0.72rem; color: var(--ink-soft); margin-bottom: 8px; }
+.gauges { display: flex; justify-content: space-between; gap: 4px; }
+.gauge { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.gauge svg { flex: none; max-width: none; /* the site-wide img,svg max-width rule would squeeze it to its label's width */ width: clamp(30px, 8cqw, 42px); height: auto; transform: rotate(-90deg); overflow: visible; }
+.gauge__track, .gauge__arc { fill: none; stroke-width: 3.2; }
+.gauge__track { stroke: #0c6; stroke-opacity: .14; fill: #0c6; fill-opacity: .08; }
+.gauge__arc {
+  stroke: #0c6;
   stroke-linecap: round;
-  stroke-linejoin: round;
+  stroke-dasharray: var(--score) 100;
+  /* Fills in as the card lands (the card-in timing above) */
+  animation: gauge-fill 1.1s 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+@keyframes gauge-fill { from { stroke-dasharray: 0 100; } }
+@media (prefers-reduced-motion: reduce) { .gauge__arc { animation: none; } }
+.gauge text {
+  transform: rotate(90deg); transform-origin: 18px 18px;     /* undo the ring's turn */
+  text-anchor: middle;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  fill: #008a3e;
+}
+.gauge span { font-size: clamp(0.46rem, 1.3cqw, 0.52rem); line-height: 1.2; color: var(--ink-soft); text-align: center; white-space: nowrap; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .gauge text { fill: #3ddc84; }
+}
+:root[data-theme="dark"] .gauge text { fill: #3ddc84; }
 
-/* -- social presence card -- */
-.template-social {
-  left: 28.5%;
-  bottom: 5.4%;
-  z-index: 1;
-  --rot: 6deg;
-  width: clamp(134px, 30cqw, 188px);
-  animation-delay: 0.37s;
+/* The climb: Safari Ember's mobile performance score, before → after → live. The line draws
+   itself in once the card has landed (pathLength="100" makes the dash maths simple). */
+.climb { margin-top: 8px; }
+.climb svg { display: block; width: 100%; height: auto; max-width: none; overflow: visible; }
+.climb__area { fill: #0c6; fill-opacity: .12; }
+.climb__line {
+  fill: none; stroke: #0c6; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 100; stroke-dashoffset: 0;
+  animation: climb-draw 1.2s 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
 }
-.tc-social-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
+.climb circle { fill: var(--paper-raised); stroke: #0c6; stroke-width: 1.2; }
+@keyframes climb-draw { from { stroke-dashoffset: 100; } }
+@media (prefers-reduced-motion: reduce) { .climb__line { animation: none; } }
+.climb__marks { display: flex; justify-content: space-between; margin-top: 4px; font-size: clamp(0.46rem, 1.3cqw, 0.52rem); color: var(--ink-soft); }
+.climb__marks b { font-weight: 600; color: #008a3e; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .climb__marks b { color: #3ddc84; }
 }
-.tc-avatar {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--line-strong);
-  flex-shrink: 0;
-}
-.tc-social-media {
+:root[data-theme="dark"] .climb__marks b { color: #3ddc84; }
+
+/* ---------------------------------------------------------
+   THE MINIATURE SCREENS
+   Sizes inside a screen are cqw of THAT screen (1cqw = 1% of its width).
+--------------------------------------------------------- */
+.mini {
+  position: relative;
   display: block;
-  aspect-ratio: 1 / 1;
+  overflow: hidden;
   border-radius: 2px;
-  background: var(--line);
-  margin-bottom: 10px;
+  container-type: inline-size;
+  background: #0b0907;           /* dark until the photo arrives */
 }
-.tc-social-actions {
-  display: flex;
-  gap: 10px;
-}
-.tc-social-actions span {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 1.5px solid var(--graphite);
-}
+.mini--desktop { aspect-ratio: 16 / 10; }
+.mini--phone   { aspect-ratio: 9 / 19.5; }
+.mini p { margin: 0; }
+.mini img { display: block; }
+.mini__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
-/* -- AI automation card -- */
-.template-automation {
-  right: 8%;
-  bottom: 7%;
-  z-index: 0;
-  --rot: 16deg;
-  width: clamp(146px, 32cqw, 204px);
-  /* Stagger order runs back-to-front by z-index (automation, z:0, lands
-     first; analytics, z:3, lands last) rather than left-to-right, so the
-     stack visually builds the way it's layered -- like laying down cards
-     back layer first. 0.12s between each keeps the cascade quick and
-     readable instead of a slow crawl.
-       automation 0.25s -> social 0.37s -> website 0.49s -> analytics 0.61s
-     Last card's animation (0.6s long) finishes at 0.61 + 0.6 = 1.21s,
-     which is what the headline's own delay below is timed against. */
-  animation-delay: 0.25s;
+/* -- Safari Ember: a sunset frame from its hero film, dark lower half, centred type -- */
+.se::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(8,7,5,.06) 0%, rgba(8,7,5,.12) 30%, rgba(8,7,5,.5) 58%, rgba(8,7,5,.82) 100%);
 }
-.tc-flow {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
+.se__ui {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+  text-align: center;
+  font-family: "Jost", var(--font-body);
 }
-.tc-flow-node {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 1.5px solid var(--graphite);
-  flex-shrink: 0;
-  background: transparent;
+.se__logo { height: auto; }
+.se__title { font-family: var(--font-display); font-weight: 400; line-height: 1.1; color: #f5e8d0; }
+.se__title em { font-style: italic; color: #c8782a; }
+.se__desc { font-weight: 300; color: #e9dcc6; }
+.se__ctas { display: flex; }
+.se__ctas span {
+  display: inline-block;
+  font-weight: 500;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: solid #c8782a;
+  color: #c8782a;
 }
-.tc-flow-node--active {
-  background: var(--ink);
-  border-color: var(--ink);
+.se__ctas span:first-child { background: #c8782a; color: #0b0907; }
+.se__burger { position: absolute; z-index: 2; display: grid; }
+.se__burger span { display: block; background: #c8782a; }
+
+/* Laptop proportions */
+.mini--desktop.se .se__ui { padding-bottom: 7.5cqw; }
+.mini--desktop .se__logo { width: 8cqw; margin-bottom: 7cqw; }
+.mini--desktop .se__title { font-size: 6.3cqw; white-space: nowrap; }
+.mini--desktop .se__desc { font-size: 1.85cqw; line-height: 2.1; max-width: 70cqw; margin: 3.4cqw 0 4.6cqw; }
+.mini--desktop .se__ctas { gap: 1.8cqw; }
+.mini--desktop .se__ctas span { padding: 2cqw 4.2cqw; font-size: 1.1cqw; border-width: 0.1cqw; }
+.mini--desktop .se__burger { top: 4cqw; right: 4cqw; gap: 0.8cqw; }
+.mini--desktop .se__burger span { width: 3.4cqw; height: 0.25cqw; }
+
+/* Phone proportions: the sun kept in the tall frame, as on the real site */
+.mini--phone.se .mini__photo { object-position: 55% 50%; }
+.mini--phone.se .se__ui { padding: 0 8cqw 16cqw; }
+.mini--phone .se__logo { width: 22cqw; margin-bottom: 9cqw; }
+.mini--phone .se__title { font-size: 10cqw; }
+.mini--phone .se__desc { font-size: 4.2cqw; line-height: 1.7; margin: 5cqw 0 7cqw; }
+.mini--phone .se__ctas { flex-direction: column; gap: 3cqw; width: 100%; }
+.mini--phone .se__ctas span { padding: 4.2cqw 0; font-size: 3cqw; border-width: 0.3cqw; }
+.mini--phone .se__burger { top: 9cqw; right: 7cqw; gap: 2cqw; }
+.mini--phone .se__burger span { width: 8cqw; height: 0.6cqw; }
+
+/* -- NURA: light header, purple ticker, a street photo, big Bebas type -- */
+.nu { font-family: "DM Sans", var(--font-body); color: #fff; background: #0a0a0a; }
+.nu__head { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; background: #f5f5f3; color: #0a0a0a; }
+.nu__logo { font-family: "Bebas Neue", var(--font-condensed); letter-spacing: .25em; }
+.nu__logo span, .nu__title span { color: #b57bff; }
+.nu__nav { display: flex; }
+.nu__nav span, .nu__tick span, .nu__tabs span { font-weight: 700; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
+.nu__nav span { color: #555; }
+.nu__cart { background: #0a0a0a; }
+.nu__tick { position: relative; z-index: 2; display: flex; overflow: hidden; background: #b57bff; color: #fff; }
+.nu__hero { position: absolute; left: 0; right: 0; bottom: 0; overflow: hidden; }
+.nu__hero::after { content: ""; position: absolute; inset: 0; }
+.nu__text { position: absolute; z-index: 1; }
+.nu__season { font-weight: 700; letter-spacing: .35em; text-transform: uppercase; color: #b57bff; }
+.nu__title { font-family: "Bebas Neue", var(--font-condensed); font-weight: 400; line-height: .92; color: #fff; }
+.nu__sub { color: #ddd; }
+.nu__cta { display: inline-block; background: #b57bff; color: #0a0a0a; font-weight: 700; letter-spacing: .25em; text-transform: uppercase; }
+
+/* Laptop: the photo on the right, black behind the words on the left */
+.mini--desktop .nu__head { height: 8cqw; padding: 0 3cqw; }
+.mini--desktop .nu__logo { font-size: 3.6cqw; }
+.mini--desktop .nu__nav { gap: 3cqw; }
+.mini--desktop .nu__nav span { font-size: 1cqw; }
+.mini--desktop .nu__cart { width: 8cqw; height: 3.2cqw; }
+.mini--desktop .nu__tick { height: 3.4cqw; align-items: center; gap: 6cqw; padding-left: 2cqw; }
+.mini--desktop .nu__tick span { font-size: 1cqw; }
+.mini--desktop .nu__hero { top: 11.4cqw; }
+.mini--desktop.nu .mini__photo { left: 30%; width: 75%; object-position: 40% 30%; }
+.mini--desktop .nu__hero::after { background: linear-gradient(to right, #0a0a0a 0%, #0a0a0a 30%, rgba(10,10,10,.6) 38%, rgba(10,10,10,0) 55%); }
+.mini--desktop .nu__text { left: 4cqw; top: 5cqw; }
+.mini--desktop .nu__season { font-size: 1cqw; margin-bottom: 1.6cqw; }
+.mini--desktop .nu__title { font-size: 9.6cqw; }
+.mini--desktop .nu__sub { font-size: 1.3cqw; line-height: 1.8; max-width: 26cqw; margin: 2.6cqw 0 2.6cqw; }
+.mini--desktop .nu__cta { font-size: 0.9cqw; padding: 1.8cqw 3.4cqw; }
+
+/* Phone: the photo across the top, fading into black under the words */
+.mini--phone .nu__head { height: 15cqw; padding: 0 6cqw; }
+.mini--phone .nu__logo { font-size: 8cqw; }
+.mini--phone .nu__nav { display: none; }
+.mini--phone .nu__cart { width: 14cqw; height: 8cqw; }
+.mini--phone .nu__tick { height: 9cqw; align-items: center; gap: 10cqw; padding-left: 4cqw; }
+.mini--phone .nu__tick span { font-size: 2.6cqw; }
+.mini--phone .nu__hero { top: 24cqw; }
+.mini--phone.nu .mini__photo {
+  height: 60%; object-position: 52% 30%;
+  -webkit-mask-image: linear-gradient(to bottom, #000 52%, transparent 92%);
+          mask-image: linear-gradient(to bottom, #000 52%, transparent 92%);
 }
-.tc-flow-connector {
-  flex: 1;
-  height: 1.5px;
-  background: var(--line-strong);
-  margin: 0 5px;
-}
+.mini--phone .nu__text { left: 6cqw; right: 6cqw; bottom: 22cqw; }
+.mini--phone .nu__season { font-size: 2.6cqw; margin-bottom: 2.5cqw; }
+.mini--phone .nu__title { font-size: 17cqw; }
+.mini--phone .nu__sub { font-size: 3.6cqw; line-height: 1.7; margin: 5cqw 0 6cqw; }
+.mini--phone .nu__cta { font-size: 2.6cqw; padding: 4.5cqw 9cqw; }
+.mini--phone .nu__tabs { position: absolute; z-index: 2; left: 0; right: 0; bottom: 4cqw; display: flex; justify-content: space-around; }
+.mini--phone .nu__tabs span { font-size: 2.4cqw; color: #ddd; }
 
 @media (min-width: 860px) {
   .hero-templates { margin-bottom: 32px; }
@@ -549,7 +604,7 @@ header {
   line-height: 1.08;
   letter-spacing: -0.01em;
   /* The finale of the staged reveal: logo first (0s), cards cascading
-     through 1.21s (see .template-automation's comment), then this --
+     through 1.33s (see the stack's timing comment), then this --
      starting right as the last card lands, so the eye has nowhere else
      left to go but here. 0.65s is deliberately the longest single move
      in the sequence; it's the "biggest reveal" the sequence builds to. */
@@ -620,43 +675,9 @@ header {
 /* ---------------------------------------------------------
    SERVICES
 --------------------------------------------------------- */
-.services {
-  border-top: 1px solid var(--line);
-  padding-block: 72px;
-}
-.services-head {
-  max-width: 60ch;
-  margin-bottom: 48px;
-}
-.services-head h2 {
-  font-size: clamp(1.8rem, 3.4vw, 2.4rem);
-  font-weight: 500;
-  margin-top: 10px;
-}
-.services-head p {
-  margin-top: 16px;
-  color: var(--ink-soft);
-  max-width: var(--measure);
-}
 
-.service-grid {
-  display: grid;
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-}
 
-@media (min-width: 780px) {
-  .service-grid { grid-template-columns: 1fr 1fr; }
-}
 
-.service-panel {
-  background: var(--paper);
-  padding: 40px 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
 
 .bearing {
   font-family: var(--font-mono);
@@ -665,36 +686,8 @@ header {
   color: var(--graphite);
 }
 
-.service-panel h3 {
-  font-size: 1.5rem;
-  font-weight: 500;
-}
 
-.service-panel p {
-  color: var(--ink-soft);
-}
 
-.service-list {
-  margin-top: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.service-list li {
-  display: flex;
-  gap: 10px;
-  font-size: 0.95rem;
-  color: var(--ink);
-}
-.service-list li::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  margin-top: 8px;
-  flex-shrink: 0;
-  background: var(--ink);
-  transform: rotate(45deg);
-}
 
 /* ---------------------------------------------------------
    CTA BAND
@@ -734,13 +727,6 @@ footer {
   padding-block: 40px;
   border-top: 1px solid var(--line);
 }
-.foot-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-  align-items: center;
-  justify-content: space-between;
-}
 .foot-mark {
   display: inline-flex;
   align-items: center;
@@ -757,5 +743,3 @@ footer {
   gap: 20px;
   flex-wrap: wrap;
 }
-.foot-meta a { text-decoration: none; }
-.foot-meta a:hover { color: var(--ink); }

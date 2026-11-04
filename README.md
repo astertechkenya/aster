@@ -11,10 +11,12 @@ A static site: plain HTML and CSS, no build step and no JavaScript yet. Netlify 
 aster/
 ├── netlify.toml          Netlify settings: publish public/, no build
 ├── README.md             this file (not published)
+├── tools/placer.html     drag the hero's cards into place, then copy the CSS (not published)
 └── public/               everything the website serves
     ├── index.html        the home page
     ├── 404.html          shown for any address that doesn't exist
-    ├── css/styles.css    all styles: fonts, design tokens, then each section in page order
+    ├── css/styles.css    fonts, design tokens, header, hero and its card stack
+    ├── css/sections.css  everything below the hero: services, work, process, about, FAQ, contact, footer
     ├── fonts/            self-hosted Playfair Display, Inter, Roboto Condensed, IBM Plex Mono
     ├── images/work/      portfolio screenshots (640 / 960 / 1400 px wide)
     ├── favicon.svg       the star mark, dark or light to match the browser tab
@@ -37,6 +39,19 @@ python -m http.server 8000 --directory public
 
 then open http://localhost:8000/404.html.
 
+## Arranging the hero's cards
+
+`tools/placer.html` opens the real home page with the cards made movable: drag to move, drag
+the blue ↻ dot to tilt, scroll to resize, shift-click to bring forward. Pick a width at the top
+(the phone layout has its own positions), then **Copy CSS**. From this folder:
+
+```
+python -m http.server 8000
+```
+
+then open http://localhost:8000/tools/placer.html (it can't work by double-clicking: a browser
+won't let a page reach into a frame opened from the disk).
+
 ## Conventions
 
 - Mobile-first, semantic HTML, accessible by default (contrast, focus rings, reduced motion).
@@ -46,4 +61,5 @@ then open http://localhost:8000/404.html.
 ## To do
 
 - Register the domain, then add `<link rel="canonical">`, Open Graph tags (link previews) and a sitemap.
-- Confirm `hello@astertechsolutions.com` receives mail before the site goes live.
+- Fill in the placeholders on the page: [KSh PRICE] (twice, in Services) and [X–Y] weeks (FAQ), and add your photo in About.
+- Once there is a domain, consider a matching email address instead of the Gmail one.

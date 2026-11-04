@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Card placer · Aster</title>
+  <!--
+    A tool for arranging the hero's cards by hand, on the REAL page.
+
+    It loads ../public/index.html in a frame and lets you, on each card:
+      drag            move it
+      drag the ↻ dot  tilt it
+      scroll          make it bigger or smaller
+      shift-click     bring it to the front
+    then "Copy CSS" gives the exact positions to paste back into styles.css.
+
+    It has to run through a local server (a browser won't let a page reach into a frame
+    opened straight from the disk). From C:\dev\aster:
+        python -m http.server 8000
+    then open http://localhost:8000/tools/placer.html
+
+    This folder is outside public/, so Netlify never publishes it.
+  -->
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 14px/1.4 system-ui, sans-serif; background: #2b2a27; color: #f3f1ea; }
+    header { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center;
+             padding: 10px 16px; background: #14130f; border-bottom: 1px solid #3d3b34; }
+    header strong { font-weight: 600; margin-right: 8px; }
+    button { font: inherit; padding: 6px 12px; border-radius: 4px; border: 1px solid #5a5850; background: #1f1e1a; color: inherit; cursor: pointer; }
+    button[aria-pressed="true"] { background: #f3f1ea; color: #14130f; border-color: #f3f1ea; }
+    button:focus-visible { outline: 2px solid #8ab4ff; outline-offset: 2px; }
+    .hint { color: #b9b6aa; }
+    main { display: grid; grid-template-columns: 1fr minmax(260px, 340px); gap: 16px; padding: 16px; align-items: start; }
+    .stage { overflow: auto; background: #1b1a17; border-radius: 6px; padding: 12px; }
+    iframe { display: block; margin: 0 auto; border: 0; background: #fff; height: 900px; }
+    aside { position: sticky; top: 64px; display: grid; gap: 10px; }
+    textarea { width: 100%; height: 360px; font: 12px/1.5 ui-monospace, Consolas, monospace; background: #14130f; color: #f3f1ea;
+               border: 1px solid #3d3b34; border-radius: 4px; padding: 10px; resize: vertical; }
+    .status { min-height: 1.4em; color: #9fe0b0; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>Card placer</strong>
+    <span>Width:</span>
+    <button type="button" data-w="1440" aria-pressed="true">1440 desktop</button>
+    <button type="button" data-w="1100" aria-pressed="false">1100 laptop</button>
+    <button type="button" data-w="900" aria-pressed="false">900 tablet</button>
+    <button type="button" data-w="390" aria-pressed="false">390 phone</button>
+    <button type="button" id="reload">Reset</button>
+    <span class="hint">Drag to move · drag ↻ to tilt · scroll to resize · shift-click to bring forward</span>
+  </header>
+
+  <main>
+    <div class="stage"><iframe id="page" src="../public/index.html" width="1440" title="The Aster home page, with cards you can move"></iframe></div>
+    <aside>
+      <button type="button" id="copy">Copy CSS</button>
+      <p class="status" id="status" role="status"></p>
+      <label for="out">CSS for this width (paste it back to Claude, or into styles.css)</label>
+      <textarea id="out" readonly></textarea>
+    </aside>
+  </main>
+
+  <script>
+    // The cards the hero has, by the class that positions each one in styles.css
+    const CARDS = ['template-analytics', 'template-nura', 'template-se', 'template-nura-m', 'template-se-m'];
+    const frame = document.getElementById('page');
+    const out = document.getElementById('out');
+    const status = document.getElementById('status');
+    const round = (n, d = 1) => Math.round(n * 10 ** d) / 10 ** d;
+
+    // Width buttons: the frame IS the browser window the page sees, so its media queries and
+    // container sizes behave exactly as they would at that width.
+    document.querySelectorAll('[data-w]').forEach((b) => b.addEventListener('click', () => {
+      document.querySelectorAll('[data-w]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      frame.width = b.dataset.w;
+      frame.contentWindow.location.reload();     // re-run the layout at the new width
+    }));
+    document.getElementById('reload').addEventListener('click', () => frame.contentWindow.location.reload());
+
+    frame.addEventListener('load', () => {
+      const doc = frame.contentDocument;
+      if (!doc) { status.textContent = 'Open this through a local server (see the top of this file).'; return; }
+      const stack = doc.querySelector('.hero-templates');
+      const win = frame.contentWindow;
+
+      // Stop the deal-in animation (it would fight the dragging), and show which card is which.
+      const style = doc.createElement('style');
+      style.textContent = `
+        .hero-templates *, .hero-templates { animation: none !important; transition: none !important; }
+        .hero h1, .hero-brand, .ink-underline path { animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important; }
+        .placer-card { cursor: grab; outline: 1px dashed rgba(60,120,255,.6); outline-offset: 2px; touch-action: none; }
+        .placer-card.is-active { cursor: grabbing; outline: 2px solid #3c78ff; }
+        .placer-rot { position: absolute; top: -12px; right: -12px; z-index: 99; width: 20px; height: 20px; border-radius: 50%;
+                      background: #3c78ff; color: #fff; font: 13px/20px system-ui; text-align: center; cursor: alias; }`;
+      doc.head.appendChild(style);
+
+      const cards = CARDS.map((cls) => ({ cls, el: doc.querySelector('.' + cls) })).filter((c) => c.el);
+
+      // Start each card from where the stylesheet put it, written as left/top in px, so
+      // cards placed from the right edge move like the others.
+      cards.forEach(({ el }) => {
+        const cs = win.getComputedStyle(el);
+        el.style.left = el.offsetLeft + 'px';
+        el.style.top = el.offsetTop + 'px';
+        el.style.right = 'auto';
+        el.style.width = cs.width;
+        el.style.zIndex = cs.zIndex;
+        el.style.setProperty('--rot', cs.getPropertyValue('--rot').trim() || '0deg');
+        el.classList.add('placer-card');
+        const rot = doc.createElement('span');
+        rot.className = 'placer-rot'; rot.textContent = '↻';
+        el.appendChild(rot);
+
+        let mode = null, sx, sy, sl, st, cx, cy;
+        el.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          el.setPointerCapture(e.pointerId);
+          el.classList.add('is-active');
+          if (e.shiftKey) {                          // to the front
+            el.style.zIndex = Math.max(...cards.map((c) => +c.el.style.zIndex || 0)) + 1;
+          }
+          if (e.target === rot) {
+            mode = 'rotate';
+            const r = el.getBoundingClientRect();
+            cx = r.left + r.width / 2; cy = r.top + r.height / 2;
+          } else {
+            mode = 'move'; sx = e.clientX; sy = e.clientY; sl = el.offsetLeft; st = el.offsetTop;
+          }
+        });
+        el.addEventListener('pointermove', (e) => {
+          if (mode === 'move') {
+            el.style.left = sl + e.clientX - sx + 'px';
+            el.style.top = st + e.clientY - sy + 'px';
+          } else if (mode === 'rotate') {
+            // The ↻ dot sits at the top-right corner, ~-45° from the centre: measure from there.
+            const a = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI + 45;
+            el.style.setProperty('--rot', round(e.altKey ? a : Math.round(a)) + 'deg');   // whole degrees unless Alt
+          }
+        });
+        const end = () => { mode = null; el.classList.remove('is-active'); write(); };
+        el.addEventListener('pointerup', end);
+        el.addEventListener('pointercancel', end);
+        el.addEventListener('wheel', (e) => {     // resize: 1% of the stack's width per notch
+          e.preventDefault();
+          const w = parseFloat(el.style.width);
+          el.style.width = Math.max(40, w + (e.deltaY < 0 ? 1 : -1) * stack.clientWidth / 100) + 'px';
+          write();
+        }, { passive: false });
+      });
+
+      // The CSS, as styles.css writes it: positions in % of the stack, widths in cqw (1% of
+      // the stack's width), so the arrangement scales with the column like the original.
+      function write() {
+        const W = stack.clientWidth, H = stack.clientHeight;
+        const narrow = frame.width < 860;
+        const lines = cards.map(({ cls, el }) => {
+          const p = [
+            `left: ${round(el.offsetLeft / W * 100)}%`,
+            `right: auto`,
+            `top: ${round(el.offsetTop / H * 100)}%`,
+            `z-index: ${el.style.zIndex}`,
+            `--rot: ${el.style.getPropertyValue('--rot').trim()}`,
+            `width: ${round(parseFloat(el.style.width) / W * 100)}cqw`,
+          ];
+          return `${narrow ? '  ' : ''}.${cls} { ${p.join('; ')}; }`;
+        });
+        const head = `/* Card placer, ${frame.width}px wide: stack ${W} × ${H}px */`;
+        out.value = narrow
+          ? `${head}\n@media (max-width: 859px) {\n${lines.join('\n')}\n}`
+          : `${head}\n${lines.join('\n')}`;
+      }
+      write();
+      status.textContent = '';
+    });
+
+    document.getElementById('copy').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(out.value); status.textContent = 'Copied.'; }
+      catch { out.select(); status.textContent = 'Press Ctrl+C to copy the selected text.'; }
+    });
+  </script>
+</body>
+</html>

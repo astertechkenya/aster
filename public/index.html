@@ -17,6 +17,7 @@
   <link rel="preload" href="fonts/playfair-display-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/sections.css" />
 </head>
 <body>
 <!-- Reusable marks, referenced with <use> everywhere they appear. -->
@@ -62,6 +63,8 @@
     </a>
     <nav class="nav-links">
       <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
       <a href="#contact">Contact</a>
     </nav>
     <a class="btn btn-primary" href="#contact">Start a project</a>
@@ -78,60 +81,118 @@
         </div>
       </div>
       <div class="hero-copy">
-        <!-- Decorative stack of service "template" cards -- a quick, monochrome
-             sketch of what each discipline looks like in practice (a site, a
-             traffic chart, a social post), not literal product screenshots.
-             aria-hidden because it's purely illustrative: the real service
-             names and descriptions already exist as text in #services below,
-             so a screen reader loses nothing by skipping this teaser. -->
+        <!-- The two sites Aster built, each on a laptop with its phone version in front, and the
+             SEO card behind. Every "screen" is that site's hero rebuilt in miniature (its own
+             photo, fonts and words) so it stays sharp while tilted: see HERO WORK STACK in
+             styles.css. aria-hidden: decoration; the work is described in words elsewhere. -->
         <div class="hero-templates" aria-hidden="true">
-          <article class="template-card template-website">
-            <div class="tc-browser-dots"><span></span><span></span><span></span></div>
-            <!-- Safari Ember's homepage, cropped from a screenshot (browser bar removed).
-                 Even the smallest file is ~3x the card's width: the card is tilted, and
-                 a rotated image is resampled, so it needs pixels to spare to stay crisp.
-                 alt="" because this whole stack is aria-hidden decoration. -->
-            <img class="tc-shot"
-                 src="images/work/safari-ember-640.webp"
-                 srcset="images/work/safari-ember-640.webp 640w, images/work/safari-ember-960.webp 960w, images/work/safari-ember-1400.webp 1400w"
-                 sizes="220px"
-                 width="480" height="300" alt="" decoding="async">
-            <p class="tc-card-label">Websites</p>
-          </article>
-
+          <!-- Real scores: Google PageSpeed Insights, Safari Ember on mobile, 2 Nov 2026
+               (pagespeed.web.dev/analysis/https-safariember-netlify-app/2c8roiyi5k). Re-run and
+               update these four numbers if the site changes. -->
           <article class="template-card template-analytics">
-            <p class="tc-card-eyebrow">Organic traffic</p>
-            <p class="tc-card-stat">+128%</p>
-            <svg class="tc-chart" viewBox="0 0 120 44" preserveAspectRatio="none">
-              <polyline points="0,38 18,32 36,34 54,20 72,22 90,10 120,4" />
-            </svg>
-            <p class="tc-card-label">SEO &amp; Analytics</p>
+            <p class="tc-card-eyebrow">PageSpeed &middot; mobile</p>
+            <div class="gauges">
+              <div class="gauge" style="--score:100">
+                <svg viewBox="0 0 36 36"><circle class="gauge__track" cx="18" cy="18" r="15.9155" pathLength="100" /><circle class="gauge__arc" cx="18" cy="18" r="15.9155" pathLength="100" /><text x="18" y="18" dy=".35em">100</text></svg>
+                <span>SEO</span>
+              </div>
+              <div class="gauge" style="--score:99">
+                <svg viewBox="0 0 36 36"><circle class="gauge__track" cx="18" cy="18" r="15.9155" pathLength="100" /><circle class="gauge__arc" cx="18" cy="18" r="15.9155" pathLength="100" /><text x="18" y="18" dy=".35em">99</text></svg>
+                <span>Performance</span>
+              </div>
+              <div class="gauge" style="--score:100">
+                <svg viewBox="0 0 36 36"><circle class="gauge__track" cx="18" cy="18" r="15.9155" pathLength="100" /><circle class="gauge__arc" cx="18" cy="18" r="15.9155" pathLength="100" /><text x="18" y="18" dy=".35em">100</text></svg>
+                <span>Accessibility</span>
+              </div>
+              <div class="gauge" style="--score:100">
+                <svg viewBox="0 0 36 36"><circle class="gauge__track" cx="18" cy="18" r="15.9155" pathLength="100" /><circle class="gauge__arc" cx="18" cy="18" r="15.9155" pathLength="100" /><text x="18" y="18" dy=".35em">100</text></svg>
+                <span>Best practices</span>
+              </div>
+            </div>
+            <!-- A rising line, but a true one: Safari Ember's mobile performance score through
+                 the optimisation work. 65 and 90 are Lighthouse runs before and after it (Oct 2026);
+                 99 is the live PageSpeed run above. The chart's floor is a score of 50, not 0, so the climb reads clearly. -->
+            <div class="climb">
+              <svg viewBox="0 0 120 20">
+                <path class="climb__area" d="M3,12.3 L60,4.8 L117,2.1 L117,20 L3,20 Z" />
+                <path class="climb__line" d="M3,12.3 L60,4.8 L117,2.1" pathLength="100" />
+                <circle cx="3" cy="12.3" r="1.8" /><circle cx="60" cy="4.8" r="1.8" /><circle cx="117" cy="2.1" r="2.2" />
+              </svg>
+              <div class="climb__marks"><span><b>65</b> before</span><span><b>90</b> after</span><span><b>99</b> live</span></div>
+            </div>
+            <p class="tc-card-label">SEO &amp; speed</p>
           </article>
 
-          <article class="template-card template-social">
-            <div class="tc-social-head">
-              <span class="tc-avatar"></span>
-              <span class="tc-line tc-line--sm"></span>
+          <article class="template-card template-nura">
+            <div class="tc-browser-dots"><span></span><span></span><span></span></div>
+            <div class="mini mini--desktop nu">
+                <div class="nu__head"><span class="nu__logo">NUR<span>A</span></span><span class="nu__nav"><span>Home</span><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></span><span class="nu__cart"></span></div>
+                <div class="nu__tick"><span>Free shipping over KSh 5,000</span><span>New drops every Friday</span><span>Pay with M-Pesa</span></div>
+                <div class="nu__hero">
+                  <img class="mini__photo" src="images/work/nura-hero-640.webp"
+                       srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w"
+                       sizes="250px" width="640" height="357" alt="" decoding="async">
+                  <div class="nu__text">
+                    <p class="nu__season">SS26 Collection</p>
+                    <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
+                    <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
+                    <span class="nu__cta">Shop now &rarr;</span>
+                  </div>
+                </div>
             </div>
-            <span class="tc-social-media"></span>
-            <div class="tc-social-actions">
-              <span></span><span></span><span></span>
-            </div>
-            <p class="tc-card-label">Social Presence</p>
+            <p class="tc-card-label">NURA</p>
           </article>
 
-          <article class="template-card template-automation">
-            <div class="tc-flow">
-              <span class="tc-flow-node"></span>
-              <span class="tc-flow-connector"></span>
-              <span class="tc-flow-node tc-flow-node--active"></span>
-              <span class="tc-flow-connector"></span>
-              <span class="tc-flow-node"></span>
+          <article class="template-card template-se">
+            <div class="tc-browser-dots"><span></span><span></span><span></span></div>
+            <div class="mini mini--desktop se">
+                <img class="mini__photo" src="images/work/safari-ember-hero-640.webp"
+                     srcset="images/work/safari-ember-hero-640.webp 640w, images/work/safari-ember-hero-960.webp 960w, images/work/safari-ember-hero-1400.webp 1400w"
+                     sizes="260px" width="640" height="400" alt="" decoding="async">
+                <span class="se__burger"><span></span><span></span><span></span></span>
+                <div class="se__ui">
+                  <img class="se__logo" src="images/work/safari-ember-logo-160.webp" width="160" height="146" alt="">
+                  <p class="se__title">A <em>private</em> world unto itself</p>
+                  <p class="se__desc">Welcome to Kenya&rsquo;s premier luxury safari retreat, where refined comfort meets the untamed beauty of the African wildlands.</p>
+                  <p class="se__ctas"><span>Reserve Stay</span><span>Explore Resort</span></p>
+                </div>
             </div>
-            <span class="tc-line tc-line--md"></span>
-            <span class="tc-line tc-line--sm"></span>
-            <p class="tc-card-label">AI Automation</p>
+            <p class="tc-card-label">Safari Ember</p>
           </article>
+
+          <div class="template-phone template-nura-m">
+            <div class="mini mini--phone nu">
+                <div class="nu__head"><span class="nu__logo">NUR<span>A</span></span><span class="nu__nav"><span>Home</span><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></span><span class="nu__cart"></span></div>
+                <div class="nu__tick"><span>Free shipping over KSh 5,000</span><span>New drops every Friday</span><span>Pay with M-Pesa</span></div>
+                <div class="nu__hero">
+                  <img class="mini__photo" src="images/work/nura-hero-640.webp"
+                       srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w"
+                       sizes="200px" width="640" height="357" alt="" decoding="async">
+                  <div class="nu__text">
+                    <p class="nu__season">SS26 Collection</p>
+                    <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
+                    <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
+                    <span class="nu__cta">Shop now &rarr;</span>
+                  </div>
+                </div>
+                <div class="nu__tabs"><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></div>
+            </div>
+          </div>
+
+          <div class="template-phone template-se-m">
+            <div class="mini mini--phone se">
+                <img class="mini__photo" src="images/work/safari-ember-hero-640.webp"
+                     srcset="images/work/safari-ember-hero-640.webp 640w, images/work/safari-ember-hero-960.webp 960w, images/work/safari-ember-hero-1400.webp 1400w"
+                     sizes="200px" width="640" height="400" alt="" decoding="async">
+                <span class="se__burger"><span></span><span></span><span></span></span>
+                <div class="se__ui">
+                  <img class="se__logo" src="images/work/safari-ember-logo-160.webp" width="160" height="146" alt="">
+                  <p class="se__title">A <em>private</em> world unto itself</p>
+                  <p class="se__desc">Welcome to Kenya&rsquo;s premier luxury safari retreat, where refined comfort meets the untamed beauty of the African wildlands.</p>
+                  <p class="se__ctas"><span>Reserve Stay</span><span>Explore Resort</span></p>
+                </div>
+            </div>
+          </div>
         </div>
 
         <h1>Make your business<br><span class="ink-highlight"><em>impossible</em><svg class="ink-underline" viewBox="0 0 220 20" aria-hidden="true"><path d="M6,14 C 40,4 80,20 120,10 C 150,3 180,16 214,8" /></svg></span> to ignore.</h1>
@@ -139,68 +200,210 @@
     </div>
   </section>
 
-  <section class="services wrap" id="services">
-    <div class="services-head">
-      <p class="eyebrow">Two disciplines, one direction</p>
-      <h2>Everything we do sits on one of two bearings.</h2>
-      <p>
-        North is what we build. East is how it grows. Most studios hand you
-        a website and wish you luck — we stay on both bearings, so the site
-        and the strategy behind it are never working against each other.
-      </p>
+  <!-- ===== SERVICES: the two things Aster sells ===== -->
+  <section class="services wrap" id="services" aria-labelledby="services-h">
+    <div class="section-head">
+      <p class="eyebrow">What we do · two bearings</p>
+      <h2 id="services-h">A website that works, and the search work that gets it <em>found</em>.</h2>
     </div>
-
-    <div class="service-grid">
-      <article class="service-panel">
-        <p class="bearing">N — BUILD</p>
-        <h3>Web Design &amp; Development</h3>
-        <p>Custom-built sites made for the business behind them — not a
-          template with your logo dropped in.</p>
-        <ul class="service-list">
-          <li>Hand-built, semantic front ends — no bloated page builders</li>
-          <li>Mobile-first, responsive layouts by default</li>
-          <li>Performance and accessibility considered from the first mockup</li>
-          <li>Ongoing support and maintenance after launch</li>
+    <div class="offer-grid">
+      <article class="offer">
+        <p class="bearing">N — Build</p>
+        <h3>Websites</h3>
+        <p class="offer__lede">Hand-built sites for Kenyan businesses: fast on a phone, easy to use, and able to take bookings and payments.</p>
+        <ul class="ticks">
+          <li>Designed for your business, not a template</li>
+          <li>Mobile-first and accessible, fast on any phone</li>
+          <li>M-Pesa and card payments, bookings, online shops</li>
+          <li>An admin area to update prices, stock and content yourself</li>
         </ul>
+        <p class="offer__price">From <strong>[KSh PRICE]</strong> · one-off</p>
       </article>
-
-      <article class="service-panel">
-        <p class="bearing">E — GROW</p>
-        <h3>Digital Marketing &amp; SEO</h3>
-        <p>Traffic and visibility work built into the site itself, then
-          extended through the channels your customers actually use.</p>
-        <ul class="service-list">
-          <li>On-page and technical SEO, built in from day one</li>
-          <li>Content and messaging strategy</li>
-          <li>Analytics and reporting you can actually read</li>
-          <li>Campaigns tied to outcomes, not vanity metrics</li>
+      <article class="offer">
+        <p class="bearing">E — Grow</p>
+        <h3>Google SEO</h3>
+        <p class="offer__lede">So the people already searching for what you sell find you, not the business down the road.</p>
+        <ul class="ticks">
+          <li>Google Business Profile set up and kept current</li>
+          <li>Technical SEO: speed, structure, search-ready pages</li>
+          <li>Pages written around what your customers actually search</li>
+          <li>A monthly report in plain language: what moved, what&rsquo;s next</li>
         </ul>
+        <p class="offer__price">From <strong>[KSh PRICE]</strong> · per month</p>
       </article>
     </div>
   </section>
 
-  <section class="cta-band" id="contact">
+  <!-- ===== WORK: real projects, real numbers ===== -->
+  <section class="work" id="work" aria-labelledby="work-h">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Selected work</p>
+        <h2 id="work-h">Built, tested and <em>live</em>.</h2>
+      </div>
+
+      <article class="case">
+        <div class="case__media" aria-hidden="true">
+          <div class="case__laptop"><div class="mini mini--desktop se">
+                <img class="mini__photo" src="images/work/safari-ember-hero-640.webp"
+                     srcset="images/work/safari-ember-hero-640.webp 640w, images/work/safari-ember-hero-960.webp 960w, images/work/safari-ember-hero-1400.webp 1400w"
+                     sizes="260px" width="640" height="400" alt="" decoding="async">
+                <span class="se__burger"><span></span><span></span><span></span></span>
+                <div class="se__ui">
+                  <img class="se__logo" src="images/work/safari-ember-logo-160.webp" width="160" height="146" alt="">
+                  <p class="se__title">A <em>private</em> world unto itself</p>
+                  <p class="se__desc">Welcome to Kenya&rsquo;s premier luxury safari retreat, where refined comfort meets the untamed beauty of the African wildlands.</p>
+                  <p class="se__ctas"><span>Reserve Stay</span><span>Explore Resort</span></p>
+                </div>
+            </div></div>
+          <div class="case__phone"><div class="mini mini--phone se">
+                <img class="mini__photo" src="images/work/safari-ember-hero-640.webp"
+                     srcset="images/work/safari-ember-hero-640.webp 640w, images/work/safari-ember-hero-960.webp 960w, images/work/safari-ember-hero-1400.webp 1400w"
+                     sizes="200px" width="640" height="400" alt="" decoding="async">
+                <span class="se__burger"><span></span><span></span><span></span></span>
+                <div class="se__ui">
+                  <img class="se__logo" src="images/work/safari-ember-logo-160.webp" width="160" height="146" alt="">
+                  <p class="se__title">A <em>private</em> world unto itself</p>
+                  <p class="se__desc">Welcome to Kenya&rsquo;s premier luxury safari retreat, where refined comfort meets the untamed beauty of the African wildlands.</p>
+                  <p class="se__ctas"><span>Reserve Stay</span><span>Explore Resort</span></p>
+                </div>
+            </div></div>
+        </div>
+        <div class="case__body">
+          <p class="case__kind">Portfolio project · Hospitality</p>
+          <h3>Safari Ember</h3>
+          <p>A luxury safari lodge site where guests check availability, choose rooms and experiences, and pay a deposit by M-Pesa or card. The lodge runs it from its own admin.</p>
+          <dl class="case__facts">
+            <div><dt>PageSpeed, mobile</dt><dd>99</dd></div>
+            <div><dt>SEO score</dt><dd>100</dd></div>
+            <div><dt>Pay by</dt><dd>M-Pesa, card</dd></div>
+          </dl>
+          <a class="case__link" href="https://safariember.netlify.app">Visit the site <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <article class="case case--flip">
+        <div class="case__media" aria-hidden="true">
+          <div class="case__laptop"><div class="mini mini--desktop nu">
+                <div class="nu__head"><span class="nu__logo">NUR<span>A</span></span><span class="nu__nav"><span>Home</span><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></span><span class="nu__cart"></span></div>
+                <div class="nu__tick"><span>Free shipping over KSh 5,000</span><span>New drops every Friday</span><span>Pay with M-Pesa</span></div>
+                <div class="nu__hero">
+                  <img class="mini__photo" src="images/work/nura-hero-640.webp"
+                       srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w"
+                       sizes="250px" width="640" height="357" alt="" decoding="async">
+                  <div class="nu__text">
+                    <p class="nu__season">SS26 Collection</p>
+                    <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
+                    <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
+                    <span class="nu__cta">Shop now &rarr;</span>
+                  </div>
+                </div>
+            </div></div>
+          <div class="case__phone"><div class="mini mini--phone nu">
+                <div class="nu__head"><span class="nu__logo">NUR<span>A</span></span><span class="nu__nav"><span>Home</span><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></span><span class="nu__cart"></span></div>
+                <div class="nu__tick"><span>Free shipping over KSh 5,000</span><span>New drops every Friday</span><span>Pay with M-Pesa</span></div>
+                <div class="nu__hero">
+                  <img class="mini__photo" src="images/work/nura-hero-640.webp"
+                       srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w"
+                       sizes="200px" width="640" height="357" alt="" decoding="async">
+                  <div class="nu__text">
+                    <p class="nu__season">SS26 Collection</p>
+                    <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
+                    <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
+                    <span class="nu__cta">Shop now &rarr;</span>
+                  </div>
+                </div>
+                <div class="nu__tabs"><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></div>
+            </div></div>
+        </div>
+        <div class="case__body">
+          <p class="case__kind">Portfolio project · E-commerce</p>
+          <h3>NURA</h3>
+          <p>A fashion store with a full checkout: cart, accounts, wishlists, M-Pesa, cards and cash on delivery in Nairobi, plus an admin for orders, stock and sales.</p>
+          <dl class="case__facts">
+            <div><dt>Ways to pay</dt><dd>3</dd></div>
+            <div><dt>Automated tests</dt><dd>473</dd></div>
+            <div><dt>Built for</dt><dd>Phones first</dd></div>
+          </dl>
+          <a class="case__link" href="https://nurafashion.netlify.app">Visit the site <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS ===== -->
+  <section class="process wrap" id="process" aria-labelledby="process-h">
+    <div class="section-head">
+      <p class="eyebrow">How it works</p>
+      <h2 id="process-h">Four steps, no surprises.</h2>
+    </div>
+    <ol class="steps">
+      <li><span class="steps__n" aria-hidden="true">01</span><h3>Talk</h3><p>A short call about your business, your customers and what the site must do. You get a fixed quote.</p></li>
+      <li><span class="steps__n" aria-hidden="true">02</span><h3>Design</h3><p>You see the design before any code is written, and change it until it&rsquo;s right.</p></li>
+      <li><span class="steps__n" aria-hidden="true">03</span><h3>Build</h3><p>Built and tested on real phones. You follow along on a private preview link.</p></li>
+      <li><span class="steps__n" aria-hidden="true">04</span><h3>Launch &amp; grow</h3><p>Live on your domain, set up on Google, and kept fast and secure after launch.</p></li>
+    </ol>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="about" aria-labelledby="about-h">
+    <div class="wrap about__grid">
+      <div class="about__photo" role="img" aria-label="Photo of Ethan (placeholder)"><span>[Your photo]</span></div>
+      <div class="about__text">
+        <p class="eyebrow">Who you&rsquo;ll work with</p>
+        <h2 id="about-h">Ethan, founder of Aster.</h2>
+        <p>I&rsquo;m a web designer and developer in Nairobi. I design and build every site myself, so the person you talk to is the person who writes the code, and the one you call if something needs fixing.</p>
+        <p>I care about the parts most people never see: how fast a page opens on a cheap phone, whether a payment can get lost, whether someone using a screen reader can book. Those parts decide whether a site makes money.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq wrap" aria-labelledby="faq-h">
+    <div class="section-head">
+      <p class="eyebrow">Questions</p>
+      <h2 id="faq-h">Before you ask.</h2>
+    </div>
+    <div class="faq__list">
+      <details open><summary>How long does a website take?</summary><p>[X&ndash;Y] weeks for most business sites. A shop or booking system takes longer; you get a date in the quote.</p></details>
+      <details><summary>Can my customers pay by M-Pesa?</summary><p>Yes: a prompt straight to their phone, with card payments too if you want them.</p></details>
+      <details><summary>Who owns the website?</summary><p>You do: the domain, the content and the code.</p></details>
+      <details><summary>How soon will SEO work?</summary><p>Honestly, usually a few months. A Google Business Profile can show results sooner, and you get a report every month so you can see what changed.</p></details>
+      <details><summary>What happens after launch?</summary><p>An optional monthly care plan covers hosting, updates, fixes and small changes.</p></details>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="cta-band" id="contact" aria-labelledby="contact-h">
     <div class="wrap">
       <div>
-        <h2>Have a project in mind?</h2>
-        <p>Tell us what you're building — or what's not working on the site
-          you have now. We'll reply with a straight answer about scope and
-          timeline, no sales script.</p>
+        <h2 id="contact-h">Have a project in mind?</h2>
+        <p>Tell me what you&rsquo;re building, or what&rsquo;s not working on the site you have now. You&rsquo;ll get a straight answer about cost and time, no sales script.</p>
       </div>
-      <a class="btn btn-primary" href="mailto:hello@astertechsolutions.com">Get in touch</a>
+      <div class="cta-band__actions">
+        <a class="btn btn-primary" href="https://wa.me/254705439631">WhatsApp me</a>
+        <a class="btn btn-outline-light" href="mailto:astertechkenya@gmail.com">Email</a>
+      </div>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap foot-row">
-    <span class="foot-mark">
-      <svg class="star-svg" viewBox="0 0 100 100" aria-hidden="true"><use href="#aster-star" /></svg>
-      Aster Tech Solutions
-    </span>
+  <div class="wrap foot-grid">
+    <div>
+      <span class="foot-mark">
+        <svg class="star-svg" viewBox="0 0 100 100" aria-hidden="true"><use href="#aster-star" /></svg>
+        Aster Tech Solutions
+      </span>
+      <p class="foot-tag">Websites &amp; Google SEO · Nairobi, Kenya</p>
+    </div>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="#services">Services</a><a href="#work">Work</a><a href="#process">Process</a><a href="#contact">Contact</a>
+    </nav>
     <div class="foot-meta">
-      <span>© 2026</span>
-      <a href="mailto:hello@astertechsolutions.com">hello@astertechsolutions.com</a>
+      <a href="mailto:astertechkenya@gmail.com">astertechkenya@gmail.com</a>
+      <a href="https://wa.me/254705439631">+254 705 439 631</a>
+      <span>&copy; 2026</span>
     </div>
   </div>
 </footer>

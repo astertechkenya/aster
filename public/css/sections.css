@@ -1,0 +1,97 @@
+/* Aster: the sections below the hero (mockup, Nov 2026).
+   Same tokens as styles.css: warm paper, ink, Playfair headings, Inter text, Plex Mono labels.
+   Mobile first: every section is one column until there's room for more. */
+
+/* Every section's opening: a mono label, then a serif heading with one italic word */
+.section-head { max-width: 46rem; margin-bottom: 40px; }
+.section-head h2 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); font-weight: 500; line-height: 1.15; margin-top: 10px; }
+.section-head h2 em { font-style: italic; }
+
+/* ---------- Services: two offers, the compass bearings carried over ---------- */
+.services { border-top: 1px solid var(--line); padding-block: 72px; }
+.offer-grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+@media (min-width: 780px) { .offer-grid { grid-template-columns: 1fr 1fr; } }
+.offer { background: var(--paper); padding: 36px 28px; display: flex; flex-direction: column; gap: 16px; }
+@media (min-width: 780px) { .offer { padding: 44px 40px; } }
+.offer h3 { font-size: clamp(1.7rem, 2.6vw, 2.1rem); font-weight: 500; }
+.offer__lede { color: var(--ink-soft); max-width: 42ch; }
+.ticks { display: grid; gap: 10px; margin-top: 4px; }
+.ticks li { position: relative; padding-left: 20px; font-size: 0.95rem; }
+.ticks li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 7px; height: 7px; background: var(--ink); transform: rotate(45deg); }
+.offer__price { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--ink-soft); }
+.offer__price strong { font-family: var(--font-display); font-size: 1.35rem; font-weight: 500; color: var(--ink); }
+
+/* ---------- Work: each case = the site on laptop + phone, then the facts ---------- */
+.work { background: var(--paper-raised); border-block: 1px solid var(--line); padding-block: 80px; }
+.case { display: grid; gap: 32px; align-items: center; padding-block: 32px; }
+.case + .case { border-top: 1px solid var(--line); }
+@media (min-width: 900px) {
+  .case { grid-template-columns: 7fr 5fr; gap: 64px; padding-block: 48px; }
+  .case--flip .case__media { order: 2; }
+}
+.case__media { position: relative; padding: 0 9% 9% 0; }
+.case__laptop { border: 1px solid var(--line-strong); border-radius: 8px; padding: 10px; background: var(--paper); box-shadow: 0 30px 50px -34px rgba(20,19,15,.5); }
+.case__laptop .mini { border-radius: 3px; }
+.case__phone { position: absolute; right: 0; bottom: 0; width: 24%; padding: 4px; border-radius: 16px; background: #121110; box-shadow: 0 24px 40px -18px rgba(20,19,15,.6); }
+.case__phone .mini { border-radius: 12px; }
+.case__kind { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--graphite); }
+.case__body h3 { font-size: clamp(2rem, 3.4vw, 2.6rem); font-weight: 500; margin: 8px 0 14px; }
+.case__body > p { color: var(--ink-soft); max-width: 46ch; }
+.case__facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 26px 0; padding-block: 18px; border-block: 1px solid var(--line); }
+.case__facts dt { font-size: 0.72rem; color: var(--graphite); }
+.case__facts dd { margin: 4px 0 0; font-family: var(--font-display); font-size: 1.35rem; }
+.case__link { font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+.case__link:hover { border-bottom-width: 2px; }
+
+/* ---------- Process: four numbered steps ---------- */
+.process { padding-block: 80px; }
+.steps { display: grid; gap: 28px; counter-reset: none; }
+@media (min-width: 700px) { .steps { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .steps { grid-template-columns: repeat(4, 1fr); gap: 32px; } }
+.steps li { border-top: 1px solid var(--ink); padding-top: 18px; }
+.steps__n { font-family: var(--font-mono); font-size: 0.78rem; color: var(--graphite); }
+.steps h3 { font-size: 1.35rem; font-weight: 500; margin: 10px 0 8px; }
+.steps p { color: var(--ink-soft); font-size: 0.95rem; }
+
+/* ---------- About: the person behind it ---------- */
+.about { border-top: 1px solid var(--line); padding-block: 80px; }
+.about__grid { display: grid; gap: 36px; align-items: center; }
+@media (min-width: 860px) { .about__grid { grid-template-columns: 4fr 7fr; gap: 64px; } }
+.about__photo { aspect-ratio: 4 / 5; max-width: 380px; background: repeating-linear-gradient(135deg, var(--line) 0 2px, transparent 2px 12px); border: 1px solid var(--line-strong); display: grid; place-items: center; }
+.about__photo span { font-family: var(--font-mono); font-size: 0.8rem; color: var(--graphite); background: var(--paper); padding: 4px 8px; }
+.about__text h2 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); font-weight: 500; margin: 10px 0 18px; }
+.about__text p { color: var(--ink-soft); max-width: 58ch; }
+.about__text p + p { margin-top: 14px; }
+
+/* ---------- FAQ: native disclosure, works with keyboard and screen readers as is ---------- */
+.faq { border-top: 1px solid var(--line); padding-block: 80px; }
+.faq__list { border-top: 1px solid var(--line); max-width: 52rem; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; list-style: none; padding: 20px 36px 20px 0; position: relative; font-family: var(--font-display); font-size: 1.2rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 4px; top: 50%; transform: translateY(-50%); font-family: var(--font-body); font-size: 1.4rem; color: var(--graphite); }
+.faq details[open] summary::after { content: "−"; }
+.faq summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.faq details p { padding: 0 0 22px; color: var(--ink-soft); max-width: 60ch; }
+
+/* ---------- Contact: two clear ways in ---------- */
+.cta-band__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn-outline-light { background: transparent; color: var(--paper); border-color: color-mix(in srgb, var(--paper) 45%, transparent); }
+.btn-outline-light:hover { border-color: var(--paper); }
+
+/* ---------- Footer ---------- */
+.foot-grid { display: grid; gap: 24px; }
+@media (min-width: 860px) { .foot-grid { grid-template-columns: 1.4fr 1fr 1fr; align-items: start; } }
+.foot-tag { margin-top: 8px; font-size: 0.85rem; color: var(--ink-soft); }
+.foot-nav { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.foot-nav a { text-decoration: none; font-size: 0.92rem; color: var(--ink-soft); padding-block: 6px; }
+.foot-nav a:hover { color: var(--ink); }
+.foot-grid .foot-meta { flex-direction: column; gap: 8px; }
+
+/* Fixes after the first look */
+.steps { list-style: none; padding: 0; margin: 0; }            /* the numbers are drawn by .steps__n */
+.offer .bearing { text-transform: uppercase; }
+.case__facts dd, .offer__price strong { font-variant-numeric: lining-nums; }   /* Playfair's default numerals sit low */
+.case__facts dd { font-size: clamp(1.1rem, 1.8vw, 1.35rem); }
+.foot-meta a { text-decoration: none; }
+.foot-meta a:hover { color: var(--ink); }
