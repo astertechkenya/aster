@@ -18,6 +18,7 @@
   <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/sections.css" />
+  <script src="js/films.js" defer></script>
 </head>
 <body>
 <!-- Reusable marks, referenced with <use> everywhere they appear. -->
@@ -129,14 +130,32 @@
                 <div class="nu__head"><span class="nu__logo">NUR<span>A</span></span><span class="nu__nav"><span>Home</span><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></span><span class="nu__cart"></span></div>
                 <div class="nu__tick"><span>Free shipping over KSh 5,000</span><span>New drops every Friday</span><span>Pay with M-Pesa</span></div>
                 <div class="nu__hero">
-                  <img class="mini__photo" src="images/work/nura-hero-640.webp"
-                       srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w"
-                       sizes="250px" width="640" height="357" alt="" decoding="async">
-                  <div class="nu__text">
-                    <p class="nu__season">SS26 Collection</p>
-                    <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
-                    <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
-                    <span class="nu__cta">Shop now &rarr;</span>
+                  <div class="nu__slide">
+                    <img class="mini__photo" src="images/work/nura-hero-640.webp" srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w" sizes="250px" width="640" height="357" alt="" decoding="async">
+                    <div class="nu__text">
+                      <p class="nu__season">SS26 Collection</p>
+                      <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
+                      <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
+                      <span class="nu__cta">Shop now &rarr;</span>
+                    </div>
+                  </div>
+                  <div class="nu__slide nu__slide--women">
+                    <img class="mini__photo" src="images/work/nura-hero-women-640.webp" srcset="images/work/nura-hero-women-640.webp 640w, images/work/nura-hero-women-960.webp 960w" sizes="250px" width="640" height="272" alt="" decoding="async" loading="lazy">
+                    <div class="nu__text">
+                      <p class="nu__season">Women &middot; SS26</p>
+                      <p class="nu__title">Tailored<br>for<br><span>her</span></p>
+                      <p class="nu__sub">Sharp blazers, print and polish. Pieces that walk in before you do.</p>
+                      <span class="nu__cta">Shop women &rarr;</span>
+                    </div>
+                  </div>
+                  <div class="nu__slide nu__slide--men">
+                    <img class="mini__photo" src="images/work/nura-hero-men-640.webp" srcset="images/work/nura-hero-men-640.webp 640w, images/work/nura-hero-men-960.webp 960w" sizes="250px" width="640" height="272" alt="" decoding="async" loading="lazy">
+                    <div class="nu__text">
+                      <p class="nu__season">Men &middot; SS26</p>
+                      <p class="nu__title">Built<br>to be<br><span>noticed</span></p>
+                      <p class="nu__sub">Sharp suits, bold colour, the right hat. Tailoring that holds its ground.</p>
+                      <span class="nu__cta">Shop men &rarr;</span>
+                    </div>
                   </div>
                 </div>
             </div>
@@ -146,9 +165,10 @@
           <article class="template-card template-se">
             <div class="tc-browser-dots"><span></span><span></span><span></span></div>
             <div class="mini mini--desktop se">
-                <img class="mini__photo" src="images/work/safari-ember-hero-640.webp"
-                     srcset="images/work/safari-ember-hero-640.webp 640w, images/work/safari-ember-hero-960.webp 960w, images/work/safari-ember-hero-1400.webp 1400w"
-                     sizes="260px" width="640" height="400" alt="" decoding="async">
+                <video class="mini__photo" data-film muted loop playsinline preload="none" poster="images/work/safari-ember-film-poster.webp" aria-hidden="true">
+                  <source src="images/work/safari-ember-film.webm" type="video/webm">
+                  <source src="images/work/safari-ember-film.mp4" type="video/mp4">
+                </video>
                 <span class="se__burger"><span></span><span></span><span></span></span>
                 <div class="se__ui">
                   <img class="se__logo" src="images/work/safari-ember-logo-160.webp" width="160" height="146" alt="">
@@ -165,14 +185,32 @@
                 <div class="nu__head"><span class="nu__logo">NUR<span>A</span></span><span class="nu__nav"><span>Home</span><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></span><span class="nu__cart"></span></div>
                 <div class="nu__tick"><span>Free shipping over KSh 5,000</span><span>New drops every Friday</span><span>Pay with M-Pesa</span></div>
                 <div class="nu__hero">
-                  <img class="mini__photo" src="images/work/nura-hero-640.webp"
-                       srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w"
-                       sizes="200px" width="640" height="357" alt="" decoding="async">
-                  <div class="nu__text">
-                    <p class="nu__season">SS26 Collection</p>
-                    <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
-                    <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
-                    <span class="nu__cta">Shop now &rarr;</span>
+                  <div class="nu__slide">
+                    <img class="mini__photo" src="images/work/nura-hero-640.webp" srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w" sizes="200px" width="640" height="357" alt="" decoding="async">
+                    <div class="nu__text">
+                      <p class="nu__season">SS26 Collection</p>
+                      <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
+                      <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
+                      <span class="nu__cta">Shop now &rarr;</span>
+                    </div>
+                  </div>
+                  <div class="nu__slide nu__slide--women">
+                    <img class="mini__photo" src="images/work/nura-hero-women-640.webp" srcset="images/work/nura-hero-women-640.webp 640w, images/work/nura-hero-women-960.webp 960w" sizes="200px" width="640" height="272" alt="" decoding="async" loading="lazy">
+                    <div class="nu__text">
+                      <p class="nu__season">Women &middot; SS26</p>
+                      <p class="nu__title">Tailored<br>for<br><span>her</span></p>
+                      <p class="nu__sub">Sharp blazers, print and polish. Pieces that walk in before you do.</p>
+                      <span class="nu__cta">Shop women &rarr;</span>
+                    </div>
+                  </div>
+                  <div class="nu__slide nu__slide--men">
+                    <img class="mini__photo" src="images/work/nura-hero-men-640.webp" srcset="images/work/nura-hero-men-640.webp 640w, images/work/nura-hero-men-960.webp 960w" sizes="200px" width="640" height="272" alt="" decoding="async" loading="lazy">
+                    <div class="nu__text">
+                      <p class="nu__season">Men &middot; SS26</p>
+                      <p class="nu__title">Built<br>to be<br><span>noticed</span></p>
+                      <p class="nu__sub">Sharp suits, bold colour, the right hat. Tailoring that holds its ground.</p>
+                      <span class="nu__cta">Shop men &rarr;</span>
+                    </div>
                   </div>
                 </div>
                 <div class="nu__tabs"><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></div>
@@ -181,9 +219,10 @@
 
           <div class="template-phone template-se-m">
             <div class="mini mini--phone se">
-                <img class="mini__photo" src="images/work/safari-ember-hero-640.webp"
-                     srcset="images/work/safari-ember-hero-640.webp 640w, images/work/safari-ember-hero-960.webp 960w, images/work/safari-ember-hero-1400.webp 1400w"
-                     sizes="200px" width="640" height="400" alt="" decoding="async">
+                <video class="mini__photo" data-film muted loop playsinline preload="none" poster="images/work/safari-ember-film-poster.webp" aria-hidden="true">
+                  <source src="images/work/safari-ember-film.webm" type="video/webm">
+                  <source src="images/work/safari-ember-film.mp4" type="video/mp4">
+                </video>
                 <span class="se__burger"><span></span><span></span><span></span></span>
                 <div class="se__ui">
                   <img class="se__logo" src="images/work/safari-ember-logo-160.webp" width="160" height="146" alt="">
@@ -245,9 +284,10 @@
       <article class="case">
         <div class="case__media" aria-hidden="true">
           <div class="case__laptop"><div class="mini mini--desktop se">
-                <img class="mini__photo" src="images/work/safari-ember-hero-640.webp"
-                     srcset="images/work/safari-ember-hero-640.webp 640w, images/work/safari-ember-hero-960.webp 960w, images/work/safari-ember-hero-1400.webp 1400w"
-                     sizes="260px" width="640" height="400" alt="" decoding="async">
+                <video class="mini__photo" data-film muted loop playsinline preload="none" poster="images/work/safari-ember-film-poster.webp" aria-hidden="true">
+                  <source src="images/work/safari-ember-film.webm" type="video/webm">
+                  <source src="images/work/safari-ember-film.mp4" type="video/mp4">
+                </video>
                 <span class="se__burger"><span></span><span></span><span></span></span>
                 <div class="se__ui">
                   <img class="se__logo" src="images/work/safari-ember-logo-160.webp" width="160" height="146" alt="">
@@ -257,9 +297,10 @@
                 </div>
             </div></div>
           <div class="case__phone"><div class="mini mini--phone se">
-                <img class="mini__photo" src="images/work/safari-ember-hero-640.webp"
-                     srcset="images/work/safari-ember-hero-640.webp 640w, images/work/safari-ember-hero-960.webp 960w, images/work/safari-ember-hero-1400.webp 1400w"
-                     sizes="200px" width="640" height="400" alt="" decoding="async">
+                <video class="mini__photo" data-film muted loop playsinline preload="none" poster="images/work/safari-ember-film-poster.webp" aria-hidden="true">
+                  <source src="images/work/safari-ember-film.webm" type="video/webm">
+                  <source src="images/work/safari-ember-film.mp4" type="video/mp4">
+                </video>
                 <span class="se__burger"><span></span><span></span><span></span></span>
                 <div class="se__ui">
                   <img class="se__logo" src="images/work/safari-ember-logo-160.webp" width="160" height="146" alt="">
@@ -288,14 +329,32 @@
                 <div class="nu__head"><span class="nu__logo">NUR<span>A</span></span><span class="nu__nav"><span>Home</span><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></span><span class="nu__cart"></span></div>
                 <div class="nu__tick"><span>Free shipping over KSh 5,000</span><span>New drops every Friday</span><span>Pay with M-Pesa</span></div>
                 <div class="nu__hero">
-                  <img class="mini__photo" src="images/work/nura-hero-640.webp"
-                       srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w"
-                       sizes="250px" width="640" height="357" alt="" decoding="async">
-                  <div class="nu__text">
-                    <p class="nu__season">SS26 Collection</p>
-                    <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
-                    <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
-                    <span class="nu__cta">Shop now &rarr;</span>
+                  <div class="nu__slide">
+                    <img class="mini__photo" src="images/work/nura-hero-640.webp" srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w" sizes="250px" width="640" height="357" alt="" decoding="async">
+                    <div class="nu__text">
+                      <p class="nu__season">SS26 Collection</p>
+                      <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
+                      <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
+                      <span class="nu__cta">Shop now &rarr;</span>
+                    </div>
+                  </div>
+                  <div class="nu__slide nu__slide--women">
+                    <img class="mini__photo" src="images/work/nura-hero-women-640.webp" srcset="images/work/nura-hero-women-640.webp 640w, images/work/nura-hero-women-960.webp 960w" sizes="250px" width="640" height="272" alt="" decoding="async" loading="lazy">
+                    <div class="nu__text">
+                      <p class="nu__season">Women &middot; SS26</p>
+                      <p class="nu__title">Tailored<br>for<br><span>her</span></p>
+                      <p class="nu__sub">Sharp blazers, print and polish. Pieces that walk in before you do.</p>
+                      <span class="nu__cta">Shop women &rarr;</span>
+                    </div>
+                  </div>
+                  <div class="nu__slide nu__slide--men">
+                    <img class="mini__photo" src="images/work/nura-hero-men-640.webp" srcset="images/work/nura-hero-men-640.webp 640w, images/work/nura-hero-men-960.webp 960w" sizes="250px" width="640" height="272" alt="" decoding="async" loading="lazy">
+                    <div class="nu__text">
+                      <p class="nu__season">Men &middot; SS26</p>
+                      <p class="nu__title">Built<br>to be<br><span>noticed</span></p>
+                      <p class="nu__sub">Sharp suits, bold colour, the right hat. Tailoring that holds its ground.</p>
+                      <span class="nu__cta">Shop men &rarr;</span>
+                    </div>
                   </div>
                 </div>
             </div></div>
@@ -303,14 +362,32 @@
                 <div class="nu__head"><span class="nu__logo">NUR<span>A</span></span><span class="nu__nav"><span>Home</span><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></span><span class="nu__cart"></span></div>
                 <div class="nu__tick"><span>Free shipping over KSh 5,000</span><span>New drops every Friday</span><span>Pay with M-Pesa</span></div>
                 <div class="nu__hero">
-                  <img class="mini__photo" src="images/work/nura-hero-640.webp"
-                       srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w"
-                       sizes="200px" width="640" height="357" alt="" decoding="async">
-                  <div class="nu__text">
-                    <p class="nu__season">SS26 Collection</p>
-                    <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
-                    <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
-                    <span class="nu__cta">Shop now &rarr;</span>
+                  <div class="nu__slide">
+                    <img class="mini__photo" src="images/work/nura-hero-640.webp" srcset="images/work/nura-hero-640.webp 640w, images/work/nura-hero-960.webp 960w" sizes="200px" width="640" height="357" alt="" decoding="async">
+                    <div class="nu__text">
+                      <p class="nu__season">SS26 Collection</p>
+                      <p class="nu__title">Dress<br>like you<br><span>mean it</span></p>
+                      <p class="nu__sub">The newest, the boldest, the most wanted &mdash; all in one place. Fashion without compromise.</p>
+                      <span class="nu__cta">Shop now &rarr;</span>
+                    </div>
+                  </div>
+                  <div class="nu__slide nu__slide--women">
+                    <img class="mini__photo" src="images/work/nura-hero-women-640.webp" srcset="images/work/nura-hero-women-640.webp 640w, images/work/nura-hero-women-960.webp 960w" sizes="200px" width="640" height="272" alt="" decoding="async" loading="lazy">
+                    <div class="nu__text">
+                      <p class="nu__season">Women &middot; SS26</p>
+                      <p class="nu__title">Tailored<br>for<br><span>her</span></p>
+                      <p class="nu__sub">Sharp blazers, print and polish. Pieces that walk in before you do.</p>
+                      <span class="nu__cta">Shop women &rarr;</span>
+                    </div>
+                  </div>
+                  <div class="nu__slide nu__slide--men">
+                    <img class="mini__photo" src="images/work/nura-hero-men-640.webp" srcset="images/work/nura-hero-men-640.webp 640w, images/work/nura-hero-men-960.webp 960w" sizes="200px" width="640" height="272" alt="" decoding="async" loading="lazy">
+                    <div class="nu__text">
+                      <p class="nu__season">Men &middot; SS26</p>
+                      <p class="nu__title">Built<br>to be<br><span>noticed</span></p>
+                      <p class="nu__sub">Sharp suits, bold colour, the right hat. Tailoring that holds its ground.</p>
+                      <span class="nu__cta">Shop men &rarr;</span>
+                    </div>
                   </div>
                 </div>
                 <div class="nu__tabs"><span>New in</span><span>Women</span><span>Men</span><span>Sale</span></div>

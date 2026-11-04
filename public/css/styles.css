@@ -403,16 +403,16 @@ header {
 
 /* One column (phones, small tablets): nothing may hang past the screen edge */
 @media (max-width: 859px) {
-  /* Cards have minimum widths, so in a narrow column they take a bigger share of it:
-     a taller stack, with NURA lower, keeps the SEO card's figure and label in view. */
-  .hero-templates { height: clamp(300px, 92cqw, 380px); }
-  .template-se { left: 0; }
-  /* The SEO card moves to the right edge and in front, so its first gauge (SEO) isn't
-     hidden behind the Safari Ember card */
-  .template-analytics { left: auto; right: 0; top: -5%; z-index: 4; width: clamp(200px, 64cqw, 250px); }
-  .template-nura { top: 44%; right: 2%; }
-  .template-nura-m { right: 0; top: 58%; }
-  .template-se-m { top: 46%; }
+  /* Cards have minimum widths, so in a narrow column they take a bigger share of it. Here the
+     SEO card sits on top, and the two sites below it, each laptop clear of anything that
+     would cover its headline. */
+  .hero-templates { height: clamp(400px, 124cqw, 480px); }
+  .template-analytics { left: auto; right: 0; top: -4%; z-index: 1; width: clamp(200px, 70cqw, 260px); }
+  .template-se { left: 0; top: 33%; }
+  .template-se-m { left: 30%; top: 57%; }
+  .template-nura { top: 49%; right: 0; }
+  .template-nura-m { right: 0; top: 66%; }
+}
 }
 
 /* -- SEO card: Lighthouse-style score gauges --
@@ -517,15 +517,17 @@ header {
 .se__burger { position: absolute; z-index: 2; display: grid; }
 .se__burger span { display: block; background: #c8782a; }
 
-/* Laptop proportions */
-.mini--desktop.se .se__ui { padding-bottom: 7.5cqw; }
-.mini--desktop .se__logo { width: 8cqw; margin-bottom: 7cqw; }
-.mini--desktop .se__title { font-size: 6.3cqw; white-space: nowrap; }
-.mini--desktop .se__desc { font-size: 1.85cqw; line-height: 2.1; max-width: 70cqw; margin: 3.4cqw 0 4.6cqw; }
-.mini--desktop .se__ctas { gap: 1.8cqw; }
-.mini--desktop .se__ctas span { padding: 2cqw 4.2cqw; font-size: 1.1cqw; border-width: 0.1cqw; }
-.mini--desktop .se__burger { top: 4cqw; right: 4cqw; gap: 0.8cqw; }
-.mini--desktop .se__burger span { width: 3.4cqw; height: 0.25cqw; }
+/* Laptop proportions, measured from the real site on a 1920px-wide screen: the headline spans
+   a little over half the width, centred. (Sized for a narrower screen, it ran to the edge and
+   the phone in front covered its last letters, which gave the mock-up away.) */
+.mini--desktop.se .se__ui { padding-bottom: 7cqw; }
+.mini--desktop .se__logo { width: 6cqw; margin-bottom: 6cqw; }
+.mini--desktop .se__title { font-size: 4.7cqw; white-space: nowrap; }
+.mini--desktop .se__desc { font-size: 1.4cqw; line-height: 2.1; max-width: 52cqw; margin: 2.6cqw 0 3.6cqw; }
+.mini--desktop .se__ctas { gap: 1.4cqw; }
+.mini--desktop .se__ctas span { padding: 1.6cqw 3.3cqw; font-size: 0.85cqw; border-width: 0.1cqw; }
+.mini--desktop .se__burger { top: 3.4cqw; right: 3.4cqw; gap: 0.7cqw; }
+.mini--desktop .se__burger span { width: 3cqw; height: 0.22cqw; }
 
 /* Phone proportions: the sun kept in the tall frame, as on the real site */
 .mini--phone.se .mini__photo { object-position: 55% 50%; }
@@ -549,7 +551,25 @@ header {
 .nu__cart { background: #0a0a0a; }
 .nu__tick { position: relative; z-index: 2; display: flex; overflow: hidden; background: #b57bff; color: #fff; }
 .nu__hero { position: absolute; left: 0; right: 0; bottom: 0; overflow: hidden; }
-.nu__hero::after { content: ""; position: absolute; inset: 0; }
+/* Three slides that take turns, like the real hero: each slides in from the right, holds
+   about 4 seconds while its photo slowly zooms, then slides out to the left. One 15 s cycle;
+   the slides start 5 s apart (the first one already in place at load). */
+.nu__slide { position: absolute; inset: 0; overflow: hidden; animation: nu-slide 15s cubic-bezier(.65, 0, .35, 1) infinite both; }
+.nu__slide .mini__photo { animation: nu-zoom 15s ease-out infinite both; }
+.nu__slide:nth-child(1), .nu__slide:nth-child(1) .mini__photo { animation-delay: -0.8s; }
+.nu__slide:nth-child(2), .nu__slide:nth-child(2) .mini__photo { animation-delay: 4.2s; }
+.nu__slide:nth-child(3), .nu__slide:nth-child(3) .mini__photo { animation-delay: 9.2s; }
+@keyframes nu-slide {
+  0% { transform: translateX(100%); }
+  5.33%, 33.33% { transform: none; }
+  38.67%, 100% { transform: translateX(-100%); }
+}
+@keyframes nu-zoom { 0% { transform: scale(1); } 38.67%, 100% { transform: scale(1.07); } }
+@media (prefers-reduced-motion: reduce) {
+  .nu__slide, .nu__slide .mini__photo { animation: none; }
+  .nu__slide:not(:first-child) { display: none; }   /* the first slide, still */
+}
+.nu__slide::after { content: ""; position: absolute; inset: 0; }
 .nu__text { position: absolute; z-index: 1; }
 .nu__season { font-weight: 700; letter-spacing: .35em; text-transform: uppercase; color: #b57bff; }
 .nu__title { font-family: "Bebas Neue", var(--font-condensed); font-weight: 400; line-height: .92; color: #fff; }
@@ -566,7 +586,9 @@ header {
 .mini--desktop .nu__tick span { font-size: 1cqw; }
 .mini--desktop .nu__hero { top: 11.4cqw; }
 .mini--desktop.nu .mini__photo { left: 30%; width: 75%; object-position: 40% 30%; }
-.mini--desktop .nu__hero::after { background: linear-gradient(to right, #0a0a0a 0%, #0a0a0a 30%, rgba(10,10,10,.6) 38%, rgba(10,10,10,0) 55%); }
+.mini--desktop .nu__slide--women .mini__photo { object-position: 62% 30%; }
+.mini--desktop .nu__slide--men .mini__photo { object-position: 55% 30%; }
+.mini--desktop .nu__slide::after { background: linear-gradient(to right, #0a0a0a 0%, #0a0a0a 30%, rgba(10,10,10,.6) 38%, rgba(10,10,10,0) 55%); }
 .mini--desktop .nu__text { left: 4cqw; top: 5cqw; }
 .mini--desktop .nu__season { font-size: 1cqw; margin-bottom: 1.6cqw; }
 .mini--desktop .nu__title { font-size: 9.6cqw; }
