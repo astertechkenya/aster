@@ -9,9 +9,12 @@
 
 /* ---------- Services: two offers, the compass bearings carried over ---------- */
 .services { border-top: 1px solid var(--line); padding-block: 72px; }
-.offer-grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+/* See-through, so the background lights show behind the offers: the divider between them is a border, not the grid's background */
+.offer-grid { display: grid; border: 1px solid var(--line); }
+.offer + .offer { border-top: 1px solid var(--line); }
+@media (min-width: 780px) { .offer + .offer { border-top: 0; border-left: 1px solid var(--line); } }
 @media (min-width: 780px) { .offer-grid { grid-template-columns: 1fr 1fr; } }
-.offer { background: var(--paper); padding: 36px 28px; display: flex; flex-direction: column; gap: 16px; }
+.offer { padding: 36px 28px; display: flex; flex-direction: column; gap: 16px; }
 @media (min-width: 780px) { .offer { padding: 44px 40px; } }
 .offer h3 { font-size: clamp(1.7rem, 2.6vw, 2.1rem); font-weight: 500; }
 .offer__lede { color: var(--ink-soft); max-width: 42ch; }
@@ -22,7 +25,8 @@
 .offer__price strong { font-family: var(--font-display); font-size: 1.35rem; font-weight: 500; color: var(--ink); }
 
 /* ---------- Work: each case = the site on laptop + phone, then the facts ---------- */
-.work { background: var(--paper-raised); border-block: 1px solid var(--line); padding-block: 80px; }
+/* A veil of the raised white, not solid, so the lights glow faintly through the work band */
+.work { background: color-mix(in srgb, var(--paper-raised) 55%, transparent); border-block: 1px solid var(--line); padding-block: 80px; }
 .case { display: grid; gap: 32px; align-items: center; padding-block: 32px; }
 .case + .case { border-top: 1px solid var(--line); }
 @media (min-width: 900px) {

@@ -175,8 +175,17 @@ button:focus-visible {
    HEADER
 --------------------------------------------------------- */
 header {
+  /* Follows the reader down the page. Its own solid paper colour, so neither the content
+     scrolling under it nor the background lights show through; it still turns dark and
+     light with the rest of the page, since --paper and --line change with the theme. */
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--paper);
   border-bottom: 1px solid var(--line);
 }
+/* Links to #sections land below the header, not hidden under it */
+html { scroll-padding-top: 88px; }
 .nav {
   display: flex;
   align-items: center;
@@ -239,11 +248,20 @@ header {
      (the card stack, then the headline) needs to still be
      visible on a short browser window without scrolling, and
      every pixel spent here is a pixel taken from that budget. */
-  padding-block: 32px 72px;
+  padding-block: 28px 56px;
+  /* The hero fills the whole first screen below the header (88px): nothing of the next
+     section shows until you scroll. svh = the screen's height with a phone's browser bars
+     showing, so it never runs under them. Content is centred in the space. */
+  min-height: calc(100vh - 88px);
+  min-height: calc(100svh - 88px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+.hero-grid { width: 100%; }
 
 @media (min-width: 860px) {
-  .hero { padding-block: 40px 100px; }
+  .hero { padding-block: 40px 80px; }
 }
 
 .hero-grid {
@@ -256,54 +274,17 @@ header {
 @media (min-width: 860px) {
   .hero-grid {
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-    gap: 56px;
+    gap: 48px;
   }
 }
 
-.hero-brand {
-  display: flex;
-  /* The logo is the first thing the viewer should see, so it gets the
-     shortest possible entrance -- a quick settle-in rather than a "slide,"
-     starting at 0s (no delay). Everything else in the staged reveal below
-     (cards, then the headline) is timed relative to this. */
-  animation: hero-brand-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes hero-brand-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-brand { animation: none; }
-}
-
-.hero-wordmark {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-}
-.hero-wordmark .wordmark-mark {
-  /* 5% bigger than the 30%-smaller clamp(3.36rem, 7.7vw, 6.02rem) --
-     net result vs. the very original clamp(4.8rem, 11vw, 8.6rem) is
-     0.7 x 1.05 = 0.735, i.e. about 26.5% smaller than where this
-     started. Every number scaled together, not just the endpoints. */
-  height: clamp(3.528rem, 8.085vw, 6.321rem);
-}
-.hero-tagline {
-  margin-top: 0.5em;
-  font-family: var(--font-condensed);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  /* sized off the actual logo file's proportions: the tagline's cap-height
-     runs about 29% of the wordmark's, not picked to "look about right".
-     Scaled by the same factors as .wordmark-mark above (x0.7, then
-     x1.05) at every step, so that ratio still holds exactly. */
-  font-size: clamp(0.9702rem, 2.75625vw, 1.764rem);
-  color: var(--ink);
-  text-indent: 0.22em; /* optically re-center for the trailing letter-spacing */
-}
+/* The hero's words: headline, one line on what Aster does, two ways forward */
+.hero-text { container-type: inline-size; }
+.hero-sub { color: var(--ink-soft); font-size: 1.06rem; line-height: 1.6; max-width: 34rem; margin-top: 22px; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.nowrap { white-space: nowrap; }   /* "M-Pesa" must never break at its hyphen */
+.hero-sub, .hero-ctas { animation: hero-headline-in 0.6s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@media (prefers-reduced-motion: reduce) { .hero-sub, .hero-ctas { animation: none; } }
 
 /* ---------------------------------------------------------
    HERO WORK STACK
@@ -324,8 +305,8 @@ header {
 .hero-templates {
   container-type: inline-size;
   position: relative;
-  height: clamp(250px, 62cqw, 350px);
-  margin-bottom: clamp(20px, 5cqw, 28px);
+  height: clamp(250px, 62cqw, 430px);   /* grows on big screens, where the hero has height to fill */
+  margin-bottom: 0;
 }
 
 /* Every card, laptop or phone: tilted by its own --rot, and dealt in by card-in */
@@ -374,7 +355,7 @@ header {
 
 /* -- The phones: a dark body and a notch, no card around them -- */
 .template-phone {
-  width: clamp(62px, 14cqw, 86px);
+  width: clamp(62px, 14cqw, 104px);
   padding: 3px;
   background: #121110;
   border-radius: 12px;
@@ -395,9 +376,9 @@ header {
    Back to front: SEO 0.25s → NURA laptop 0.37s → Safari Ember laptop 0.49s
    → NURA phone 0.61s → Safari Ember phone 0.73s. The last lands at 1.33s, just as the
    headline (delay 1.05s, see .hero h1) finishes rising, so the eye ends on the words. */
-.template-analytics { left: 37%;    top: -6%;  z-index: 1; --rot: 3deg;  width: clamp(214px, 44cqw, 250px); animation-delay: 0.25s; }
-.template-nura      { right: 3%;    top: 43%;  z-index: 2; --rot: 5deg;  width: clamp(170px, 44cqw, 250px); animation-delay: 0.37s; }
-.template-se        { left: -10%;   top: 8%;   z-index: 3; --rot: -6deg; width: clamp(170px, 46cqw, 260px); animation-delay: 0.49s; }
+.template-analytics { left: 41%;    top: -6%;  z-index: 1; --rot: 3deg;  width: clamp(214px, 44cqw, 300px); animation-delay: 0.25s; }
+.template-nura      { right: 3%;    top: 43%;  z-index: 2; --rot: 5deg;  width: clamp(170px, 44cqw, 300px); animation-delay: 0.37s; }
+.template-se        { left: -4%;    top: 8%;   z-index: 3; --rot: -6deg; width: clamp(170px, 46cqw, 315px); animation-delay: 0.49s; }
 .template-nura-m    { right: -4%;   top: 60%;  z-index: 4; --rot: 8deg;  animation-delay: 0.61s; }
 .template-se-m      { left: 27%;    top: 40%;  z-index: 5; --rot: -3deg; animation-delay: 0.73s; }
 
@@ -413,21 +394,18 @@ header {
   .template-nura { top: 49%; right: 0; }
   .template-nura-m { right: 0; top: 66%; }
 }
-}
 
-/* -- SEO card: Lighthouse-style score gauges --
-   Real scores, in the green Lighthouse uses for 90-100, so anyone who has run PageSpeed
-   Insights recognises them at a glance. Each ring is an SVG circle with pathLength="100", so
-   a dash of length --score draws exactly that share of the ring; the number is SVG text, so
-   it stays sharp at the card's tilt. */
-.tc-card-eyebrow { font-size: 0.72rem; color: var(--ink-soft); margin-bottom: 8px; }
+/* -- SEO card: the real PageSpeed scores, in the page's own black and white --
+   Each ring is an SVG circle with pathLength="100", so a dash of length --score draws exactly
+   that share of the ring; the numbers are SVG text in the display serif, so they stay sharp
+   at the card's tilt and read like the rest of the page's figures. */
 .gauges { display: flex; justify-content: space-between; gap: 4px; }
 .gauge { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-.gauge svg { flex: none; max-width: none; /* the site-wide img,svg max-width rule would squeeze it to its label's width */ width: clamp(30px, 8cqw, 42px); height: auto; transform: rotate(-90deg); overflow: visible; }
-.gauge__track, .gauge__arc { fill: none; stroke-width: 3.2; }
-.gauge__track { stroke: #0c6; stroke-opacity: .14; fill: #0c6; fill-opacity: .08; }
+.gauge svg { flex: none; max-width: none; /* the site-wide img,svg max-width rule would squeeze it to its label's width */ width: clamp(30px, 8cqw, 50px); height: auto; transform: rotate(-90deg); overflow: visible; }
+.gauge__track, .gauge__arc { fill: none; stroke-width: 2.4; }
+.gauge__track { stroke: var(--line); }
 .gauge__arc {
-  stroke: #0c6;
+  stroke: var(--ink);
   stroke-linecap: round;
   stroke-dasharray: var(--score) 100;
   /* Fills in as the card lands (the card-in timing above) */
@@ -438,36 +416,32 @@ header {
 .gauge text {
   transform: rotate(90deg); transform-origin: 18px 18px;     /* undo the ring's turn */
   text-anchor: middle;
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  fill: #008a3e;
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 500;
+  font-variant-numeric: lining-nums;   /* Playfair's default numerals sit low, like lowercase */
+  fill: var(--ink);
 }
-.gauge span { font-size: clamp(0.46rem, 1.3cqw, 0.52rem); line-height: 1.2; color: var(--ink-soft); text-align: center; white-space: nowrap; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .gauge text { fill: #3ddc84; }
-}
-:root[data-theme="dark"] .gauge text { fill: #3ddc84; }
+.gauge span { font-size: clamp(0.46rem, 1.3cqw, 0.62rem); line-height: 1.2; color: var(--ink-soft); text-align: center; white-space: nowrap; }
 
-/* The climb: Safari Ember's mobile performance score, before → after → live. The line draws
-   itself in once the card has landed (pathLength="100" makes the dash maths simple). */
+/* The climb: Safari Ember's mobile performance score, before → after → live, sketched in
+   pencil like the underline under "impossible". The line draws itself in once the card
+   has landed (pathLength="100" makes the dash maths simple). */
 .climb { margin-top: 8px; }
 .climb svg { display: block; width: 100%; height: auto; max-width: none; overflow: visible; }
-.climb__area { fill: #0c6; fill-opacity: .12; }
+.climb__area { fill: url(#climb-hatch); }
+#climb-hatch line { stroke: var(--line-strong); stroke-width: .45; }
+.climb__sketch { fill: none; stroke: var(--ink); stroke-width: .6; stroke-linecap: round; opacity: .35; }
 .climb__line {
-  fill: none; stroke: #0c6; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  fill: none; stroke: var(--ink); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round;
   stroke-dasharray: 100; stroke-dashoffset: 0;
   animation: climb-draw 1.2s 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
 }
-.climb circle { fill: var(--paper-raised); stroke: #0c6; stroke-width: 1.2; }
+.climb ellipse { fill: var(--paper-raised); stroke: var(--ink); stroke-width: 1.1; }
 @keyframes climb-draw { from { stroke-dashoffset: 100; } }
 @media (prefers-reduced-motion: reduce) { .climb__line { animation: none; } }
-.climb__marks { display: flex; justify-content: space-between; margin-top: 4px; font-size: clamp(0.46rem, 1.3cqw, 0.52rem); color: var(--ink-soft); }
-.climb__marks b { font-weight: 600; color: #008a3e; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .climb__marks b { color: #3ddc84; }
-}
-:root[data-theme="dark"] .climb__marks b { color: #3ddc84; }
+.climb__marks { display: flex; justify-content: space-between; margin-top: 4px; font-size: clamp(0.46rem, 1.3cqw, 0.52rem); color: var(--graphite); }
+.climb__marks b { font-family: var(--font-display); font-weight: 500; font-size: 1.15em; font-variant-numeric: lining-nums; color: var(--ink); margin-right: 2px; }
 
 /* ---------------------------------------------------------
    THE MINIATURE SCREENS
@@ -617,20 +591,18 @@ header {
 .mini--phone .nu__tabs span { font-size: 2.4cqw; color: #ddd; }
 
 @media (min-width: 860px) {
-  .hero-templates { margin-bottom: 32px; }
+  .hero-templates { margin-bottom: 0; }
 }
 
 .hero h1 {
-  font-size: clamp(2.3rem, 5.6vw, 3.6rem);
+  /* Sized by its own column (cqw of .hero-text), so it always fits in two lines beside the work */
+  font-size: clamp(2.3rem, 10.6cqw, 3.4rem);
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.01em;
-  /* The finale of the staged reveal: logo first (0s), cards cascading
-     through 1.33s (see the stack's timing comment), then this --
-     starting right as the last card lands, so the eye has nowhere else
-     left to go but here. 0.65s is deliberately the longest single move
-     in the sequence; it's the "biggest reveal" the sequence builds to. */
-  animation: hero-headline-in 0.65s 1.05s cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* The words lead now: the headline rises first, the line under it and the buttons follow
+     (0.35s), while the cards are dealt in beside them (0.25s to 1.33s). */
+  animation: hero-headline-in 0.65s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .hero h1 em {
   font-style: italic;
@@ -657,6 +629,49 @@ header {
   position: relative;
   display: inline-block;
 }
+/* "impossible" is written by hand, stroke by stroke, before the underline is drawn under it.
+   Two layers in one SVG:
+     the ink   - the brush-script word Ethan chose, traced into one filled outline, so it keeps
+                 its real thick-and-thin brush strokes;
+     the pen   - a mask over it: one wide line per pen stroke, laid along the centre of the
+                 letters in the order they're written (i, m's legs, p's stem then bowl...).
+   Each pen line is a dash as long as itself (pathLength="1" makes that length 1), pushed out
+   of view and slid back in, and the ink only shows where the mask is white: so the letters
+   appear from where the pen starts to where it lifts. Each line carries its own start (--d)
+   and duration (--t), set from its length so the pen moves at one steady speed; the dots of
+   the i's come last.
+   The real word is in the heading for screen readers and search engines (.sr-only); the
+   drawing is aria-hidden. Sized in em, so it scales with the headline: its width matches the
+   Playfair word it stands in for, and it sits on the baseline. The margins pull its box back
+   to a text-sized line. */
+.handwrite {
+  display: inline-block;
+  width: 4.460em; height: 1.550em;
+  vertical-align: baseline;
+  margin: -0.121em 0 -0.509em;
+  overflow: visible;
+}
+.handwrite__ink { fill: var(--ink); }
+.handwrite mask path {
+  fill: none;
+  stroke: #fff;               /* white in a mask = show the ink beneath */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: pen var(--t) var(--d) linear both;
+}
+@keyframes pen {
+  0%   { stroke-dashoffset: 1; opacity: 0; }   /* opacity: a round pen tip would otherwise show a dot before its turn */
+  1%   { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .handwrite mask path { animation: none; stroke-dashoffset: 0; opacity: 1; }
+}
+
+
+
 .ink-underline {
   position: absolute;
   left: -2%;
@@ -681,7 +696,7 @@ header {
      finish drawing itself in while "impossible" is still invisible, and
      then just sit there "already done" the moment the word fades in.
      1.8s gives it a 0.1s beat after the headline lands before it starts. */
-  animation: ink-draw 0.9s 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation: ink-draw 0.9s 3.27s cubic-bezier(0.65, 0, 0.35, 1) forwards;   /* once the pen has finished "impossible" */
 }
 @keyframes ink-draw {
   to { stroke-dashoffset: 0; }
@@ -765,3 +780,126 @@ footer {
   gap: 20px;
   flex-wrap: wrap;
 }
+
+/* ---------------------------------------------------------
+   FIRST SCREEN FIT (Nov 2026)
+   The headline must be readable without scrolling, on laptops and phones alike.
+--------------------------------------------------------- */
+
+@media (max-width: 859px) {
+  .hero-grid { gap: 36px; }   /* phones: the words, then the work below them */
+}
+
+/* ---------------------------------------------------------
+   SCROLL THEME (Nov 2026)
+   The page changes mood as you read: light throughout, dark only for the portfolio
+   (Selected work), light again from How it works on. js/scroll-theme.js sets <html data-theme> as each section reaches the
+   middle of the screen; the dark values are the :root[data-theme="dark"] tokens above.
+
+   A plain colour variable can't animate (it would jump). Registering each one with
+   @property tells the browser it's a colour, so it can fade between the two values.
+--------------------------------------------------------- */
+@property --paper        { syntax: "<color>"; inherits: true; initial-value: #f6f5f1; }
+@property --paper-raised { syntax: "<color>"; inherits: true; initial-value: #ffffff; }
+@property --ink          { syntax: "<color>"; inherits: true; initial-value: #14130f; }
+@property --ink-soft     { syntax: "<color>"; inherits: true; initial-value: #47453d; }
+@property --graphite     { syntax: "<color>"; inherits: true; initial-value: #86847a; }
+@property --line         { syntax: "<color>"; inherits: true; initial-value: #dedcd3; }
+@property --line-strong  { syntax: "<color>"; inherits: true; initial-value: #c7c4b8; }
+
+:root {
+  transition: --paper .7s ease, --paper-raised .7s ease, --ink .7s ease, --ink-soft .7s ease,
+              --graphite .7s ease, --line .7s ease, --line-strong .7s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { transition: none; }   /* the switch still happens, just without the fade */
+}
+
+/* ---------------------------------------------------------
+   THE LIGHTS, IN THE DEEP BACKGROUND (Nov 2026)
+   Three large, very soft lights drift slowly behind the page, each on its own long path
+   around the edges of the screen. They shine ONLY in the dark portfolio band: everywhere
+   else the paper is plain. Each project has its own two colours (Safari Ember's apricot and
+   pale gold, NURA's lilac and blush), set in the HTML as data-glow="#a #b"; js/scroll-theme.js
+   sets --glow-a and --glow-b as you reach each one, and they fade across.
+
+   z-index: -1 puts the layer under all the page's content but over the page's own paper
+   colour (the body's background is painted on the whole canvas, beneath it). So the lights
+   colour only the paper between and around things: text, cards and the project screens are
+   never tinted. Sections that used to paint their own solid background are now see-through
+   (sections.css) so the light reaches them.
+
+   Each light is a radial gradient moved with transform only, so the browser glides it on the
+   graphics card instead of repainting the page as it moves.
+--------------------------------------------------------- */
+@property --glow-a { syntax: "<color>"; inherits: true; initial-value: #e9b872; }
+@property --glow-b { syntax: "<color>"; inherits: true; initial-value: #8fbce6; }
+:root {
+  --light-strength: 30%;
+  transition: --paper .7s ease, --paper-raised .7s ease, --ink .7s ease, --ink-soft .7s ease,
+              --graphite .7s ease, --line .7s ease, --line-strong .7s ease,
+              --glow-a 1.6s ease, --glow-b 1.6s ease;
+}
+:root[data-theme="dark"] { --light-strength: 26%; }
+.lights {
+  position: fixed; inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;                     /* off on the light parts of the page... */
+  transition: opacity .7s ease;   /* ...fading in and out with the theme change */
+}
+:root[data-theme="dark"] .lights { opacity: 1; }   /* ...on in the portfolio */
+.lights span {
+  position: absolute;
+  width: 70vmax; height: 70vmax;
+  left: calc(50% - 35vmax); top: calc(50% - 35vmax);
+  border-radius: 50%;
+  will-change: transform;
+}
+.lights span:nth-child(1) {
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--glow-a) var(--light-strength), transparent), transparent);
+  animation: drift-1 38s ease-in-out infinite alternate;
+}
+.lights span:nth-child(2) {
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--glow-b) var(--light-strength), transparent), transparent);
+  animation: drift-2 46s ease-in-out infinite alternate;
+}
+.lights span:nth-child(3) {   /* the two colours mixed: the blend between them */
+  width: 55vmax; height: 55vmax; left: calc(50% - 27.5vmax); top: calc(50% - 27.5vmax);
+  background: radial-gradient(closest-side, color-mix(in srgb, color-mix(in srgb, var(--glow-a), var(--glow-b)) calc(var(--light-strength) * .8), transparent), transparent);
+  animation: drift-3 31s ease-in-out infinite alternate;
+}
+/* Three long loops that keep to the edges of the screen and never cross the middle, where
+   the words are: one roams the left side, one the right, one the bottom edge. Each light's
+   centre stays on or past the screen's edge, so only its soft outer glow reaches in.
+   The negative delays start each one partway along its path, so the light is already
+   spread around the edges the moment the page opens, instead of all starting together. */
+.lights span:nth-child(1) { animation-delay: -14s; }
+.lights span:nth-child(2) { animation-delay: -27s; }
+.lights span:nth-child(3) { animation-delay: -9s; }
+@keyframes drift-1 {   /* the left edge, top to bottom and back */
+  0%   { transform: translate(-52vw, -38vh) scale(1); }
+  35%  { transform: translate(-48vw, 10vh) scale(1.12); }
+  70%  { transform: translate(-55vw, 42vh) scale(.92); }
+  100% { transform: translate(-46vw, -12vh) scale(1.05); }
+}
+@keyframes drift-2 {   /* the right edge, bottom to top and back */
+  0%   { transform: translate(52vw, 40vh) scale(1.08); }
+  40%  { transform: translate(47vw, -8vh) scale(.9); }
+  75%  { transform: translate(55vw, -42vh) scale(1.15); }
+  100% { transform: translate(49vw, 18vh) scale(1); }
+}
+@keyframes drift-3 {   /* along the bottom edge, side to side */
+  0%   { transform: translate(-28vw, 58vh) scale(.95); }
+  50%  { transform: translate(6vw, 62vh) scale(1.15); }
+  100% { transform: translate(32vw, 56vh) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { transition: none; }
+  .lights span { animation: none; }   /* still there, still coloured, just not moving */
+  .lights span:nth-child(1) { transform: translate(-50vw, 0); }
+  .lights span:nth-child(2) { transform: translate(50vw, -20vh); }
+  .lights span:nth-child(3) { transform: translate(0, 60vh); }
+}
+@media print { .lights { display: none; } }
