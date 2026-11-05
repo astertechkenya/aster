@@ -48,7 +48,9 @@
   }, {
     // Wait until the word is well onto the screen (above the bottom 15%), not at its very edge
     rootMargin: '0px 0px -15% 0px',
-    threshold: 1
+    // Most of it on screen. Not all: a mark inside a tilted note never quite counts as
+    // fully visible, and would never be drawn.
+    threshold: 0.6
   });
 
   for (var j = 0; j < marks.length; j++) seen.observe(marks[j]);
