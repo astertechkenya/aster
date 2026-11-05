@@ -74,3 +74,43 @@
 @media print {
   .mark path { opacity: 1; stroke-dasharray: none; }
 }
+
+/* Doodles: a small drawing over a marked word, drawn after its mark (the --d delays in the
+   HTML put it last). Unlike the marks these keep their own proportions (an arrow or a torch
+   mustn't stretch with the word), so they're sized in em and sit above it. */
+.mark .mark__doodle { overflow: visible; }
+.mark--arrow .mark__doodle {          /* "forward": an arrow riding over the loop, pointing on */
+  top: auto; left: 4%; width: 100%;   /* top: auto - the loop's own top would otherwise pin it inside */
+  bottom: calc(100% + 0.02em); height: 0.42em;
+}
+.mark--torch .mark__doodle {          /* "find": a torch up to the left, its beams falling on the word */
+  top: auto; left: -0.75em; width: 1.2em;
+  bottom: calc(100% - 0.22em); height: 0.85em;
+}
+.mark__doodle path { stroke-width: 0.05em; }
+/* Headroom: an inline-block's top margin makes only ITS line taller, so the line with the
+   drawing opens up to fit it and the rest of the heading keeps its normal spacing. */
+.mark--arrow, .mark--torch { margin-top: 0.62em; }   /* the same on both, so the two offers' headings line up */
+.mark__doodle .thick { stroke-width: 0.1em; }   /* a handle, a tick: the heavier parts of a drawing */
+
+/* "solve": a magnifying glass up to the right of the loop, its handle reaching in */
+.mark--glass .mark__doodle { top: auto; left: 62%; width: 0.9em; bottom: calc(100% - 0.12em); height: 0.9em; }
+/* "idea": a light bulb over the word, rays drawn round it, then it lights up */
+.mark--bulb .mark__doodle  { top: auto; left: calc(50% - 0.5em); width: 1em; bottom: calc(100% - 0.02em); height: 1em; }
+.mark--glass, .mark--bulb  { margin-top: 0.75em; }
+/* The glow: a soft warm light behind the bulb that fades up once the bulb is drawn. Pale and
+   blurred, so it reads as light rather than a coloured shape. */
+.mark__glow {
+  fill: #f2c94c;
+  opacity: 0;
+  filter: blur(3px);
+}
+.mark.is-drawn .mark__glow { opacity: 0.45; transition: opacity 0.9s var(--d, 0s) ease-out; }
+
+/* The checkbox after "project": a box of its own (no word inside), drawn, then ticked */
+.mark--check { width: 0.72em; height: 0.72em; vertical-align: -0.04em; }
+.mark--check svg { inset: 0; width: 100%; height: 100%; }
+
+@media (scripting: none) { .mark__glow { opacity: 0.45; } }
+@media (prefers-reduced-motion: reduce) { .mark__glow, .mark.is-drawn .mark__glow { opacity: 0.45; transition: none; } }
+@media print { .mark__glow { opacity: 0.45; } }

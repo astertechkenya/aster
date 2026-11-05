@@ -16,7 +16,11 @@
 @media (min-width: 780px) { .offer-grid { grid-template-columns: 1fr 1fr; } }
 .offer { padding: 36px 28px; display: flex; flex-direction: column; gap: 16px; }
 @media (min-width: 780px) { .offer { padding: 44px 40px; } }
-.offer h3 { font-size: clamp(1.7rem, 2.6vw, 2.1rem); font-weight: 500; }
+.offer h3 { font-size: clamp(1.7rem, 2.6vw, 2.1rem); font-weight: 500; line-height: 1.2; }
+/* The services opening: just the label, then the two offers carry the headlines.
+   The headings leave room above for the drawings on "forward" and "find". */
+.services__title { margin: 0 0 22px; font-weight: 400; }
+.offer h3 { padding-top: 0.55em; max-width: 16ch; }
 .offer__lede { color: var(--ink-soft); max-width: 42ch; }
 .ticks { display: grid; gap: 10px; margin-top: 4px; }
 .ticks li { position: relative; padding-left: 20px; font-size: 0.95rem; }
