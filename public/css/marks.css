@@ -79,9 +79,9 @@
    HTML put it last). Unlike the marks these keep their own proportions (an arrow or a torch
    mustn't stretch with the word), so they're sized in em and sit above it. */
 .mark .mark__doodle { overflow: visible; }
-.mark--arrow .mark__doodle {          /* "forward": an arrow riding over the loop, pointing on */
-  top: auto; left: 4%; width: 100%;   /* top: auto - the loop's own top would otherwise pin it inside */
-  bottom: calc(100% + 0.24em); height: 0.42em;   /* clear of the loop's top */
+.mark--rocket .mark__doodle {         /* "forward": a rocket taking off beside the loop, up and to the right */
+  top: auto; left: calc(100% + 0.45em); width: 1.1em;
+  bottom: 0.3em; height: 1.1em;
 }
 .mark--torch .mark__doodle {          /* "find": a torch up to the left, its beams falling on the word */
   top: auto; left: -0.75em; width: 1.2em;
@@ -90,7 +90,7 @@
 .mark__doodle path { stroke-width: 0.05em; }
 /* Headroom: an inline-block's top margin makes only ITS line taller, so the line with the
    drawing opens up to fit it and the rest of the heading keeps its normal spacing. */
-.mark--arrow, .mark--torch { margin-top: 0.72em; }   /* the same on both, so the two offers' headings line up */
+.mark--rocket, .mark--torch { margin-top: 0.72em; }   /* the same on both, so the two offers' headings line up */
 .mark__doodle .thick { stroke-width: 0.1em; }   /* a handle, a tick: the heavier parts of a drawing */
 
 /* "solve": a magnifying glass up to the right of the loop, its handle reaching in */
@@ -99,8 +99,47 @@
 .mark--bulb .mark__doodle  { top: auto; left: calc(50% - 0.5em); width: 1em; bottom: calc(100% - 0.02em); height: 1em; }
 .mark--glass, .mark--bulb  { margin-top: 0.75em; }
 /* "forward": a roomier loop, so it rings the word instead of cutting through the f */
-.mark--arrow > svg:first-of-type { left: -0.42em; top: -0.34em; width: calc(100% + 0.85em); height: calc(100% + 0.5em); }
+.mark--rocket > svg:first-of-type { left: -0.42em; top: -0.34em; width: calc(100% + 0.85em); height: calc(100% + 0.5em); }
 /* The checkbox after "project": a box of its own (no word inside), drawn, then ticked */
 .mark--check { width: 0.72em; height: 0.72em; vertical-align: -0.04em; }
 .mark--check svg { inset: 0; width: 100%; height: 100%; }
 
+
+/* ---------- The hero's buttons: a pen loop drawn round the one you point at ----------
+   The same hand-drawn loop as the headings, drawn on hover (or keyboard focus) and wiped
+   back when you leave. It sits just outside the button, in ink, so it reads on the dark
+   button and the outlined one alike. Touch screens have no hover, so they're left alone. */
+.btn--loop { position: relative; }
+.hero-ctas { gap: 14px 18px; }   /* room between the buttons for the loop to swing round one */
+.btn-loop {
+  position: absolute;
+  left: -20px; top: -14px;
+  width: calc(100% + 40px); height: calc(100% + 28px);
+  max-width: none;
+  overflow: visible;
+  pointer-events: none;
+}
+.btn-loop path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.25;       /* stretched to the button's size, this is about a 2px pen */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;      /* pathLength="1": one dash the length of the loop... */
+  stroke-dashoffset: 1;     /* ...pushed off its start */
+  opacity: 0;
+  transition: stroke-dashoffset 0.35s cubic-bezier(0.65, 0, 0.35, 1), opacity 0s 0.35s;   /* leaving: wipe back, then hide */
+}
+@media (hover: hover) {
+  .btn--loop:hover .btn-loop path {
+    stroke-dashoffset: 0; opacity: 1;
+    transition: stroke-dashoffset 0.55s cubic-bezier(0.65, 0, 0.35, 1), opacity 0s;
+  }
+}
+.btn--loop:focus-visible .btn-loop path {
+  stroke-dashoffset: 0; opacity: 1;
+  transition: stroke-dashoffset 0.55s cubic-bezier(0.65, 0, 0.35, 1), opacity 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-loop path, .btn--loop:hover .btn-loop path, .btn--loop:focus-visible .btn-loop path { transition: none; }
+}

@@ -49,6 +49,7 @@
   --ink: #14130f;
   --ink-soft: #47453d;
   --graphite: #86847a;
+  --stone: #6b665c;   /* warm muted grey for supporting text: 5.2:1 on the paper, so still easy to read */
   --line: #dedcd3;
   --line-strong: #c7c4b8;
 
@@ -68,6 +69,7 @@
     --ink: #f3f1ea;
     --ink-soft: #c7c4b8;
     --graphite: #928f83;
+    --stone: #aaa59a;
     --line: #2d2c27;
     --line-strong: #3d3b34;
   }
@@ -79,6 +81,7 @@
   --ink: #f3f1ea;
   --ink-soft: #c7c4b8;
   --graphite: #928f83;
+  --stone: #aaa59a;
   --line: #2d2c27;
   --line-strong: #3d3b34;
 }
@@ -185,22 +188,26 @@ header {
   background: var(--paper);
   border-bottom: 1px solid var(--line);
 }
+/* The header's height, in one place: the hero and the in-page links both measure from it */
+:root { --header-h: 64px; }
 /* Links to #sections land below the header, not hidden under it */
-html { scroll-padding-top: 88px; }
+html { scroll-padding-top: var(--header-h); }
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding-block: 20px;
+  min-height: calc(var(--header-h) - 1px);   /* slimmer than before (88px); -1px for the border below it */
+  padding-block: 8px;
 }
+header .btn { padding: 8px 16px; font-size: 0.86rem; }   /* the header's button, a size down to suit the slimmer bar */
 .logo {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
 }
 .logo .wordmark-mark {
-  height: 1.98rem; /* 1.6rem, rescaled for the viewBox's new 24-unit margin so the letters read the same size as before */
+  height: 1.75rem; /* a touch smaller for the slimmer header (was 1.98rem); 1.6rem, rescaled for the viewBox's new 24-unit margin so the letters read the same size as before */
 }
 
 .nav-links {
@@ -250,11 +257,11 @@ html { scroll-padding-top: 88px; }
      visible on a short browser window without scrolling, and
      every pixel spent here is a pixel taken from that budget. */
   padding-block: 28px 56px;
-  /* The hero fills the whole first screen below the header (88px): nothing of the next
-     section shows until you scroll. svh = the screen's height with a phone's browser bars
-     showing, so it never runs under them. Content is centred in the space. */
-  min-height: calc(100vh - 88px);
-  min-height: calc(100svh - 88px);
+  /* The hero fills the whole first screen below the header: nothing of the next section
+     shows until you scroll. svh = the screen's height with a phone's browser bars showing,
+     so it never runs under them. Content is centred in the space. */
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100svh - var(--header-h));
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -262,7 +269,7 @@ html { scroll-padding-top: 88px; }
 .hero-grid { width: 100%; }
 
 @media (min-width: 860px) {
-  .hero { padding-block: 40px 80px; }
+  .hero { padding-block: 24px 32px; }   /* was 40/80: the whole hero has to fit one laptop screen */
 }
 
 .hero-grid {
@@ -281,7 +288,7 @@ html { scroll-padding-top: 88px; }
 
 /* The hero's words: headline, one line on what Aster does, two ways forward */
 .hero-text { container-type: inline-size; }
-.hero-sub { color: var(--ink-soft); font-size: 1.06rem; line-height: 1.6; max-width: 34rem; margin-top: 22px; }
+.hero-sub { color: var(--stone);   /* softer than the headline's ink: title first, then the detail */ font-size: 1.06rem; line-height: 1.6; max-width: 34rem; margin-top: 22px; }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .nowrap { white-space: nowrap; }   /* "M-Pesa" must never break at its hyphen */
 .hero-sub, .hero-ctas { animation: hero-headline-in 0.6s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
@@ -310,36 +317,57 @@ html { scroll-padding-top: 88px; }
   margin-bottom: 0;
 }
 
-/* Every card, laptop or phone: tilted by its own --rot, and dealt in by card-in */
+/* -- The stack (Nov 2026): one deck of cards, tilted back in 3D as a whole --
+   Every card shares ONE tilt (turned away to the left, leaning back a little), so they read
+   as layers of a single stack rather than cards thrown on a table. They cascade from the
+   SEO card at the back, through NURA, to Safari Ember in front, with the two phones standing
+   at the right. Everything stays inside the column: nothing hangs into the page margin.
+   .hero-templates gives the 3D its depth (perspective); the positions are % of the stack and
+   the widths cqw of its width, so the arrangement scales with the column. */
+.hero-templates { perspective: 1800px; }
 .template-card,
 .template-phone {
   position: absolute;
-  transform: rotate(var(--rot, 0deg));
-  /* Staggered per card with animation-delay: back to front, the way the stack is layered */
-  animation: card-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform: rotateY(-18deg) rotateX(7deg) rotateZ(-1.5deg);
+  /* Two animations, on two different properties so they never fight:
+     card-in  - dealt in once (opacity and scale), back to front, staggered by --in;
+     float    - then a very slow bob (translate), forever, each card on its own timing. */
+  animation:
+    card-in 0.7s var(--in, 0s) cubic-bezier(0.22, 1, 0.36, 1) both,
+    float var(--fd, 9s) var(--fdel, 0s) ease-in-out infinite;
 }
-.template-card {
-  background: var(--paper-raised);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: 0 20px 40px -22px rgba(20, 19, 15, 0.45), 0 2px 8px rgba(20, 19, 15, 0.08);
-  padding: 10px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .template-card {
-    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
-}
-:root[data-theme="dark"] .template-card {
-  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
 @keyframes card-in {
-  from { opacity: 0; transform: translateY(28px) scale(0.94) rotate(var(--rot, 0deg)); }
-  to   { opacity: 1; transform: translateY(0) scale(1) rotate(var(--rot, 0deg)); }
+  from { opacity: 0; scale: 0.94; }
+  to   { opacity: 1; scale: 1; }
+}
+@keyframes float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 var(--fy, -8px); }   /* a few pixels up and back: alive, not busy */
 }
 @media (prefers-reduced-motion: reduce) {
   .template-card, .template-phone { animation: none; }
+}
+
+/* -- The panels: dark glass --
+   Smoked glass (ink at 78%) with a fine white edge and a lit top rim. backdrop-filter blurs
+   whatever shows through: where cards overlap, the one behind softens through the one in
+   front. Over plain paper there is nothing to blur, so the panel is kept dark enough to read
+   as deliberate glass rather than a grey wash. Inside, the SEO card's ink turns light. */
+.template-card {
+  background: rgba(20, 19, 15, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: 0 30px 60px -28px rgba(20, 19, 15, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  padding: 10px;
+}
+.template-card .tc-card-label { color: rgba(255, 255, 255, 0.72); }
+.template-card .tc-browser-dots span { background: rgba(255, 255, 255, 0.35); }
+.template-analytics {
+  --ink: #f3f1ea; --ink-soft: #d8d4c8; --graphite: #bdb9ad;
+  --line: rgba(255, 255, 255, 0.16); --line-strong: rgba(255, 255, 255, 0.32);
+  color: #f3f1ea;
 }
 
 .tc-card-label {
@@ -349,18 +377,16 @@ html { scroll-padding-top: 88px; }
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--graphite);
 }
 .tc-browser-dots { display: flex; gap: 5px; margin-bottom: 8px; }
-.tc-browser-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--line-strong); }
+.tc-browser-dots span { width: 6px; height: 6px; border-radius: 50%; }
 
 /* -- The phones: a dark body and a notch, no card around them -- */
 .template-phone {
-  width: clamp(62px, 14cqw, 104px);
   padding: 3px;
   background: #121110;
   border-radius: 12px;
-  box-shadow: 0 18px 30px -16px rgba(20, 19, 15, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  box-shadow: 0 24px 40px -18px rgba(20, 19, 15, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.14);
 }
 .template-phone .mini { border-radius: 9px; }
 .template-phone::before {          /* the notch */
@@ -373,27 +399,48 @@ html { scroll-padding-top: 88px; }
   background: #121110;
 }
 
-/* -- Where each card sits (percentages of the stack), and when it's dealt in --
-   Back to front: SEO 0.25s → NURA laptop 0.37s → Safari Ember laptop 0.49s
-   → NURA phone 0.61s → Safari Ember phone 0.73s. The last lands at 1.33s, just as the
-   headline (delay 1.05s, see .hero h1) finishes rising, so the eye ends on the words. */
-.template-analytics { left: 41%;    top: -6%;  z-index: 1; --rot: 3deg;  width: clamp(214px, 44cqw, 300px); animation-delay: 0.25s; }
-.template-nura      { right: 3%;    top: 43%;  z-index: 2; --rot: 5deg;  width: clamp(170px, 44cqw, 300px); animation-delay: 0.37s; }
-.template-se        { left: -4%;    top: 8%;   z-index: 3; --rot: -6deg; width: clamp(170px, 46cqw, 315px); animation-delay: 0.49s; }
-.template-nura-m    { right: -4%;   top: 60%;  z-index: 4; --rot: 8deg;  animation-delay: 0.61s; }
-.template-se-m      { left: 27%;    top: 40%;  z-index: 5; --rot: -3deg; animation-delay: 0.73s; }
+/* -- Where each card sits, when it's dealt in (--in), and how it floats (--fd/--fdel/--fy) --
+   Back to front: SEO 0.25s, NURA 0.37s, Safari Ember 0.49s, NURA phone 0.61s,
+   Safari Ember phone 0.73s. The float periods (7 to 11s) and offsets never line up, so the
+   cards drift independently. */
+.hero-templates {
+  /* Its height follows its own width (the cards are placed in % of both), and on a short
+     screen it narrows so its whole height fits under the header: the composition shrinks
+     as one piece instead of the cards bunching up. It hugs the right of its column. */
+  --stack-ratio: 0.92;     /* height / width */
+  height: auto;            /* the stack's height comes from its width, below */
+  aspect-ratio: 1 / var(--stack-ratio);
+  width: 97%;              /* 3% under the full column: a sliver of air at the page edge */
+  max-width: calc((100svh - var(--header-h) - 56px) / var(--stack-ratio) * 0.97);
+  justify-self: end;
+  margin-right: 40px;      /* nudged in from the column's right edge, toward the words */
+  margin-bottom: 0;
+}
+/* A narrow two-column hero (small laptops, landscape tablets): the column is slim, so the
+   stack runs a little taller to keep each card's headline clear of the one in front */
+@media (min-width: 860px) and (max-width: 1199px) {
+  .hero-templates { --stack-ratio: 1.08; }
+  .template-nura   { top: 31% !important; }   /* !important: these sit above the base positions below */
+  .template-se     { top: 58% !important; }
+  .template-nura-m { top: 41% !important; }
+  .template-se-m   { top: 63% !important; }
+}
+.template-analytics { left: 36%; top: 0;   width: 63.0cqw; z-index: 1; --in: 0.25s; --fd: 10s; --fdel: -2s; }
+.template-nura      { left: 18%; top: 24%; width: 65.1cqw; z-index: 2; --in: 0.37s; --fd: 9s;  --fdel: -5s; }
+.template-se        { left: 0;   top: 55%; width: 63.0cqw; z-index: 3; --in: 0.49s; --fd: 11s; --fdel: -1s; }
+.template-nura-m    { left: 84%; top: 35%; width: 13.7cqw; z-index: 4; --in: 0.61s; --fd: 7s;  --fdel: -3s; --fy: -6px; }
+.template-se-m      { left: 66%; top: 60%; width: 15.8cqw; z-index: 5; --in: 0.73s; --fd: 8s;  --fdel: -6s; --fy: -6px; }
 
-/* One column (phones, small tablets): nothing may hang past the screen edge */
+/* One column (phones, small tablets): the cards take a bigger share of the narrow column */
 @media (max-width: 859px) {
-  /* Cards have minimum widths, so in a narrow column they take a bigger share of it. Here the
-     SEO card sits on top, and the two sites below it, each laptop clear of anything that
-     would cover its headline. */
-  .hero-templates { height: clamp(400px, 124cqw, 480px); }
-  .template-analytics { left: auto; right: 0; top: -4%; z-index: 1; width: clamp(200px, 70cqw, 260px); }
-  .template-se { left: 0; top: 33%; }
-  .template-se-m { left: 30%; top: 57%; }
-  .template-nura { top: 49%; right: 0; }
-  .template-nura-m { right: 0; top: 66%; }
+  /* Capped at 520px wide: on a tablet the column is wide enough to blow the cards up
+     past the stack's height, so the stack keeps a phone-like size, centred */
+  .hero-templates { width: 100%; max-width: 520px; margin-inline: auto; height: auto; aspect-ratio: 1 / 1.14; justify-self: center; }
+  .template-analytics { left: 30%; width: 68cqw; }
+  .template-nura      { left: 12%; top: 30%; width: 70cqw; }
+  .template-se        { left: 0;   top: 59%; width: 68cqw; }
+  .template-se-m      { left: 70%; top: 63%; width: 18cqw; }
+  .template-nura-m    { left: 84%; top: 38%; width: 14cqw; }
 }
 
 /* -- SEO card: the real PageSpeed scores, in the page's own black and white --
@@ -599,11 +646,16 @@ html { scroll-padding-top: 88px; }
   /* Sized by its own column (cqw of .hero-text), so it always fits in two lines beside the work */
   font-size: clamp(2.3rem, 10.6cqw, 3.4rem);
   font-weight: 500;
-  line-height: 1.08;
+  line-height: 1.18;          /* was 1.08: room above the second line for the script word's tall loops */
   letter-spacing: -0.01em;
   /* The words lead now: the headline rises first, the line under it and the buttons follow
      (0.35s), while the cards are dealt in beside them (0.25s to 1.33s). */
   animation: hero-headline-in 0.65s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+/* Two columns: the words 3% under their full size, for a little more paper around the hero */
+@media (min-width: 860px) {
+  .hero h1 { font-size: clamp(2.23rem, 10.28cqw, 3.3rem); }
+  .hero-sub { font-size: 1.03rem; }
 }
 .hero h1 em {
   font-style: italic;
