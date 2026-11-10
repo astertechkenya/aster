@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aster Tech Solutions | Web Design, Development &amp; SEO in Nairobi</title>
-  <meta name="description" content="Aster Tech Solutions builds fast, accessible websites that take M-Pesa and card payments, and the SEO to get them found. Based in Nairobi, Kenya." />
+  <title>Aster Technologies | Web Design, Development &amp; SEO in Nairobi</title>
+  <meta name="description" content="Aster Technologies builds fast, accessible websites that take M-Pesa and card payments, and the SEO to get them found. Based in Nairobi, Kenya." />
   <!-- The browser bar matches the page, in light and dark mode -->
   <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)" />
@@ -22,6 +22,7 @@
   <script src="js/films.js" defer></script>
   <script src="js/scroll-theme.js" defer></script>
   <script src="js/marks.js" defer></script>
+  <script src="js/demos.js" defer></script>
 </head>
 <body>
 <!-- Reusable marks, referenced with <use> everywhere they appear. -->
@@ -65,17 +66,19 @@
 
 <header>
   <div class="wrap nav">
+    <!-- Left: the two places a visitor most wants to go -->
+    <nav class="nav-links" aria-label="Main">
+      <a href="#services"><span class="nav-word">Services<svg class="nav-scribble" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M2,4.5 C20,2 48,6.5 70,3.6 C82,2.4 91,3.4 98,3" pathLength="1" /><path d="M7,9.6 C30,7.4 58,10.8 93,7.8" pathLength="1" /></svg></span></a>
+      <a href="#work"><span class="nav-word">Portfolio<svg class="nav-scribble" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M2,4.5 C20,2 48,6.5 70,3.6 C82,2.4 91,3.4 98,3" pathLength="1" /><path d="M7,9.6 C30,7.4 58,10.8 93,7.8" pathLength="1" /></svg></span></a>
+    </nav>
+    <!-- Centre: the logo -->
     <a class="logo" href="#top">
       <svg class="wordmark-mark" viewBox="-9 -9 354.6 124" aria-hidden="true"><use href="#aster-wordmark" /></svg>
-      <span class="sr-only">Aster</span>
+      <span class="logo__tag" aria-hidden="true">Technologies</span>
+      <span class="sr-only">Aster Technologies</span>
     </a>
-    <nav class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#work">Work</a>
-      <a href="#process">Process</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <a class="btn btn-primary" href="#contact">Start a project</a>
+    <!-- Right: the one action that matters -->
+    <a class="btn btn-primary btn--loop" href="#contact">Start a project<svg class="btn-loop" viewBox="0 0 160 56" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M22,50 C6,44 2,30 8,18 C16,6 50,3 82,3 C116,3 150,6 156,22 C161,38 140,52 96,53 C62,54 26,52 12,42 C4,36 4,24 14,14 C20,9 30,6 40,5" pathLength="1" /></svg></a>
   </div>
 </header>
 
@@ -267,28 +270,173 @@
     <h2 class="note services__title" id="services-h">services<span class="mark mark--note" aria-hidden="true"><svg viewBox="0 0 46 34" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><path d="M3,8 C17,3 31,7 34,24" style="--d:0.15s" /><path d="M27.5,19 L34.5,25.5 L39,16.5" style="--d:0.6s" /></svg></span></h2>
     <div class="offer-grid">
       <article class="offer">
-        <p class="bearing">Websites</p>
-        <h3>Built to move your business <span class="mark mark--circle mark--rocket">forward<svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M10,30 C2,22 6,8 30,5 C55,2 88,4 96,16 C102,28 82,37 52,37 C26,37 6,33 4,22 C3,13 14,6 26,4" style="--d:0.00s" /></svg><svg class="mark__doodle" viewBox="0 0 40 40" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><g transform="rotate(45 20 20)"><path d="M20,4 C26,9 27,17 26,27 L14,27 C13,17 14,9 20,4" style="--d:0.75s" /><path d="M17.4,14 A2.6,2.6 0 1,0 22.6,14 A2.6,2.6 0 1,0 17.4,14" style="--d:1.20s" /><path d="M14,20.5 L9,29 L14,27" style="--d:1.35s" /><path d="M26,20.5 L31,29 L26,27" style="--d:1.45s" /><path d="M17,27.5 C17,31 19,33 20,36.5 C21,33 23,31 23,27.5" style="--d:1.60s" /><path d="M14.5,32 L13,38" style="--d:1.75s" /><path d="M25.5,32 L27,38" style="--d:1.82s" /></g></svg></span></h3>
-        <p class="offer__lede">Hand-built sites for Kenyan businesses: fast on a phone, easy to use, and able to take <span class="mark mark--highlight">bookings and payments<svg viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M1,13 C28,10 66,12 99,8" style="--d:0.00s" /></svg></span>.</p>
-        <ul class="ticks">
-          <li>Designed for your business, not a template</li>
-          <li>Mobile-first and accessible, fast on any phone</li>
-          <li>M-Pesa and card payments, bookings, online shops</li>
-          <li>An admin area to update prices, stock and content yourself</li>
+        <div class="offer__intro">
+          <p class="bearing">Modern Websites</p>
+          <h3>Built to move your business <span class="mark mark--circle mark--rocket">forward<svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M10,30 C2,22 6,8 30,5 C55,2 88,4 96,16 C102,28 82,37 52,37 C26,37 6,33 4,22 C3,13 14,6 26,4" style="--d:0.00s" /></svg><svg class="mark__doodle" viewBox="0 0 40 40" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><g transform="rotate(45 20 20)"><path d="M20,4 C26,9 27,17 26,27 L14,27 C13,17 14,9 20,4" style="--d:0.75s" /><path d="M17.4,14 A2.6,2.6 0 1,0 22.6,14 A2.6,2.6 0 1,0 17.4,14" style="--d:1.20s" /><path d="M14,20.5 L9,29 L14,27" style="--d:1.35s" /><path d="M26,20.5 L31,29 L26,27" style="--d:1.45s" /><path d="M17,27.5 C17,31 19,33 20,36.5 C21,33 23,31 23,27.5" style="--d:1.60s" /><path d="M14.5,32 L13,38" style="--d:1.75s" /><path d="M25.5,32 L27,38" style="--d:1.82s" /></g></svg></span></h3>
+          <p class="offer__lede">Hand-built sites for Kenyan businesses: fast on a phone, easy to use, and able to take <span class="mark mark--highlight">bookings and payments<svg viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M1,13 C28,10 66,12 99,8" style="--d:0.00s" /></svg></span>.</p>
+          <p class="offer__price">From <strong>[KSh PRICE]</strong> · one-off</p>
+        </div>
+        <!-- Demo: a shop app, as if screen-recorded on a phone. A fingertip scrolls down in two
+             swipes and taps "Pay with M-Pesa"; the phone's own M-Pesa prompt pops up, the PIN is
+             typed and sent, the M-PESA confirmation message drops in, and the order is confirmed.
+             The product is made up; the motion is js/demos.js. -->
+        <div class="demo demo-web" data-demo="web" aria-hidden="true">
+          <svg viewBox="0 0 220 400" focusable="false">
+            <defs>
+              <clipPath id="dw-screen"><rect x="6" y="6" width="208" height="388" rx="28"/></clipPath>
+              <clipPath id="dw-below-header"><rect x="0" y="60" width="220" height="380"/></clipPath>
+              <linearGradient id="dw-body" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a3835"/><stop offset=".5" stop-color="#121110"/><stop offset="1" stop-color="#2a2826"/></linearGradient>
+              <linearGradient id="dw-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdeee6"/><stop offset="1" stop-color="#f6d3c2"/></linearGradient>
+              <linearGradient id="dw-cupg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f59273"/><stop offset=".55" stop-color="#e8684a"/><stop offset="1" stop-color="#c24e33"/></linearGradient>
+              <linearGradient id="dw-bandg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4643"/><stop offset="1" stop-color="#1b1918"/></linearGradient>
+              <linearGradient id="dw-thumb1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3ecf7"/><stop offset="1" stop-color="#c6d6ec"/></linearGradient>
+              <linearGradient id="dw-thumb2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef0e4"/><stop offset="1" stop-color="#d7dcc2"/></linearGradient>
+              <linearGradient id="dw-fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".09"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
+              <filter id="dw-soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+              <filter id="dw-lift" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1a7a30" flood-opacity=".3"/></filter>
+              <filter id="dw-card" x="-20%" y="-30%" width="140%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity=".22"/></filter>
+              <filter id="dw-keysh" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1" stdDeviation=".4" flood-opacity=".25"/></filter>
+            </defs>
+            <!-- the phone body -->
+            <rect x="0" y="0" width="220" height="400" rx="34" fill="url(#dw-body)"/>
+            <g clip-path="url(#dw-screen)">
+              <rect class="dw-screen-bg" x="6" y="6" width="208" height="388"/>
+              <!-- the page: scrolls under the header -->
+              <g clip-path="url(#dw-below-header)"><g class="dw-page">
+                <rect x="14" y="66" width="192" height="160" rx="12" fill="url(#dw-bg)"/>
+                <g transform="translate(0 6)">
+                  <ellipse cx="110" cy="194" rx="46" ry="5" fill="#7a3a26" opacity=".22" filter="url(#dw-soft)"/>
+                  <path d="M69 138V122C69 76 151 76 151 122V138H143V124C143 88 77 88 77 124V138Z" fill="url(#dw-bandg)"/>
+                  <path d="M72 120C73 86 147 86 148 120" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1.4" stroke-linecap="round"/>
+                  <rect x="81" y="142" width="9" height="38" rx="4.5" fill="#2b2826"/>
+                  <rect x="130" y="142" width="9" height="38" rx="4.5" fill="#2b2826"/>
+                  <rect x="60" y="134" width="25" height="50" rx="11" fill="url(#dw-cupg)"/>
+                  <rect x="135" y="134" width="25" height="50" rx="11" fill="url(#dw-cupg)"/>
+                  <rect x="64" y="141" width="4" height="30" rx="2" fill="#fff" opacity=".35"/>
+                  <rect x="139" y="141" width="4" height="30" rx="2" fill="#fff" opacity=".35"/>
+                </g>
+                <circle cx="100" cy="236" r="2.4" fill="#1d1b19"/><circle cx="110" cy="236" r="2.4" fill="#d6d3cc"/><circle cx="120" cy="236" r="2.4" fill="#d6d3cc"/>
+                <text class="dw-title" x="16" y="262">Wireless Headphones</text>
+                <text class="dw-price" x="16" y="288">KSh 2,500</text>
+                <path d="M16 304H204" stroke="#ece9e2" stroke-width="1"/>
+                <text class="dw-h" x="16" y="322">About this item</text>
+                <text class="dw-body" x="16" y="337">Up to 40 hours of battery and fast USB-C</text>
+                <text class="dw-body" x="16" y="348">charging. Deep bass, soft memory-foam</text>
+                <text class="dw-body" x="16" y="359">cushions, and it folds flat to fit in</text>
+                <text class="dw-body" x="16" y="370">any bag.</text>
+                <text class="dw-h" x="16" y="396">Specifications</text>
+                <text class="dw-meta" x="16" y="414">Battery life</text><text class="dw-spec" x="204" y="414" text-anchor="end">40 hours</text><path d="M16 419H204" stroke="#f0eee9" stroke-width="1"/><text class="dw-meta" x="16" y="430">Bluetooth</text><text class="dw-spec" x="204" y="430" text-anchor="end">5.3</text><path d="M16 435H204" stroke="#f0eee9" stroke-width="1"/><text class="dw-meta" x="16" y="446">Weight</text><text class="dw-spec" x="204" y="446" text-anchor="end">250 g</text><path d="M16 451H204" stroke="#f0eee9" stroke-width="1"/><text class="dw-meta" x="16" y="462">Warranty</text><text class="dw-spec" x="204" y="462" text-anchor="end">1 year</text>
+                <rect class="dw-btn" x="16" y="488" width="188" height="36" rx="10" filter="url(#dw-lift)"/>
+                <text class="dw-btn-label" x="110" y="510" text-anchor="middle">Pay with M-Pesa</text>
+                <text class="dw-btn-wait" x="110" y="510" text-anchor="middle">Waiting for payment&hellip;</text>
+                <rect x="16" y="532" width="188" height="32" rx="10" fill="#f1efea"/>
+                <text class="dw-btn2" x="110" y="552" text-anchor="middle">Add to cart</text>
+                <text class="dw-h" x="16" y="590">You may also like</text>
+                <rect x="16" y="598" width="90" height="72" rx="10" fill="url(#dw-thumb1)"/><rect x="114" y="598" width="90" height="72" rx="10" fill="url(#dw-thumb2)"/>
+              </g></g>
+              <!-- the status bar and the app's top bar stay put while the page scrolls -->
+              <rect class="dw-screen-bg" x="0" y="0" width="220" height="60"/>
+              <rect x="0" y="60" width="220" height="6" fill="url(#dw-fade)"/>
+              <text class="dw-clock" x="26" y="22">9:41</text>
+              <rect x="88" y="11" width="44" height="13" rx="6.5" fill="#000"/>
+              <path d="M164 21v-2M167.5 21v-4M171 21v-6M174.5 21v-8" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+              <rect x="180" y="14" width="18" height="9" rx="2.5" fill="none" stroke="#111" stroke-opacity=".45"/><rect x="181.5" y="15.5" width="13" height="6" rx="1.2" fill="#111"/>
+              <path d="M23 36l-6 6 6 6" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="168" cy="42" r="5" fill="none" stroke="#111" stroke-width="1.6"/><path d="M171.6 45.6 175 49" stroke="#111" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M184 36h3l2.6 9.4h9.4l2.2-6.6h-13" fill="none" stroke="#111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="190.5" cy="49" r="1.5" fill="#111"/><circle cx="198" cy="49" r="1.5" fill="#111"/>
+              <rect class="dw-scrollbar" x="209" y="66" width="2.5" height="80" rx="1.25"/>
+              <!-- the touch indicator, as a screen recording shows it, and the tap ripple -->
+              <circle class="dw-ripple" cx="0" cy="0" r="14"/>
+              <!-- the phone's M-Pesa prompt: a dim backdrop, the system pop-up, and the number pad -->
+              <rect class="dw-backdrop" x="6" y="6" width="208" height="388"/>
+              <g class="dw-prompt">
+                <rect x="20" y="118" width="180" height="128" rx="12" fill="#fff" filter="url(#dw-card)"/>
+                <text class="dw-p" x="34" y="146">Pay Ksh 2,500.00 to</text>
+                <text class="dw-p" x="34" y="159">Online Shop.</text>
+                <text class="dw-p" x="34" y="178">Enter M-PESA PIN:</text>
+                <path d="M34 204H186" stroke="#2f9e44" stroke-width="1.4"/>
+                <circle class="dw-dot" cx="40" cy="195" r="2.8"/><circle class="dw-dot" cx="50" cy="195" r="2.8"/><circle class="dw-dot" cx="60" cy="195" r="2.8"/><circle class="dw-dot" cx="70" cy="195" r="2.8"/>
+                <rect class="dw-caret" x="38" y="188" width="1.2" height="12"/>
+                <text class="dw-pbtn" x="138" y="232" text-anchor="end">CANCEL</text>
+                <text class="dw-pbtn" x="184" y="232" text-anchor="end">SEND</text>
+              </g>
+              <g class="dw-keyboard">
+                <rect x="0" y="258" width="220" height="142" fill="#e4e4e8"/>
+                <g class="dw-key" data-key="1"><rect x="12" y="266" width="60" height="26" rx="5"/><text x="42" y="283.5" text-anchor="middle">1</text></g><g class="dw-key" data-key="2"><rect x="80" y="266" width="60" height="26" rx="5"/><text x="110" y="283.5" text-anchor="middle">2</text></g><g class="dw-key" data-key="3"><rect x="148" y="266" width="60" height="26" rx="5"/><text x="178" y="283.5" text-anchor="middle">3</text></g><g class="dw-key" data-key="4"><rect x="12" y="296" width="60" height="26" rx="5"/><text x="42" y="313.5" text-anchor="middle">4</text></g><g class="dw-key" data-key="5"><rect x="80" y="296" width="60" height="26" rx="5"/><text x="110" y="313.5" text-anchor="middle">5</text></g><g class="dw-key" data-key="6"><rect x="148" y="296" width="60" height="26" rx="5"/><text x="178" y="313.5" text-anchor="middle">6</text></g><g class="dw-key" data-key="7"><rect x="12" y="326" width="60" height="26" rx="5"/><text x="42" y="343.5" text-anchor="middle">7</text></g><g class="dw-key" data-key="8"><rect x="80" y="326" width="60" height="26" rx="5"/><text x="110" y="343.5" text-anchor="middle">8</text></g><g class="dw-key" data-key="9"><rect x="148" y="326" width="60" height="26" rx="5"/><text x="178" y="343.5" text-anchor="middle">9</text></g><g class="dw-key" data-key="⌫"><rect x="12" y="356" width="60" height="26" rx="5"/><text x="42" y="373.5" text-anchor="middle">⌫</text></g><g class="dw-key" data-key="0"><rect x="80" y="356" width="60" height="26" rx="5"/><text x="110" y="373.5" text-anchor="middle">0</text></g><g class="dw-key" data-key="↵"><rect x="148" y="356" width="60" height="26" rx="5"/><text x="178" y="373.5" text-anchor="middle">↵</text></g>
+              </g>
+              <!-- the M-PESA confirmation message, dropping in from the top -->
+              <g class="dw-note">
+                <rect x="12" y="10" width="196" height="50" rx="14" fill="#fff" filter="url(#dw-card)"/>
+                <circle cx="31" cy="35" r="10" fill="#2f9e44"/>
+                <path d="M25.5 31.5h11v7h-6.5l-3 2.5v-2.5h-1.5Z" fill="#fff"/>
+                <text class="dw-note-t" x="48" y="27">M-PESA</text><text class="dw-meta" x="196" y="27" text-anchor="end">now</text>
+                <text class="dw-note-b" x="48" y="39">Confirmed. Ksh2,500.00 paid to</text>
+                <text class="dw-note-b" x="48" y="50">Online Shop. Thank you.</text>
+              </g>
+              <!-- the shop confirms the order -->
+              <g class="dw-done">
+                <rect x="6" y="252" width="208" height="160" rx="20" fill="#fff" filter="url(#dw-card)"/>
+                <rect x="96" y="259" width="28" height="4" rx="2" fill="#d9d6cf"/>
+                <circle class="dw-check-bg" cx="110" cy="298" r="20"/>
+                <path class="dw-check" d="M100.5 298.5l6.5 6.5L120 292" pathLength="1"/>
+                <text class="dw-ok" x="110" y="340" text-anchor="middle">Payment received</text>
+                <text class="dw-meta" x="110" y="354" text-anchor="middle">Your order is confirmed</text>
+              </g>
+              <g class="dw-finger"><circle r="11"/></g>
+              <rect x="84" y="383" width="52" height="4" rx="2" fill="#111"/>
+            </g>
+          </svg>
+        </div>
+        <ul class="offer__details">
+          <li><strong>Designed for your business, not a template</strong><span>Every page is planned around what your customers need to do, so the site looks like you and nobody else.</span></li>
+          <li><strong>Fast on any phone</strong><span>Built mobile-first and kept light, so pages open quickly even on a budget phone and a weak connection.</span></li>
+          <li><strong>Accessible to everyone</strong><span>Clear contrast, readable text and full keyboard and screen-reader support, so no customer is shut out.</span></li>
+          <li><strong>Payments and bookings built in</strong><span>M-Pesa and card payments, bookings and online shops, with every payment checked so none goes missing.</span></li>
+          <li><strong>An admin area you control</strong><span>Update prices, stock, photos and text yourself, without waiting on a developer.</span></li>
+          <li><strong>Yours to keep</strong><span>You own the domain, the content and the code.</span></li>
         </ul>
-        <p class="offer__price">From <strong>[KSh PRICE]</strong> · one-off</p>
       </article>
       <article class="offer">
-        <p class="bearing">Google SEO</p>
-        <h3>Help the right customers <span class="mark mark--double mark--torch">find<svg viewBox="0 0 100 14" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M2,6 C30,2 70,8 98,4" style="--d:0.00s" /><path d="M10,11 C35,8 65,12 90,9" style="--d:0.45s" /></svg><svg class="mark__doodle" viewBox="0 0 50 30" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><g transform="rotate(50 22 16)"><path d="M2,11 C7,10.5 13,10.6 17,10.4 L17.2,17.6 C13,17.8 7,17.6 2.2,17.2 C1,15.6 1,12.8 2,11" style="--d:1.25s" /><path d="M17,10.4 L25,7 C26.2,10.5 26.2,17.5 25,21 L17.2,17.6" style="--d:1.60s" /><path d="M7,14 L11,14" style="--d:1.85s" /><path d="M28,6 L46,-1" style="--d:1.95s" /><path d="M28,22 L46,29" style="--d:2.05s" /><path d="M30,14 L42,14" style="--d:2.15s" /></g></svg></span> you</h3>
-        <p class="offer__lede">So the people already searching for what you sell find you, not the business down the road.</p>
-        <ul class="ticks">
-          <li>Google Business Profile set up and kept current</li>
-          <li>Technical SEO: speed, structure, search-ready pages</li>
-          <li>Pages written around what your customers actually search</li>
-          <li>A monthly report in plain language: what moved, what&rsquo;s next</li>
+        <div class="offer__intro">
+          <p class="bearing">Google SEO</p>
+          <h3>Help the right customers <span class="mark mark--double mark--torch">find<svg viewBox="0 0 100 14" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M2,6 C30,2 70,8 98,4" style="--d:0.00s" /><path d="M10,11 C35,8 65,12 90,9" style="--d:0.45s" /></svg><svg class="mark__doodle" viewBox="0 0 50 30" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><g transform="rotate(50 22 16)"><path d="M2,11 C7,10.5 13,10.6 17,10.4 L17.2,17.6 C13,17.8 7,17.6 2.2,17.2 C1,15.6 1,12.8 2,11" style="--d:1.25s" /><path d="M17,10.4 L25,7 C26.2,10.5 26.2,17.5 25,21 L17.2,17.6" style="--d:1.60s" /><path d="M7,14 L11,14" style="--d:1.85s" /><path d="M28,6 L46,-1" style="--d:1.95s" /><path d="M28,22 L46,29" style="--d:2.05s" /><path d="M30,14 L42,14" style="--d:2.15s" /></g></svg></span> you</h3>
+          <p class="offer__lede">So the people already searching for what you sell find you, not the business down the road.</p>
+          <p class="offer__price">From <strong>[KSh PRICE]</strong> · per month</p>
+        </div>
+        <!-- Demo: a search typed in, then "Your business" climbs to the top (js/demos.js) -->
+        <div class="demo demo-seo" data-demo="seo" aria-hidden="true">
+          <div class="sd-browser">
+            <div class="sd-bar"><i></i><i></i><i></i><span class="sd-time"></span></div>
+              <span class="sd-load"></span>
+              <svg class="sd-cursor" viewBox="0 0 14 20" width="14" height="20"><path d="M1 1v15.5l4.2-4 3 6.6 2.6-1.2-3-6.4H13Z"/></svg>
+            <div class="sd-search">
+              <svg viewBox="0 0 14 14" width="13" height="13"><circle cx="6" cy="6" r="4.5"/><path d="M9.5 9.5 13 13"/></svg>
+              <span class="sd-query" data-text="best restaurant in Westlands"></span><span class="sd-caret"></span>
+            </div>
+            <div class="sd-results">
+                <div class="sd-row" style="--pos:1"><div class="sd-site"><i class="sd-fav"></i><span class="sd-sitebars"><b style="width:46%"></b><b style="width:70%"></b></span></div><span class="sd-t" style="width:78%"></span><span class="sd-d" style="width:64%"></span></div>
+                <div class="sd-row" style="--pos:2"><div class="sd-site"><i class="sd-fav"></i><span class="sd-sitebars"><b style="width:46%"></b><b style="width:70%"></b></span></div><span class="sd-t" style="width:62%"></span><span class="sd-d" style="width:80%"></span></div>
+                <div class="sd-row" style="--pos:3"><div class="sd-site"><i class="sd-fav"></i><span class="sd-sitebars"><b style="width:46%"></b><b style="width:70%"></b></span></div><span class="sd-t" style="width:84%"></span><span class="sd-d" style="width:52%"></span></div>
+                <div class="sd-row sd-you" style="--pos:4">
+                  <div class="sd-site">
+                    <i class="sd-fav sd-fav--you">Y</i>
+                    <span><span class="sd-sitename">Your Business</span><span class="sd-url">https://yourbusiness.co.ke &rsaquo; menu</span></span>
+                  </div>
+                  <span class="sd-rank">#4</span>
+                  <svg class="sd-pin" viewBox="0 0 22 30" width="16" height="22"><path d="M11 28C11 28 3 17 3 11a8 8 0 0 1 16 0c0 6-8 17-8 17Z"/><circle cx="11" cy="11" r="3"/></svg>
+                  <p class="sd-title">Your Business | Westlands Restaurant &amp; Grill</p>
+                  <p class="sd-snippet"><b>Nyama choma, Swahili dishes and cocktails</b>, in the heart of Westlands. Book a table online.</p>
+                </div>
+              </div>
+          </div>
+        </div>
+        <ul class="offer__details">
+          <li><strong>Google Business Profile</strong><span>Set up and kept current, so you appear on Google Maps and in local searches with the right hours, photos and contact details.</span></li>
+          <li><strong>Technical SEO</strong><span>Speed, structure and search-ready pages, so Google can read your site properly and rank it.</span></li>
+          <li><strong>Pages built around real searches</strong><span>Find the words your customers actually type, then write pages that answer them.</span></li>
+          <li><strong>A monthly report in plain language</strong><span>What moved, what didn&rsquo;t and what&rsquo;s next, without the jargon.</span></li>
+          <li><strong>Honest about timing</strong><span>SEO builds over months, not days. The monthly report lets you watch the progress as it grows.</span></li>
         </ul>
-        <p class="offer__price">From <strong>[KSh PRICE]</strong> · per month</p>
       </article>
     </div>
   </section>
@@ -492,7 +640,7 @@
     <div>
       <span class="foot-mark">
         <svg class="star-svg" viewBox="0 0 100 100" aria-hidden="true"><use href="#aster-star" /></svg>
-        Aster Tech Solutions
+        Aster Technologies
       </span>
       <p class="foot-tag">Websites &amp; Google SEO · Nairobi, Kenya</p>
     </div>

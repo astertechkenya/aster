@@ -1,4 +1,4 @@
-/* Aster Tech Solutions: the site's styles.
+/* Aster Technologies: the site's styles.
    Fonts first (self-hosted from /fonts: no third-party requests), then the design tokens,
    then each part of the page in reading order. */
 
@@ -192,35 +192,102 @@ header {
 :root { --header-h: 64px; }
 /* Links to #sections land below the header, not hidden under it */
 html { scroll-padding-top: var(--header-h); }
+/* Three columns: menu on the left, logo dead centre, the project button on the right.
+   The outer columns are equal (1fr each), so the logo is centred on the page, not just
+   between whatever sits beside it. */
 .nav {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);   /* minmax(0,…): the button can't widen its side and push the logo off centre */
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
+  gap: 16px;
   min-height: calc(var(--header-h) - 1px);   /* slimmer than before (88px); -1px for the border below it */
-  padding-block: 8px;
+  padding-block: 7px;              /* the logo and its tagline just fit in 64px */
 }
+.nav .btn { justify-self: end; }
 header .btn { padding: 8px 16px; font-size: 0.86rem; }   /* the header's button, a size down to suit the slimmer bar */
+/* Phones: a tighter bar, so the logo can sit truly centred between the links and the button */
+@media (max-width: 479px) {
+  .nav { gap: 8px; }
+  header .btn { padding: 8px 12px; font-size: 0.8rem; }
+  header .logo .wordmark-mark { height: 1.55rem; }
+  header .logo .logo__tag { font-size: 0.43rem; }   /* 28% of the 1.55rem wordmark, as on desktop */   /* "header" outranks the base size set just below */
+}
 .logo {
   display: inline-flex;
+  flex-direction: column;          /* the wordmark, and its line underneath */
   align-items: center;
   text-decoration: none;
+  color: var(--ink);
+}
+/* "TECHNOLOGIES" under the wordmark, in the proportions of the original logo (the old hero
+   wordmark, which matched the actual logo file): Roboto Condensed capitals, letter-spacing
+   0.22em, a size 28% of the wordmark's height, and a gap of half its own size above it. */
+.logo__tag {
+  margin-top: 0.5em;              /* was 0.18em: the original's gap */
+  font-family: var(--font-condensed);
+  font-weight: 500;
+  font-size: 0.6rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;          /* the original's spacing (was 0.32em) */
+  text-indent: 0.22em;             /* re-centres it: letter-spacing adds space after the last letter too */
 }
 .logo .wordmark-mark {
-  height: 1.75rem; /* a touch smaller for the slimmer header (was 1.98rem); 1.6rem, rescaled for the viewBox's new 24-unit margin so the letters read the same size as before */
+  height: 2.15rem; /* bigger again (was 1.75rem), now that it shares the bar with only two links; 1.6rem, rescaled for the viewBox's new 24-unit margin so the letters read the same size as before */
 }
 
+/* The two links, on the left: quiet text that darkens on hover, while a quick scribbled
+   double underline is drawn under the word (and wiped back when you leave).
+   The scribble's SVG is sized close to its viewBox's own proportions (100 x 12), so the
+   stretch to each word's width is nearly even and the pen line keeps its weight. */
 .nav-links {
-  display: none;
+  justify-self: start;
+  display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
   font-size: 0.94rem;
 }
-.nav-links a { text-decoration: none; color: var(--ink-soft); }
-.nav-links a:hover { color: var(--ink); }
-
-@media (min-width: 720px) {
-  .nav-links { display: flex; }
+.nav-links a {
+  text-decoration: none;
+  color: var(--ink-soft);
+  padding-block: 10px;             /* a taller tap target than the text alone */
+  transition: color 0.2s ease;
+}
+.nav-word { position: relative; display: inline-block; }
+.nav-scribble {
+  position: absolute;
+  left: -4%; top: 100%;
+  width: 108%; height: 0.5em;
+  max-width: none;
+  overflow: visible;
+  pointer-events: none;
+}
+.nav-scribble path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.2;
+  stroke-linecap: butt;            /* flat ends: a round cap leaves a dot where the dash is parked */
+  stroke-dasharray: 1;             /* pathLength="1": one dash the length of the line... */
+  stroke-dashoffset: 1;            /* ...pushed off its start */
+  opacity: 0;
+  transition: stroke-dashoffset 0.25s cubic-bezier(0.65, 0, 0.35, 1), opacity 0s 0.25s;   /* leaving: wipe back */
+}
+.nav-links a:hover, .nav-links a:focus-visible { color: var(--ink); }
+.nav-links a:hover .nav-scribble path,
+.nav-links a:focus-visible .nav-scribble path {
+  stroke-dashoffset: 0; opacity: 1;
+  transition: stroke-dashoffset 0.3s cubic-bezier(0.65, 0, 0.35, 1), opacity 0s;
+}
+.nav-links a:hover .nav-scribble path:nth-child(2),
+.nav-links a:focus-visible .nav-scribble path:nth-child(2) {   /* the second stroke follows the first */
+  transition: stroke-dashoffset 0.3s 0.18s cubic-bezier(0.65, 0, 0.35, 1), opacity 0s 0.2s;   /* shown only once its turn comes: no stray pen dot */
+}
+.nav-links a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .nav-links a, .nav-scribble path { transition: none !important; }
+}
+@media (max-width: 479px) {
+  header .nav-links { gap: 10px; font-size: 0.78rem; }   /* phones: a size down so the bar fits */
 }
 
 .btn {

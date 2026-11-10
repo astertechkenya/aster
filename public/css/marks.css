@@ -90,7 +90,7 @@
 .mark__doodle path { stroke-width: 0.05em; }
 /* Headroom: an inline-block's top margin makes only ITS line taller, so the line with the
    drawing opens up to fit it and the rest of the heading keeps its normal spacing. */
-.mark--rocket, .mark--torch { margin-top: 0.72em; }   /* the same on both, so the two offers' headings line up */
+.mark--rocket, .mark--torch { margin-top: 0.72em; }   /* headroom for the rocket and torch above these words */
 .mark__doodle .thick { stroke-width: 0.1em; }   /* a handle, a tick: the heavier parts of a drawing */
 
 /* "solve": a magnifying glass up to the right of the loop, its handle reaching in */

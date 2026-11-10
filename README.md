@@ -1,6 +1,6 @@
-# Aster Tech Solutions
+# Aster Technologies
 
-The website for Aster Tech Solutions: web design, development and SEO from Nairobi.
+The website for Aster Technologies: web design, development and SEO from Nairobi.
 
 A static site: plain HTML and CSS, no build step and no JavaScript yet. Netlify publishes the
 `public/` folder as it is (see `netlify.toml`).

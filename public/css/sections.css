@@ -11,11 +11,25 @@
 .services { border-top: 1px solid var(--line); padding-block: 72px; }
 /* See-through, so the background lights show behind the offers: the divider between them is a border, not the grid's background */
 .offer-grid { display: grid; border: 1px solid var(--line); }
+/* One offer after another, each the full width, so there's room to explain it: on wide
+   screens the pitch sits on the left and what's included on the right. */
 .offer + .offer { border-top: 1px solid var(--line); }
-@media (min-width: 780px) { .offer + .offer { border-top: 0; border-left: 1px solid var(--line); } }
-@media (min-width: 780px) { .offer-grid { grid-template-columns: 1fr 1fr; } }
-.offer { padding: 36px 28px; display: flex; flex-direction: column; gap: 16px; }
-@media (min-width: 780px) { .offer { padding: 44px 40px; } }
+.offer { padding: 36px 28px; display: grid; gap: 32px; }
+.offer__intro { display: flex; flex-direction: column; gap: 16px; }
+@media (min-width: 900px) {
+  .offer { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px 64px; padding: 56px 48px; align-items: center; }
+  .offer .demo { grid-column: 1; grid-row: 1; }      /* the picture on the left... */
+  .offer__intro { grid-column: 2; grid-row: 1; }     /* ...the words on the right */
+  .offer__details { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; column-gap: 48px; }   /* the list runs across both columns, two by two */
+  .offer__details li:nth-child(-n+2) { border-top: 0; }
+}
+/* What's included: each point named, then a sentence on what it means for the customer */
+.offer__details { list-style: none; margin: 0; padding: 8px 0 0; display: grid; border-top: 1px solid var(--line); }
+.offer__details li { display: grid; gap: 4px; padding: 16px 0 16px 22px; position: relative; border-top: 1px solid var(--line); }
+.offer__details li::before { content: ""; position: absolute; left: 0; top: 1.4em; width: 7px; height: 7px; background: var(--ink); transform: rotate(45deg); }
+.offer__details li:first-child { border-top: 0; }   /* the list has its own line above it */
+.offer__details strong { font-weight: 600; font-size: 1rem; color: var(--ink); }
+.offer__details span { color: var(--stone); font-size: 0.95rem; line-height: 1.55; }
 .offer h3 { font-size: clamp(1.7rem, 2.6vw, 2.1rem); font-weight: 500; line-height: 1.2; }
 /* The services opening: just the label, then the two offers carry the headlines.
    The headings leave room above for the drawings on "forward" and "find". */
@@ -25,7 +39,7 @@
 .ticks { display: grid; gap: 10px; margin-top: 4px; }
 .ticks li { position: relative; padding-left: 20px; font-size: 0.95rem; }
 .ticks li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 7px; height: 7px; background: var(--ink); transform: rotate(45deg); }
-.offer__price { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--ink-soft); }
+.offer__price { margin-top: 8px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--ink-soft); }
 .offer__price strong { font-family: var(--font-display); font-size: 1.35rem; font-weight: 500; color: var(--ink); }
 
 /* ---------- Work: each case = the site on laptop + phone, then the facts ---------- */
@@ -126,3 +140,134 @@
 
 /* The line under a heading: says plainly what the section shows */
 .section-sub { color: var(--ink-soft); font-size: 1.05rem; line-height: 1.6; max-width: 36rem; margin-top: 16px; }
+
+/* ---------- The two service demos: small drawn animations under each price ----------
+   Each plays once, the first time it's scrolled into view (js/demos.js adds .is-playing),
+   then rests on its last frame. Ink on paper like the rest of the page; decoration only
+   (aria-hidden), since the words beside them already say the same thing. */
+.demo { width: 100%; max-width: 360px; justify-self: center; }   /* centred in its column, and on phones under the price */
+
+/* -- Google SEO: a search is typed, then "Your business" climbs to first -- */
+.demo-seo { max-width: 400px; font-size: 12px; --row: 6.6em; }   /* compact rows: the whole window fits a laptop screen */
+.sd-browser { border: 1px solid var(--line-strong); border-radius: 10px; background: var(--paper-raised); box-shadow: 0 18px 30px -24px rgba(20, 19, 15, 0.5); overflow: hidden; }
+.sd-bar { display: flex; gap: 5px; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.sd-bar i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong); }
+.sd-search { display: flex; align-items: center; gap: 8px; margin: 12px; padding: 8px 12px; border: 1px solid var(--line-strong); border-radius: 20px; min-height: 2.9em; }
+.sd-search svg { flex: none; fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; }
+.sd-query { white-space: nowrap; }
+.sd-caret { display: inline-block; width: 1.5px; height: 1.1em; margin-left: -6px; background: var(--ink); opacity: 0; }
+.demo-seo.is-typing .sd-caret { animation: sd-blink 0.9s steps(1) infinite; }
+@keyframes sd-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+/* The results, laid out like a real search result: the site's icon and name, its address,
+   then the page title as a link, then a two-line description. Four rows stacked by --pos
+   (1 = top); the climb is --pos changing, with "top" transitioning so the rows slide past. */
+.sd-results { position: relative; height: calc(var(--row) * 4 + 6px); margin: 0 12px 12px; }
+.sd-row {
+  position: absolute; left: 0; right: 0;
+  top: calc((var(--pos) - 1) * var(--row));
+  height: calc(var(--row) - 6px);
+  padding: 8px 10px; border-radius: 8px;
+  display: flex; flex-direction: column; gap: 5px;
+  background: var(--paper-raised);
+  opacity: 0; transform: translateY(6px);
+  transition: top 0.45s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.35s ease, transform 0.35s ease;
+}
+.sd-row:nth-child(2) { transition-delay: 0s, 0.08s, 0.08s; }
+.sd-row:nth-child(3) { transition-delay: 0s, 0.16s, 0.16s; }
+.sd-row:nth-child(4) { transition-delay: 0s, 0.24s, 0.24s; }
+.demo-seo.has-results .sd-row { opacity: 1; transform: none; }
+.sd-site { display: flex; align-items: center; gap: 8px; flex: none; }
+.sd-fav { flex: none; width: 20px; height: 20px; border-radius: 50%; background: #e4e1d8; }
+.sd-sitebars { flex: 1; display: grid; gap: 4px; }
+.sd-sitebars b, .sd-t, .sd-d { display: block; border-radius: 4px; flex: none; }
+.sd-sitebars b { height: 5px; background: #e4e1d8; }
+.sd-t { height: 9px; background: #cfcbbf; margin-top: 2px; }
+.sd-d { height: 5px; width: 92%; background: #ebe8e0; }
+/* Your result: real text, a ring round it, a counter, and the pin once it's first */
+.sd-you { z-index: 2; outline: 1.5px solid var(--ink); gap: 3px; }
+.sd-you > * { flex: none; }
+.sd-fav--you { display: grid; place-items: center; background: var(--ink); color: var(--paper); font: 600 10px/1 var(--font-body); font-style: normal; }
+.sd-site > span:not(.sd-sitebars) { display: grid; line-height: 1.25; min-width: 0; }
+.sd-sitename { font-size: 11px; color: var(--ink); }
+.sd-url { font-size: 9.5px; color: var(--stone); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 64px; }
+.sd-title { font-size: 14px; line-height: 1.3; color: #2b4fb3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }   /* a link's blue: reads instantly as a search result */
+.sd-snippet { font-size: 10px; line-height: 1.45; color: var(--ink-soft); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.sd-snippet b { font-weight: 600; color: var(--ink); }
+.sd-rank { position: absolute; right: 8px; top: 9px; padding: 2px 7px; border-radius: 10px; background: var(--ink); color: var(--paper); font-size: 9px; font-weight: 600; }
+.sd-pin { position: absolute; right: 44px; top: 7px; fill: none; stroke: var(--ink); stroke-width: 1.6; opacity: 0; transform: translateY(-10px); transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.demo-seo.is-pinned .sd-pin { opacity: 1; transform: none; }
+
+/* -- Modern Websites: a shop app on a phone, styled like a real screen recording. A touch
+   indicator scrolls the page in two swipes and taps "Pay with M-Pesa"; the phone's own
+   M-Pesa prompt pops up over a dimmed screen with the number pad, the PIN is typed and sent,
+   the M-PESA confirmation message drops in from the top, and the shop confirms the order.
+   Motion: js/demos.js. The product is made up. -- */
+.demo-web { max-width: 272px;   /* wide enough for the app's text to read comfortably */
+  --dw-green: #2f9e44; filter: drop-shadow(0 24px 30px rgba(20, 19, 15, 0.25)); }
+.demo-web svg { display: block; width: 100%; height: auto; }
+.demo-web text { font-family: var(--font-body); fill: #141414; }
+.dw-screen-bg { fill: #fff; }
+.dw-clock { font-size: 9.5px; font-weight: 600; }
+.dw-title { font-size: 13px; font-weight: 600; }
+.dw-price { font-size: 17px; font-weight: 700; }
+.dw-meta { font-size: 8px; fill: #6f6a60 !important; }
+.dw-spec { font-size: 8px; font-weight: 500; }
+.dw-h { font-size: 10px; font-weight: 600; }
+.dw-body { font-size: 7.5px; fill: #5d594f !important; }
+.dw-btn { fill: var(--dw-green); transition: fill 0.15s ease; }
+.demo-web.is-pressed .dw-btn { fill: #22803a; }
+.demo-web.is-waiting .dw-btn { fill: #8cc79a; }
+.dw-btn-label, .dw-btn-wait { font-size: 11.5px; font-weight: 600; fill: #fff !important; transition: opacity 0.2s ease; }
+.dw-btn-wait { opacity: 0; font-size: 10.5px; }
+.demo-web.is-waiting .dw-btn-label { opacity: 0; }
+.demo-web.is-waiting .dw-btn-wait { opacity: 1; }
+.dw-btn2 { font-size: 10.5px; font-weight: 500; }
+.dw-scrollbar { fill: #000; opacity: 0; }
+/* The touch indicator a phone's screen recorder draws: a soft grey disc with a white rim */
+.dw-finger circle { fill: #8a8780; fill-opacity: 0.45; stroke: #fff; stroke-opacity: 0.9; stroke-width: 1.5; }
+.dw-finger, .dw-ripple { opacity: 0; }
+.dw-ripple { fill: #fff; }
+.dw-backdrop { fill: #000; opacity: 0; transition: opacity 0.25s ease; }
+.demo-web.is-prompt .dw-backdrop { opacity: 0.45; }
+/* The phone's M-Pesa prompt: a plain system pop-up, as the SIM menu shows it */
+.dw-prompt { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.94); transition: opacity 0.18s ease, transform 0.22s ease; }
+.demo-web.is-prompt .dw-prompt { opacity: 1; transform: none; }
+.dw-p { font-size: 10px; }
+.dw-pbtn { font-size: 8.5px; font-weight: 700; letter-spacing: 0.06em; fill: #1f7a33 !important; }
+.dw-dot { fill: #141414; opacity: 0; }
+.dw-dot.is-on { opacity: 1; }
+.dw-caret { fill: #2f9e44; opacity: 0; }
+.demo-web.is-prompt .dw-caret { animation: dw-blink 1s steps(1) infinite; }
+@keyframes dw-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.dw-keyboard { transform: translateY(145px); }
+.dw-key rect { fill: #fff; filter: url(#dw-keysh); transition: fill 0.12s ease; }
+.dw-key text { font-size: 13px; font-weight: 500; }
+.dw-key.is-down rect { fill: #cfcfd4; transition: none; }
+/* The M-PESA message and the order confirmation */
+.dw-note { transform: translateY(-80px); }
+.dw-note-t { font-size: 8px; font-weight: 700; }
+.dw-note-b { font-size: 8px; fill: #333 !important; }
+.dw-done { transform: translateY(170px); }
+.dw-check-bg { fill: var(--dw-green); transform-box: fill-box; transform-origin: center; transform: scale(0.4); transition: transform 0.4s 0.2s cubic-bezier(0.2, 1.4, 0.4, 1); }
+.demo-web.is-paid .dw-check-bg { transform: scale(1); }
+.dw-check { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.demo-web.is-paid .dw-check { stroke-dashoffset: 0; transition: stroke-dashoffset 0.35s 0.45s ease-out; }
+.dw-ok { font-size: 12px; font-weight: 700; fill: var(--dw-green) !important; }
+
+/* -- The search demo's browser: an address bar, a loading line, a time chip and a pointer -- */
+.sd-browser { position: relative; }
+.sd-bar { position: relative; align-items: center; }
+.sd-time { position: absolute; left: 50%; top: 50%; translate: -50% -50%;   /* centred in the window's top bar */
+  padding: 2px 10px; border-radius: 10px; background: var(--ink); color: var(--paper); font-size: 9px; font-weight: 600; opacity: 0; transition: opacity 0.3s ease; }
+.demo-seo.has-time .sd-time { opacity: 1; }
+.sd-load { position: absolute; left: 0; top: 30px; height: 2px; width: 0; background: #2b4fb3; opacity: 0; }
+.sd-search { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+.demo-seo.is-focused .sd-search { border-color: var(--ink); box-shadow: 0 0 0 3px #e9e6de; }
+.sd-cursor { position: absolute; left: 0; top: 0; z-index: 5; opacity: 0; fill: var(--ink); stroke: #fff; stroke-width: 1.2; stroke-linejoin: round; pointer-events: none; }
+.demo-seo.is-hover .sd-title { text-decoration: underline; text-underline-offset: 2px; }
+
+/* Less motion asked for: both demos simply show their last frame */
+@media (prefers-reduced-motion: reduce) {
+  .sd-row, .sd-pin { transition: none !important; }
+}
