@@ -141,7 +141,15 @@ button:focus-visible {
 
 .star-spin {
   transform-origin: 50% 50%;
-  animation: star-rotate 22s linear infinite;
+  animation: star-rotate var(--star-speed, 22s) linear infinite;   /* a custom property reaches inside <use>, so each copy can set its own speed */
+}
+
+/* The star in the hero's "Start a project" button: the Aster star in highlighter yellow,
+   turning steadily, before the words. */
+.btn-star { flex: none; width: 2.7em; height: 2.7em; margin: -0.7em -0.35em -0.7em -0.75em;   /* negative margins: its thin tips reach into the padding, so the button grows neither taller nor much wider */ color: var(--hl, #f5c518); --star-speed: 6s; }
+/* Small phones: the star makes the button wider, so tighten both buttons to keep them on one row */
+@media (max-width: 379px) {
+  .hero-ctas .btn { padding-inline: 14px; gap: 6px; }
 }
 
 @keyframes star-rotate {

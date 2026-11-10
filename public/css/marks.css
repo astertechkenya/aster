@@ -111,6 +111,7 @@
    button and the outlined one alike. Touch screens have no hover, so they're left alone. */
 .btn--loop { position: relative; }
 .hero-ctas { gap: 14px 18px; }   /* room between the buttons for the loop to swing round one */
+@media (max-width: 479px) { .hero-ctas { column-gap: 12px; } }   /* phones have no hover, so no room is needed for the loop */
 .btn-loop {
   position: absolute;
   left: -20px; top: -14px;
@@ -143,3 +144,19 @@
 @media (prefers-reduced-motion: reduce) {
   .btn-loop path, .btn--loop:hover .btn-loop path, .btn--loop:focus-visible .btn-loop path { transition: none; }
 }
+
+/* ---------- The highlighter (Nov 2026): one accent colour for the whole site ----------
+   A warm highlighter yellow, used only for marking up: the loops and underlines drawn under
+   headline words, the marker swipes behind key phrases, the hero's underline, and the
+   portfolio's figures. Like a yellow marker on a printout, it says "this bit matters".
+   The small drawings (rocket, torch, magnifier, bulb, checkbox) and the handwritten notes
+   stay in ink, so the yellow only ever means "highlighted".
+   A thin yellow line almost vanishes on cream, so these strokes are drawn thicker. */
+:root { --hl: #f5c518; }
+.mark--circle > svg:first-of-type path,
+.mark--underline > svg:first-of-type path,
+.mark--double > svg:first-of-type path { stroke: var(--hl); stroke-width: 0.09em; }
+.mark--highlight path { stroke: color-mix(in srgb, var(--hl) 55%, transparent); }
+.ink-underline path { stroke: var(--hl); stroke-width: 6; }
+/* The portfolio's figures: a marker stroke across the lower half of each number */
+.case__facts dd { display: inline; background: linear-gradient(transparent 55%, color-mix(in srgb, var(--hl) 45%, transparent) 55%); }

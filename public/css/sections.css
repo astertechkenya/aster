@@ -44,7 +44,17 @@
 
 /* ---------- Work: each case = the site on laptop + phone, then the facts ---------- */
 /* A veil of the raised white, not solid, so the lights glow faintly through the work band */
-.work { background: color-mix(in srgb, var(--paper-raised) 55%, transparent); border-block: 1px solid var(--line); padding-block: 80px; }
+/* The portfolio is a dark band in the page: the dark colour tokens apply only inside it, so
+   everything in it (text, lines, the hand-drawn marks, the notes) turns light-on-dark, while
+   the header and the rest of the page stay light. */
+.work {
+  --paper: #121110; --paper-raised: #1a1917;
+  --ink: #f3f1ea; --ink-soft: #c7c4b8; --graphite: #928f83; --stone: #aaa59a;
+  --line: #2d2c27; --line-strong: #3d3b34;
+  background: var(--paper);
+  color: var(--ink);
+  padding-block: 80px;
+}
 .case { display: grid; gap: 32px; align-items: center; padding-block: 32px; }
 .case + .case { border-top: 1px solid var(--line); }
 @media (min-width: 900px) {
@@ -271,3 +281,31 @@
 @media (prefers-reduced-motion: reduce) {
   .sd-row, .sd-pin { transition: none !important; }
 }
+
+/* ---------- The portfolio, pinned: on screens big enough to show a whole project at once,
+   the dark band holds still while the two projects slide through it, one after the other,
+   and then the page carries on. js/work-pin.js adds .work--pin when the screen qualifies and
+   moves the projects as you scroll; without it (phones, old browsers) they simply stack. */
+.work--pin .work__stage { height: calc((100svh - var(--header-h)) * 2.4); }   /* the scroll distance it takes to pass both */
+.work--pin .work__frame {
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100svh - var(--header-h));
+  overflow: hidden;
+}
+.work--pin .work__track { position: relative; height: 100%; }
+.work--pin .case {
+  position: absolute; inset: 0;
+  padding-block: 24px;
+  border-top: 0;
+  will-change: transform;
+}
+/* A small counter in the corner: which project you're on */
+.work__count { display: none; }
+.work--pin .work__count {
+  display: block;
+  position: absolute; right: 0; bottom: 20px;
+  font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.12em;
+  color: var(--graphite);
+}
+.work__n { color: var(--ink); }
