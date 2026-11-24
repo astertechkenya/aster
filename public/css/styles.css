@@ -13,6 +13,8 @@
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/playfair-display-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/playfair-display-latin-ext-600-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/playfair-display-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/playfair-display-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/playfair-display-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/playfair-display-latin-ext-400-italic.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 @font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/playfair-display-latin-400-italic.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'Playfair Display';font-style:italic;font-weight:500;font-display:swap;src:url(../fonts/playfair-display-latin-ext-500-italic.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
@@ -92,7 +94,17 @@
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  background: var(--paper);
+  /* The whole page is ruled paper: the warm off-white with a faint line every 48px, like a
+     notebook. White panels and the dark bands sit on top of it with their own backgrounds. */
+  background-color: var(--paper);
+  /* One 48px tile holding a single line along its bottom edge, repeated down the page. A small
+     tile keeps every line crisp: one gradient stretched over the whole (very tall) page gets
+     drawn at reduced resolution by the browser, and lines drop out at random. */
+  background-image: linear-gradient(to bottom, transparent 47px, rgba(20, 19, 15, 0.06) 47px);
+  background-size: 100% 48px;
+  /* The ruling starts where the header ends, so the header's own bottom border is the first
+     line and every line after it, the first included, is the same 48px apart */
+  background-position: 0 var(--header-h);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 16px;
@@ -147,9 +159,31 @@ button:focus-visible {
 /* The star in the hero's "Start a project" button: the Aster star in highlighter yellow,
    turning steadily, before the words. */
 .btn-star { flex: none; width: 2.7em; height: 2.7em; margin: -0.7em -0.35em -0.7em -0.75em;   /* negative margins: its thin tips reach into the padding, so the button grows neither taller nor much wider */ color: var(--hl, #f5c518); --star-speed: 6s; }
+/* The hero's main button: black, with a solid block of highlighter yellow sitting behind it,
+   offset down and to the right like a printed sticker. It stands out from "See the work"
+   without shouting, and ties the button to the yellow marks on the page. On hover the button
+   presses into its shadow. */
+.hero-ctas .btn--star {
+  font-family: var(--font-display);   /* Playfair, the headline face */
+  font-weight: 600;
+  font-size: 1.02rem;                 /* Playfair reads a touch smaller than Inter at the same size */
+  box-shadow: 5px 5px 0 var(--hl, #f5c518);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.hero-ctas .btn--star:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--hl, #f5c518); }
+.hero-ctas .btn--star:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+/* Phones: Playfair sets a little wider, so the star button tightens to keep both on one row */
+@media (max-width: 419px) {
+  .hero-ctas .btn--star { font-size: 0.96rem; padding-inline: 15px; gap: 7px; }
+}
+/* "See the work" in Playfair too, so both hero buttons share the headline face */
+.hero-ctas .btn--scribble { font-family: var(--font-display); font-weight: 600; font-size: 1.02rem; }
+@media (max-width: 419px) { .hero-ctas .btn--scribble { font-size: 0.96rem; padding-inline: 15px; } }
 /* Small phones: the star makes the button wider, so tighten both buttons to keep them on one row */
 @media (max-width: 379px) {
   .hero-ctas .btn { padding-inline: 14px; gap: 6px; }
+  .hero-ctas .btn--scribble { padding-inline: 12px; }   /* Playfair runs a little wider */
 }
 
 @keyframes star-rotate {
@@ -262,6 +296,13 @@ header .btn { padding: 8px 16px; font-size: 0.86rem; }   /* the header's button,
   transition: color 0.2s ease;
 }
 .nav-word { position: relative; display: inline-block; }
+/* The hero's "See the work": one quick, bold pen flick under the words. */
+.btn--scribble .nav-scribble { top: calc(100% - 1px); height: 0.5em; left: -6%; width: 112%; }
+.btn--scribble .nav-scribble path { stroke-width: 3.4; }
+.hero-ctas .btn--scribble:hover .nav-scribble path,
+.hero-ctas .btn--scribble:focus-visible .nav-scribble path {
+  transition: stroke-dashoffset 0.18s cubic-bezier(0.2, 0.7, 0.3, 1), opacity 0s;
+}
 .nav-scribble {
   position: absolute;
   left: -4%; top: 100%;
@@ -282,12 +323,16 @@ header .btn { padding: 8px 16px; font-size: 0.86rem; }   /* the header's button,
 }
 .nav-links a:hover, .nav-links a:focus-visible { color: var(--ink); }
 .nav-links a:hover .nav-scribble path,
-.nav-links a:focus-visible .nav-scribble path {
+.nav-links a:focus-visible .nav-scribble path,
+.btn--scribble:hover .nav-scribble path,
+.btn--scribble:focus-visible .nav-scribble path {
   stroke-dashoffset: 0; opacity: 1;
   transition: stroke-dashoffset 0.3s cubic-bezier(0.65, 0, 0.35, 1), opacity 0s;
 }
 .nav-links a:hover .nav-scribble path:nth-child(2),
-.nav-links a:focus-visible .nav-scribble path:nth-child(2) {   /* the second stroke follows the first */
+.nav-links a:focus-visible .nav-scribble path:nth-child(2),
+.btn--scribble:hover .nav-scribble path:nth-child(2),
+.btn--scribble:focus-visible .nav-scribble path:nth-child(2) {   /* the second stroke follows the first */
   transition: stroke-dashoffset 0.3s 0.18s cubic-bezier(0.65, 0, 0.35, 1), opacity 0s 0.2s;   /* shown only once its turn comes: no stray pen dot */
 }
 .nav-links a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
@@ -296,6 +341,16 @@ header .btn { padding: 8px 16px; font-size: 0.86rem; }   /* the header's button,
 }
 @media (max-width: 479px) {
   header .nav-links { gap: 10px; font-size: 0.78rem; }   /* phones: a size down so the bar fits */
+}
+/* The header's links in Playfair, the headline face, so the bar matches the wordmark and the
+   headings; its button in the handwriting (Caveat), like the hero's. Caveat draws small for
+   its size, so it's set about 1.4x larger. Line height is held at 1.2 so the bar stays 64px. */
+header .nav-links, header .btn { font-weight: 500; line-height: 1.2; }
+header .nav-links { font-family: var(--font-display); font-size: 1.02rem; }
+header .btn { font-family: 'Caveat', var(--font-body); font-size: 1.3rem; padding-block: 6px 8px; }
+@media (max-width: 479px) {
+  header .nav-links { font-size: 0.86rem; }
+  header .btn { font-size: 1.14rem; }
 }
 
 .btn {
@@ -522,9 +577,9 @@ header .btn { padding: 8px 16px; font-size: 0.86rem; }   /* the header's button,
    Each ring is an SVG circle with pathLength="100", so a dash of length --score draws exactly
    that share of the ring; the numbers are SVG text in the display serif, so they stay sharp
    at the card's tilt and read like the rest of the page's figures. */
-.gauges { display: flex; justify-content: space-between; gap: 4px; }
+.gauges { display: flex; justify-content: space-around; gap: 8px; } /* three scores, spread evenly across the card */
 .gauge { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-.gauge svg { flex: none; max-width: none; /* the site-wide img,svg max-width rule would squeeze it to its label's width */ width: clamp(30px, 8cqw, 50px); height: auto; transform: rotate(-90deg); overflow: visible; }
+.gauge svg { flex: none; max-width: none; /* the site-wide img,svg max-width rule would squeeze it to its label's width */ width: clamp(38px, 10cqw, 58px); height: auto; transform: rotate(-90deg); overflow: visible; }
 .gauge__track, .gauge__arc { fill: none; stroke-width: 2.4; }
 .gauge__track { stroke: var(--line); }
 .gauge__arc {
@@ -545,26 +600,27 @@ header .btn { padding: 8px 16px; font-size: 0.86rem; }   /* the header's button,
   font-variant-numeric: lining-nums;   /* Playfair's default numerals sit low, like lowercase */
   fill: var(--ink);
 }
-.gauge span { font-size: clamp(0.46rem, 1.3cqw, 0.62rem); line-height: 1.2; color: var(--ink-soft); text-align: center; white-space: nowrap; }
+.gauge span { font-size: clamp(0.54rem, 1.7cqw, 0.76rem); line-height: 1.2; color: var(--ink-soft); text-align: center; white-space: nowrap; }
 
-/* The climb: Safari Ember's mobile performance score, before → after → live, sketched in
-   pencil like the underline under "impossible". The line draws itself in once the card
-   has landed (pathLength="100" makes the dash maths simple). */
-.climb { margin-top: 8px; }
+/* The climb: Safari Ember's mobile performance score, before -> after -> live. A smooth white
+   line with a soft glow fading beneath it, and the live score tagged at the top. The line
+   draws itself in once the card has landed (pathLength="100" keeps the dash maths simple). */
+.climb { margin-top: 2px; }
 .climb svg { display: block; width: 100%; height: auto; max-width: none; overflow: visible; }
-.climb__area { fill: url(#climb-hatch); }
-#climb-hatch line { stroke: var(--line-strong); stroke-width: .45; }
-.climb__sketch { fill: none; stroke: var(--ink); stroke-width: .6; stroke-linecap: round; opacity: .35; }
+.climb__area { fill: url(#climb-glow); }
 .climb__line {
-  fill: none; stroke: var(--ink); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round;
+  fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linecap: round;
   stroke-dasharray: 100; stroke-dashoffset: 0;
   animation: climb-draw 1.2s 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
 }
-.climb ellipse { fill: var(--paper-raised); stroke: var(--ink); stroke-width: 1.1; }
+.climb__dot { fill: #1d1c1a; stroke: var(--ink); stroke-width: 0.8; }
+.climb__halo { fill: var(--ink); opacity: 0.18; }
+.climb__end { fill: var(--ink); }
+.climb__lbl { font-family: var(--font-body); font-size: 3.6px; letter-spacing: 0.04em; fill: var(--ink-soft); }
+.climb__tag { fill: var(--ink); }
+.climb__tagtxt { font-family: var(--font-body); font-size: 4.2px; font-weight: 600; fill: #14130f; }
 @keyframes climb-draw { from { stroke-dashoffset: 100; } }
 @media (prefers-reduced-motion: reduce) { .climb__line { animation: none; } }
-.climb__marks { display: flex; justify-content: space-between; margin-top: 4px; font-size: clamp(0.46rem, 1.3cqw, 0.52rem); color: var(--graphite); }
-.climb__marks b { font-family: var(--font-display); font-weight: 500; font-size: 1.15em; font-variant-numeric: lining-nums; color: var(--ink); margin-right: 2px; }
 
 /* ---------------------------------------------------------
    THE MINIATURE SCREENS
@@ -727,9 +783,11 @@ header .btn { padding: 8px 16px; font-size: 0.86rem; }   /* the header's button,
      (0.35s), while the cards are dealt in beside them (0.25s to 1.33s). */
   animation: hero-headline-in 0.65s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
-/* Two columns: the words 3% under their full size, for a little more paper around the hero */
+/* Two columns: the headline is allowed past its column into the open space beside the cards
+   (118% wide), so it can be larger and still sit on two lines. Checked from 900px to 2560px
+   wide: it stays at least 40px clear of the cards. */
 @media (min-width: 860px) {
-  .hero h1 { font-size: clamp(2.23rem, 10.28cqw, 3.3rem); }
+  .hero h1 { width: 118%; font-size: clamp(2.23rem, 13.1cqw, 4.2rem); }
   .hero-sub { font-size: 1.03rem; }
 }
 .hero h1 em {
@@ -800,11 +858,16 @@ header .btn { padding: 8px 16px; font-size: 0.86rem; }   /* the header's button,
 
 
 
+/* Now a highlighter swipe behind "impossible" (the class name is from when it was an
+   underline). It sits across the letters' bodies, behind the ink: z-index -1, kept inside the
+   word's own layer by isolation on .ink-highlight so it doesn't drop behind the hero. */
+.ink-highlight { isolation: isolate; }
 .ink-underline {
   position: absolute;
-  left: -2%;
-  top: 100%;
-  width: 104%;
+  left: -3%;
+  top: 38%;
+  width: 106%;
+  z-index: -1;
   aspect-ratio: 220 / 20;
   overflow: visible;
   pointer-events: none;
@@ -812,11 +875,11 @@ header .btn { padding: 8px 16px; font-size: 0.86rem; }   /* the header's button,
 .ink-underline path {
   fill: none;
   stroke: var(--ink);
-  stroke-width: 3.5;
-  stroke-linecap: round;
+  stroke-width: 30;
+  stroke-linecap: butt;        /* a marker's chisel tip: square ends */
   stroke-linejoin: round;
-  stroke-dasharray: 210;
-  stroke-dashoffset: 210;
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
   /* Delay used to be a flat 0.6s from page load, back when the headline
      itself appeared instantly. Now the headline doesn't finish revealing
      until 1.05s (its delay) + 0.65s (its duration) = 1.7s, so this has to
@@ -824,7 +887,7 @@ header .btn { padding: 8px 16px; font-size: 0.86rem; }   /* the header's button,
      finish drawing itself in while "impossible" is still invisible, and
      then just sit there "already done" the moment the word fades in.
      1.8s gives it a 0.1s beat after the headline lands before it starts. */
-  animation: ink-draw 0.9s 3.27s cubic-bezier(0.65, 0, 0.35, 1) forwards;   /* once the pen has finished "impossible" */
+  animation: ink-draw 0.6s 3.27s cubic-bezier(0.65, 0, 0.35, 1) forwards;   /* once the pen has finished "impossible" */
 }
 @keyframes ink-draw {
   to { stroke-dashoffset: 0; }
@@ -1031,3 +1094,25 @@ footer {
   .lights span:nth-child(3) { transform: translate(0, 60vh); }
 }
 @media print { .lights { display: none; } }
+
+/* "See the work": on hover the button fills with hand-drawn diagonal hatching, wiped in from
+   the left, in place of the scribbled underline. The hatching is a small repeating drawing (an
+   inline SVG tile) on a layer behind the words; the wipe is a clip-path that opens left to right. */
+.hero-ctas .btn--scribble { position: relative; isolation: isolate; overflow: hidden; }
+/* The hatching is drawn stroke by stroke on hover, like a pen shading the button in: straight,
+   evenly spaced diagonal lines (the SVG in index.html), laid down left to right, each starting
+   a moment after the one before. On the way out they all lift at once. */
+.btn-hatch { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+.btn-hatch path {
+  fill: none; stroke: #c9c4b9; stroke-width: 1.6; stroke-linecap: round;
+  vector-effect: non-scaling-stroke;   /* the SVG stretches to the button; the pen width doesn't */
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.18s ease-in;
+}
+.hero-ctas .btn--scribble:hover .btn-hatch path,
+.hero-ctas .btn--scribble:focus-visible .btn-hatch path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.16s cubic-bezier(0.3, 0, 0.4, 1) calc(var(--i) * 26ms);
+}
+.hero-ctas .btn--scribble .nav-scribble { display: none; }   /* the hatching replaces the underline */
+@media (prefers-reduced-motion: reduce) { .btn-hatch path { transition: none !important; } }
