@@ -98,6 +98,16 @@
 /* "idea": a light bulb over the word, its rays drawn round it */
 .mark--bulb .mark__doodle  { top: auto; left: calc(50% - 0.5em); width: 1em; bottom: calc(100% - 0.02em); height: 1em; }
 .mark--glass, .mark--bulb  { margin-top: 0.75em; }
+/* "idea" also has the highlighter: keep the bulb in ink with a pen's round ends, not the swipe's yellow chisel */
+.mark--highlight.mark--bulb > svg:first-of-type { top: 0.1em; }   /* the swipe a touch higher, centred on the letters */
+.mark--highlight.mark--glass > svg:first-of-type { top: 0.1em; }
+.mark--highlight.mark--glass .mark__doodle path, .mark--highlight.mark--bulb .mark__doodle path { stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; }
+/* "ask": two scribbled question marks off to the upper right, drawn one after the other once the swipe is done */
+.mark--qq .mark__doodle { top: auto; left: calc(100% + 0.32em); width: 1.15em; bottom: calc(100% - 0.38em); height: 0.95em; transform: rotate(8deg); }   /* past the full stop, off to the upper right */
+.mark--qq { margin-top: 0.4em; }   /* headroom above the word */
+.mark--qq .mark__doodle path { stroke: var(--ink); stroke-width: 0.05em; stroke-linecap: round; stroke-linejoin: round; }   /* in ink with a pen's round ends, not the swipe's yellow chisel */
+.mark--qq .mark__doodle .thick { stroke-width: 0.09em; }
+.mark--qq > svg:first-of-type { width: calc(100% + 0.18em); }   /* the swipe stops short of the full stop */
 /* "forward": a roomier loop, so it rings the word instead of cutting through the f */
 .mark--rocket > svg:first-of-type { left: -0.42em; top: -0.34em; width: calc(100% + 0.85em); height: calc(100% + 0.5em); }
 /* The checkbox after "project": a box of its own (no word inside), drawn, then ticked */
@@ -157,6 +167,4 @@
 .mark--underline > svg:first-of-type path,
 .mark--double > svg:first-of-type path { stroke: var(--hl); stroke-width: 0.09em; }
 .mark--highlight path { stroke: color-mix(in srgb, var(--hl) 55%, transparent); }
-.ink-underline path { stroke: var(--hl); stroke-width: 6; }
-/* The portfolio's figures: a marker stroke across the lower half of each number */
-.case__facts dd { display: inline; background: linear-gradient(transparent 55%, color-mix(in srgb, var(--hl) 45%, transparent) 55%); }
+.ink-underline path { stroke: color-mix(in srgb, var(--hl) 55%, transparent); }   /* the hero swipe: the same pale yellow as the other highlights */
